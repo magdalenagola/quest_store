@@ -1,24 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Quest Store</title>
+    <link href="css/style.css" rel="stylesheet">
 </head>
+
 <body>
-    <header>
-        <p><a href="#">Quest Store</a></p>
+    <header class="header">
+        <p class="logo"><a href="#">Quest Store</a></p>
     </header>
 
     <main>
         <h1 class="visually-hidden">Quest Store</h1>
         <section class="login">
-            <h2 class="visually-hidden"></h2>
-            
+            <div class="login__wrapper">
+                <h2 class="visually-hidden">Login form</h2>
+                <form class="login__form">
+                    <input class="login__input" placeholder="Login" type="text">
+                    <input class="login__input" placeholder="Password" type="password">
+                    <btn class="btn login__btn" type="submit">Log in</btn>
+                </form>
+            </div>
         </section>
     </main>
 
-
 </body>
+
 </html>
