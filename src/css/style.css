@@ -59,11 +59,11 @@ body {
 
 .logo {
     margin: 0;
-    padding: 120px 0;
+    padding: 50px 0 70px 0;
 }
 
 .logo a {
-    font-size: 200px;
+    font-size: 150px;
     font-weight: bold;
     color: #5d6e80;
     text-decoration: none;
@@ -76,9 +76,9 @@ body {
 }
 
 .login__wrapper {
-    width: 50vw;
+    width: 40vw;
     margin: 0 auto;
-    padding: 100px 0;
+    padding: 50px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -98,7 +98,7 @@ body {
     font-weight: bold;
     width: 100%;
     margin-bottom: 30px;
-    font-size: 24px;
+    font-size: 16px;
     color: #b4b4b4;
     padding: 15px;
     background-color: #f0ecec;
@@ -107,14 +107,48 @@ body {
 }
 
 .login__btn {
-    margin-top: 35px;
+    margin-top: 15px;
     width: 50%;
     padding: 15px;
     color: #5d6e80;
-    font-size: 30px;
+    font-size: 18px;
     font-weight: bold;
     background-color: #e6e6e6;
     border-radius: 20px;
     text-align: center;
     text-transform: uppercase;
+}
+
+.main-nav {
+    width: 100vw;
+    display: flex;
+    padding: 15px 9vw;
+    background-color: #c9c9c9;
+    box-sizing: border-box;
+}
+
+.site-list {
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    list-style: none;
+}
+
+.site-list__item:not(:last-child) {
+    margin-right: 110px;
+}
+
+.site-list__item a {
+    font-size: 20px;
+    font-weight: bold;
+    color: #5d6e80;
+    text-decoration: none;
+}
+
+.site-list__item:hover a {
+    color: #9da7b3;
+}
+
+.site-list__item:active a {
+    color: #465463;
 }
