@@ -59,7 +59,7 @@ body {
 }
 .logout__icon svg
 {
-    position: absolute;
+    position: fixed;
     right: 15px;
     top: 15px;
     fill:#adadad;
