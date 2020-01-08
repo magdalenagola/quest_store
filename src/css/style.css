@@ -55,8 +55,23 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
 }
-
+.logout__icon svg
+{
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    fill:#adadad;
+}
+.logout__icon:hover svg
+{
+    fill: #ffffff;
+}
+.logout__icon:active svg
+{
+    fill: #465463;
+}
 .logo {
     margin: 50px 0;
     padding: 70px 0 70px 4.6vw;
@@ -71,7 +86,7 @@ body {
     background-size: cover;
     background-position: center top;
     background-repeat: no-repeat;
-    min-height: 600px;
+    min-height: 535px;
     justify-content: center;
 }
 .logo a {
