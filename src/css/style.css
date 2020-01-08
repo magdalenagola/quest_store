@@ -181,3 +181,29 @@ body {
 .site-list__item-active a{
     color: #465463;
 }
+
+.cards__wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    width: 100vw;
+    padding: 0 9vw;
+    list-style: none;
+    
+}
+
+.card{
+    width: 25.8vw;
+    margin-top: 50px;
+    /*border: 1px solid #000000;*/
+    box-sizing: border-box;
+    box-shadow: inset 0 0 1em #acacac, 0 0 1em #575757;
+    background-color: #e2d8c6;
+}
+
+.card:not(:nth-child(3n)){
+    margin-right: 2.2vw;
+}
+.card img{
+    width: 100%;
+}
