@@ -187,23 +187,53 @@ body {
     flex-wrap: wrap;
     box-sizing: border-box;
     width: 100vw;
-    padding: 0 9vw;
+    padding: 0 5vw;
     list-style: none;
     
 }
 
 .card{
-    width: 25.8vw;
+    width: 30%;
     margin-top: 50px;
     /*border: 1px solid #000000;*/
     box-sizing: border-box;
     box-shadow: inset 0 0 1em #acacac, 0 0 1em #575757;
     background-color: #e2d8c6;
+    position: relative;
 }
 
 .card:not(:nth-child(3n)){
-    margin-right: 2.2vw;
+    margin-right: 5%;
 }
 .card img{
     width: 100%;
 }
+
+.card__title, .card__description{
+    margin: 0;
+    padding: 15px;
+    
+}
+
+.card__title{
+    text-align: center;
+    font-size: 20px;
+}
+
+.card__description{
+    margin-right: 60px;
+    font-size: 16px;
+}
+
+.card__basket{
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-image: url("../img/supermarket.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    bottom: 45px;
+    right: 10px;
+}
+
