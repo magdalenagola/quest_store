@@ -207,6 +207,25 @@ body {
     position: relative;
 }
 
+.card__coin{
+    position: absolute;
+    background-image: url("../img/coin.svg");
+    width: 60px;
+    height: 60px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center;
+    color: #9c988e;
+    font-weight: bold;
+    padding-top: 14px;
+    padding-left: 5px;
+    box-sizing: border-box;
+    bottom: 170px;
+    right: 10px;
+    font-size: 25px;
+}
+
 .card:not(:nth-child(3n)){
     margin-right: 5%;
 }
