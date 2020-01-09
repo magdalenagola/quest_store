@@ -369,6 +369,10 @@ body {
 }
 
 @media (max-width: 992px) and (min-width: 768px) {
+    .main-nav {
+        padding: 15px 16vw;
+    }
+
     .intro {
         min-height: 400px;
     }
@@ -379,8 +383,31 @@ body {
 }
 
 @media (max-width: 768px) {
+    body {
+        min-width: 320px;
+    }
+
+    .main-nav {
+        display: none;
+    }
     .intro {
         min-height: 160px;
+        background-position: center top;
+        background-clip: content-box;
+        background-size: cover;
+        background-image: url("../img/main-bg-mobile.jpg");
+    }
+
+    .logo {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0 4vw;
+        margin: 100px 0;
+    }
+
+    .logo a {
+        font-size: 90px;
+        line-height: 100px;
     }
 
     .cards__wrapper {
