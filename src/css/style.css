@@ -56,6 +56,7 @@ body {
     flex-direction: column;
     align-items: center;
     position: relative;
+    z-index: 1;
 }
 .logout__icon svg
 {
@@ -237,3 +238,7 @@ body {
     right: 10px;
 }
 
+.card__basket:hover
+{
+    background-image: url("../img/supermarkethover.svg");
+}
