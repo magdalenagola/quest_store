@@ -39,6 +39,7 @@
 
 body {
     /* max-width: 1440px;*/
+    min-width: 320px;
     margin: 0 auto;
     background-color: #e6e6e6;
     font-family: 'Roboto', sans-serif;
@@ -326,29 +327,36 @@ body {
 }
 
 @media (max-width: 992px) and (min-width: 768px) {
+    .intro {
+        min-height: 400px;
+    }
+    
     .card {
         width: 50%;
     }
 }
 
-@media (max-width: 768px) and (min-width: 320px) {
+@media (max-width: 768px) {
+    .intro {
+        min-height: 160px;
+    }
+
     .cards__wrapper {
         flex-direction: column;
+        padding: 0 6vw;
     }
 
     .card {
         width: 100%;
     }
 
-    .card__content-wrapper {
-        padding: 0 30px;
-    }
-
     .card__img-wrapper {
         position: relative;
     }
 
-    .card__description {
-        padding: 25px 0;
+    .card__img-wrapper img {
+        width: 100%;
+        height: auto;
+        min-height: auto;
     }
 }
