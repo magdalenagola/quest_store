@@ -277,7 +277,7 @@ body {
     background-image: url("../img/supermarkethover.svg");
 }
 
-.transactions {
+.transactions, .mentors_management {
     display: flex;
     box-sizing: border-box;
     margin: 100px 0;
@@ -286,7 +286,7 @@ body {
     align-items: center;
 }
 
-.transactions__table {
+.transactions__table, .mentors__table {
     width: 100%;
     font-size: 18px;
     box-shadow: inset 0 0 1em #acacac, 0 0 1em #575757;
@@ -302,7 +302,8 @@ body {
     box-shadow: 0 1px 6px #acacac;
 }
 
-.transactions__table tbody th {
+.transactions__table tbody th,
+.mentors__table tbody th {
     padding: 10px;
     font-weight: 400;
     font-style: italic;
@@ -311,7 +312,10 @@ body {
 .table-body {
     color: #2b920b;
 }
-
+.table-body__mentors
+{
+    color:#626060;
+}
 .table-body--bought {
     color: #f70303;
 }
