@@ -106,8 +106,8 @@ body {
     align-items: center;
     flex-direction: column;
     background-image: url("../img/main-bg.jpg");
-    background-size: cover;
-    background-position: center top;
+    background-size: cover contain;
+    background-position: right top;
     background-repeat: no-repeat;
     min-height: 535px;
     justify-content: center;
