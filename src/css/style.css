@@ -260,6 +260,7 @@ body {
 }
 
 .card__content-wrapper {
+    position: relative;
     box-sizing: border-box;
     box-shadow: inset 0 0 1em #acacac, 0 0 1em #575757;
     background-color: #e2d8c6;
