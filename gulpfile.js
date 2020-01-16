@@ -1,12 +1,12 @@
 var gulp = require("gulp");
-var babel = require("gulp-babel");
-var rename = require("gulp-rename");
+var server = require("browser-sync").create();
 
-gulp.task("js", function () {
-  return gulp.src("src/js/app.js")
-    .pipe(babel({
-        presets: ['env']
-        }))
-    .pipe(rename("index.js"))
-    .pipe(gulp.dest("src/js"));
+gulp.task("server", function () {
+  server.init({
+      server: "src/",
+      notify: false,
+      open: true,
+      cors: true,
+      ui: false
+});
 });
