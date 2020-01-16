@@ -73,6 +73,7 @@ body {
     border-radius: 3px;
     outline: none;
     border: none;
+    text-decoration: none;
 }
 
 .header {
