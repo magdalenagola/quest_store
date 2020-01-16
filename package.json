@@ -1,0 +1,25 @@
+{
+  "name": "quest_store",
+  "version": "1.0.0",
+  "description": "Project for CodeCool",
+  "main": "src/index.html",
+  "scripts": {
+    "dev": "gulp server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/magdalenagola/quest_store.git"
+  },
+  "author": "Szczepan, Magda, Victoria",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/magdalenagola/quest_store/issues"
+  },
+  "homepage": "https://github.com/magdalenagola/quest_store#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2"
+  },
+  "dependencies": {
+    "browser-sync": "^2.26.7"
+  }
+}
