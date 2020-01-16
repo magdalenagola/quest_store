@@ -418,6 +418,7 @@ body {
 
     .header--opened .main-nav {
         display: flex;
+        width: 100%;
         margin-top: 20%;
         padding-top: 0;
         align-self: flex-start;
@@ -425,7 +426,7 @@ body {
 
     .header--opened .site-list {
         flex-direction: column;
-        margin: 0 0 10px 40%;
+        margin: 0 auto;
     }
 
     .site-list__item {
@@ -480,6 +481,12 @@ body {
         right: 0;
         top: 6px;
         background-color: #fff;
+    }
+
+    .header--opened .menu__btn {
+        position: absolute;
+        left: 5px;
+        top: 5px;
     }
 
     .header--opened .menu__btn span::before {
