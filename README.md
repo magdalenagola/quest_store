@@ -11,7 +11,7 @@
     `cd 'your-project-folder'`
 5. Install all the required dependencies by running:<br>
     `npm install`
-6. Run web server by running the following command in termanal:<br>
+6. Run web server by running the following command in terminal:<br>
     `npm run dev`<br>
     OR<br>
     `gulp server`<br>
