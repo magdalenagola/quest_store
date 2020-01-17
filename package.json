@@ -8,13 +8,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/magdalenagola/quest_store.git"
+    "url": "https://github.com/magdalenagola/quest_store.git"
   },
-  "author": "Szczepan, Magda, Victoria",
+  "author": "Szczepan Topolski, Magda Gola, Victoria Eremeeva, Piotr Łyskawa",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/magdalenagola/quest_store/issues"
-  },
   "homepage": "https://github.com/magdalenagola/quest_store#readme",
   "devDependencies": {
     "gulp": "^4.0.2"
