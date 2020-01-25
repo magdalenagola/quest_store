@@ -1,0 +1,116 @@
+.cards__wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    align-items: center;
+    padding: 0 5vw;
+    list-style: none;
+
+}
+
+.card {
+    width: 33.3333%;
+    flex-shrink: 0;
+    margin-top: 50px;
+    padding: 0 1.4vw;
+    box-sizing: border-box;
+}
+
+.card__content-wrapper {
+    position: relative;
+    box-sizing: border-box;
+    box-shadow: inset 0 0 1em #acacac, 0 0 1em #575757;
+    background-color: #e2d8c6;
+}
+
+.card__coin {
+    position: absolute;
+    background-image: url("../img/coin.svg");
+    width: 60px;
+    height: 60px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center;
+    color: #9c988e;
+    font-weight: bold;
+    padding-top: 14px;
+    padding-left: 5px;
+    box-sizing: border-box;
+    top: 70%;
+    right: 15px;
+    font-size: 25px;
+}
+
+.card__img-wrapper {
+    width: 100%;
+    position: relative;
+}
+
+.card img {
+    width: 100%;
+    min-height: 270px;
+}
+
+.card__title {
+    margin: 0;
+    padding: 15px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.card__description {
+    margin: 0;
+    padding: 25px;
+    margin-right: 60px;
+    font-size: 16px;
+}
+
+.quests .card__description,
+.inventory .card__description {
+    margin-right: 0;
+}
+
+
+.card__basket {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-image: url("../img/supermarket.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    bottom: 45px;
+    right: 10px;
+}
+
+.card__basket:hover {
+    background-image: url("../img/supermarkethover.svg");
+}
+
+@media (max-width: 992px) {
+    .card {
+        width: 50%;
+    }
+}
+
+@media (max-width: 768px) {
+    .cards__wrapper {
+        flex-direction: column;
+        padding: 0 6vw;
+    }
+
+    .card {
+        width: 100%;
+    }
+
+    .card__img-wrapper {
+        position: relative;
+    }
+
+    .card__img-wrapper img {
+        width: 100%;
+        height: auto;
+        min-height: auto;
+    }
+}

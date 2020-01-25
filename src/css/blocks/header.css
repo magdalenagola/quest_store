@@ -1,0 +1,159 @@
+.index .header {
+    background-color: transparent;
+    position: static;
+}
+
+.header {
+    width: 100%;
+    /*max-width: 1440px;*/
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+    position: fixed;
+    background-color: #000000;
+}
+
+.logout__icon {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    cursor: pointer;
+}
+
+.logout__icon svg {
+    fill: #adadad;
+}
+
+.logout__icon:hover svg {
+    fill: #ffffff;
+}
+
+.logout__icon:active svg {
+    fill: #465463;
+}
+
+.logo {
+    margin: 50px 0;
+    padding: 70px 0 70px 4.6vw;
+    align-self: flex-start;
+}
+
+.index .logo {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 20px;
+    padding-left: 2.3vw;
+    padding-bottom: 20px;
+}
+
+.logo a {
+    font-size: 170px;
+    font-weight: bold;
+    color: #adadad;
+    text-decoration: none;
+    font-family: 'Cute Font';
+}
+
+.menu__btn {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .logo {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 5vw;
+        margin: 100px 0;
+    }
+
+    .index .logo {
+        margin-bottom: 40px;
+    }
+
+    .logo a {
+        font-size: 80px;
+        line-height: 80px;
+    }
+}
+
+@media (max-width: 768px) {
+    .regular .header--opened {
+        flex-direction: row-reverse;
+        height: 100vh;
+    }
+
+    .logout__icon {
+        top: 10px;
+    }
+
+    .menu__btn {
+        display: block;
+        margin: 8px 0 5px 20px;
+        padding: 0;
+        border: 0;
+        outline: none;
+        background-color: transparent;
+        width: 24px;
+        height: 26px;
+        font-size: 0;
+        position: relative;
+        align-self: flex-start;
+        flex-direction: row;
+        cursor: pointer;
+    }
+
+    .menu__btn span {
+        display: inline-block;
+        position: absolute;
+        top: 6px;
+        right: 0;
+        width: 24px;
+        height: 3px;
+        background-color: #fff;
+    }
+
+    .menu__btn span::before,
+    .menu__btn span::after {
+        width: 24px;
+        height: 3px;
+        content: "";
+        display: inline-block;
+        position: absolute;
+    }
+
+    .menu__btn span::before {
+        right: 0;
+        top: 6px;
+        background-color: #fff;
+    }
+
+    .header--opened .menu__btn {
+        position: absolute;
+        left: 5px;
+        top: 5px;
+    }
+
+    .header--opened .menu__btn span::before {
+        display: none;
+    }
+
+    .header--opened .menu__btn span {
+        top: 10px;
+        right: 10px;
+        transform: rotate(45deg);
+    }
+
+    .header--opened .menu__btn span::after {
+        top: 0;
+        right: 0;
+        transform: rotate(90deg);
+    }
+
+    .menu__btn span::after {
+        top: 12px;
+        right: 0;
+        background-color: #fff;
+    }
+}

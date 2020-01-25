@@ -1,0 +1,27 @@
+.intro {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-image: url("../img/main-bg.jpg");
+    background-size: cover;
+    background-position: right top;
+    background-repeat: no-repeat;
+    min-height: 535px;
+    justify-content: center;
+}
+
+@media (max-width: 992px) {
+    .intro {
+        min-height: 400px;
+        background-image: url("../img/main-bg-mobile.jpg");
+    }
+}
+
+@media (max-width: 768px) {
+    .intro {
+        min-height: 160px;
+        background-position: center top;
+        background-size: cover;
+        background-image: url("../img/main-bg-mobile.jpg");
+    }
+}
