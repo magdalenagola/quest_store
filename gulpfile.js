@@ -24,3 +24,5 @@ gulp.task("server", function () {
       ui: false
 });
 });
+
+gulp.watch(["src/css/**/*.css", '!src/css/style.css'], gulp.series('css'));
