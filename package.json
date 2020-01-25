@@ -4,7 +4,7 @@
   "description": "Project for CodeCool",
   "main": "src/index.html",
   "scripts": {
-    "dev": "gulp server"
+    "dev": "gulp server & gulp css"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,10 @@
     "gulp": "^4.0.2"
   },
   "dependencies": {
-    "browser-sync": "^2.26.7"
+    "autoprefixer": "^9.7.4",
+    "browser-sync": "^2.26.7",
+    "gulp-concat": "^2.6.1",
+    "gulp-csso": "^4.0.1",
+    "gulp-postcss": "^8.0.0"
   }
 }
