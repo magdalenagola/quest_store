@@ -19,7 +19,7 @@
 .site-list__item a {
     font-size: 20px;
     font-weight: bold;
-    color: #adadad;
+    color: #d9d9d9;
     text-decoration: none;
 }
 
@@ -29,7 +29,7 @@
 
 .site-list__item:active a,
 .site-list__item-active a {
-    color: #465463;
+    color: #6d6d6d;
 }
 
 @media (max-width: 992px) {

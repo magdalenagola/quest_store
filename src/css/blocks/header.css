@@ -23,7 +23,7 @@
 }
 
 .logout__icon svg {
-    fill: #adadad;
+    fill: #d9d9d9;
 }
 
 .logout__icon:hover svg {
@@ -34,51 +34,19 @@
     fill: #465463;
 }
 
-.logo {
-    margin: 50px 0;
-    padding: 70px 0 70px 4.6vw;
-    align-self: flex-start;
-}
-
-.index .logo {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-top: 20px;
-    padding-left: 2.3vw;
-    padding-bottom: 20px;
-}
-
-.logo a {
-    font-size: 170px;
-    font-weight: bold;
-    color: #adadad;
-    text-decoration: none;
-    font-family: 'Cute Font';
-}
-
 .menu__btn {
     display: none;
 }
 
-@media (max-width: 768px) {
-    .logo {
-        width: 100%;
-        box-sizing: border-box;
-        padding: 5vw;
-        margin: 100px 0;
-    }
+@media (max-width: 992px) {
 
-    .index .logo {
-        margin-bottom: 40px;
-    }
-
-    .logo a {
-        font-size: 80px;
-        line-height: 80px;
-    }
 }
 
 @media (max-width: 768px) {
+    .logo a {
+        font-size: 60px;
+    }
+
     .regular .header--opened {
         flex-direction: row-reverse;
         height: 100vh;

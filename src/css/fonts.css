@@ -28,3 +28,9 @@
     font-weight: normal;
     font-style: italic;
 }
+
+@font-face {
+    font-family: "Optimus";
+    src: url('../fonts/OptimusPrinceps.ttf');
+    font-weight: normal;
+}

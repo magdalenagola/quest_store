@@ -1,0 +1,51 @@
+.logo {
+    margin: 50px 0;
+    padding: 70px 0 70px 4.6vw;
+    align-self: flex-start;
+}
+
+.index .logo {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 20px;
+    padding-left: 2.3vw;
+    padding-bottom: 20px;
+}
+
+.logo a {
+    font-size: 70px;
+    font-size: 5.6vw;
+    color: #d9d9d9;
+    text-decoration: none;
+    font-family: 'Optimus';
+    text-shadow: -1px -1px #6d6d6d;
+}
+
+@media (max-width: 992px) {
+    .logo {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 5vw;
+        padding-left: 4vw;
+        margin: 100px 0;
+    }
+
+    .index .logo {
+        margin-bottom: 40px;
+    }
+
+    .logo a {
+        font-size: 83px;
+        line-height: 80px;
+    }
+}
+
+@media (max-width: 768px) {
+    .logo {
+        padding-left: 2.6vw;
+    }
+
+    .logo a {
+        font-size: 64px;
+    }
+}
