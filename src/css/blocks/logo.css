@@ -7,7 +7,11 @@
 .index .logo {
     margin-top: 0;
     margin-bottom: 0;
-    padding: 30px 0 30px 2.3vw;
+    padding: 50px 0 0 60px;
+}
+
+.index .logo a {
+    font-size: 87px;
 }
 
 .logo a {
