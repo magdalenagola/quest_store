@@ -59,18 +59,44 @@
     color: #f70303;
 }
 
-.mentors__btn {
+.mentors__btn,
+.mentors__btn--edit,
+.mentors__btn--remove {
     margin: 5px auto;
     width: 28px;
     height: 28px;
     cursor: pointer;
 }
 
-.mentors__btn:hover svg {
+.mentors__btn--edit svg,
+.mentors__btn--remove svg {
+    width: 27px;
+    height: 27px;
+}
+
+.mentors__btn--edit,
+.mentors__btn--remove {
+    margin: 0;
+    opacity: 0.8;
+}
+
+.mentors__btn-wrapper {
+    width: 82px;
+    display: flex;
+    margin-left: auto;
+    margin-right: 3vw;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mentors__btn:hover svg,
+.mentors__btn--remove:hover svg,
+.mentors__btn--edit:hover svg {
     opacity: 0.5;
 }
 
 @media (max-width: 768px) {
+
     .transactions__list,
     .mentors__list {
         display: none;
@@ -87,6 +113,12 @@
     .transactions__list--mobile p,
     .mentors__list--mobile p {
         margin: 0;
+    }
+
+    .mentors__btn,
+    .mentors__btn--edit,
+    .mentors__btn--remove {
+        margin: 5px auto !important;
     }
 
     .transactions__list--mobile .transactions__item,
@@ -111,6 +143,7 @@
     .mentors__content-wrapper--opened {
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
         padding: 20px 30px;
         padding-top: 0;
     }
@@ -125,5 +158,17 @@
     .transactions__content-wrapper--opened .transactions__amount,
     .mentors__content-wrapper--opened .mentors__account {
         border-left: 1px solid #b1a58f;
+    }
+
+    .mentors__btn-wrapper {
+        margin: auto;
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .mentors__btn--edit {
+        margin-right: 20px !important;
     }
 }
