@@ -59,6 +59,16 @@
     color: #f70303;
 }
 
+.mentors__btn {
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+}
+
+.mentors__btn:hover svg {
+    opacity: 0.5;
+}
+
 @media (max-width: 768px) {
     .transactions__list,
     .mentors__list {
@@ -81,6 +91,7 @@
     .transactions__list--mobile .transactions__item,
     .mentors__list--mobile .mentors__item {
         box-shadow: 0 0px 2px #b1a58f;
+        cursor: pointer;
     }
 
     .transactions__list--mobile .transactions__title,
