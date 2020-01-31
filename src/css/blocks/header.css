@@ -45,8 +45,8 @@
 }
 
 @media (max-width: 768px) {
-    .logo a {
-        font-size: 60px;
+    .index .header {
+        margin-bottom: 30px;
     }
 
     .regular .header--opened {
