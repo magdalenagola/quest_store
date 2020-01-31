@@ -36,4 +36,8 @@ body {
     body {
         min-width: 320px;
     }
+
+    .wrapper {
+        background-image: url("../img/background_image_mobile.jpg");
+    }
 }
