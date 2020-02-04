@@ -1,0 +1,174 @@
+.transactions__list--mobile,
+.mentors__list--mobile {
+    display: none;
+}
+
+.transactions,
+.mentors_management {
+    display: flex;
+    box-sizing: border-box;
+    margin: 100px 0;
+    padding: 0 9vw;
+    flex-direction: column;
+    align-items: center;
+}
+
+.transactions__title,
+.mentors__name {
+    margin: 0;
+}
+
+.transactions__list,
+.mentors__list {
+    width: 100%;
+    font-size: 18px;
+    padding-bottom: 15px;
+    box-shadow: inset 0 0 1em #acacac, 0 0 1em #575757;
+    background-color: #e2d8c6;
+}
+
+.table-header__row th {
+    padding: 20px 10px 20px 10px;
+    color: #424141;
+}
+
+.table-header__row {
+    box-shadow: 0 1px 6px #acacac;
+}
+
+.transactions__item th,
+.mentors__list tbody th {
+    padding: 10px;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.transactions__item {
+    color: #2b920b;
+}
+
+.transactions__item th {
+    padding-top: 15px;
+}
+
+.mentors__item {
+    color: #626060;
+}
+
+.transactions__item--bought {
+    color: #f70303;
+}
+
+.mentors__btn,
+.mentors__btn--edit,
+.mentors__btn--remove {
+    margin: 5px auto;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+}
+
+.mentors__btn--edit svg,
+.mentors__btn--remove svg {
+    width: 27px;
+    height: 27px;
+}
+
+.mentors__btn--edit,
+.mentors__btn--remove {
+    margin: 0;
+    opacity: 0.8;
+}
+
+.mentors__btn-wrapper {
+    width: 82px;
+    display: flex;
+    margin-left: auto;
+    margin-right: 3vw;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mentors__btn:hover svg,
+.mentors__btn--remove:hover svg,
+.mentors__btn--edit:hover svg {
+    opacity: 0.5;
+}
+
+@media (max-width: 768px) {
+
+    .transactions__list,
+    .mentors__list {
+        display: none;
+    }
+
+    .transactions__list--mobile,
+    .mentors__list--mobile {
+        display: flex;
+        flex-direction: column;
+        list-style: none;
+        padding: 0;
+    }
+
+    .transactions__list--mobile p,
+    .mentors__list--mobile p {
+        margin: 0;
+    }
+
+    .mentors__btn,
+    .mentors__btn--edit,
+    .mentors__btn--remove {
+        margin: 5px auto !important;
+    }
+
+    .transactions__list--mobile .transactions__item,
+    .mentors__list--mobile .mentors__item {
+        box-shadow: 0 0px 2px #b1a58f;
+        cursor: pointer;
+    }
+
+    .transactions__list--mobile .transactions__title,
+    .mentors__list--mobile .mentors__name,
+    .mentors__item--btn {
+        padding: 20px 30px;
+        text-align: center;
+    }
+
+    .transactions__content-wrapper,
+    .mentors__content-wrapper {
+        display: none;
+    }
+
+    .transactions__content-wrapper--opened,
+    .mentors__content-wrapper--opened {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 20px 30px;
+        padding-top: 0;
+    }
+
+    .transactions__content-wrapper--opened p,
+    .mentors__content-wrapper--opened p {
+        width: 50%;
+        box-sizing: border-box;
+        text-align: center;
+    }
+
+    .transactions__content-wrapper--opened .transactions__amount,
+    .mentors__content-wrapper--opened .mentors__account {
+        border-left: 1px solid #b1a58f;
+    }
+
+    .mentors__btn-wrapper {
+        margin: auto;
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .mentors__btn--edit {
+        margin-right: 20px !important;
+    }
+}
