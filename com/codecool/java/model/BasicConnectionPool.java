@@ -68,6 +68,4 @@ public class BasicConnectionPool implements ConnectionPool{
     public int getSize() {
         return connectionPool.size() + usedConnections.size();
     }
-
-    // standard getters
 }
