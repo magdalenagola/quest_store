@@ -1,11 +1,13 @@
 package codecool.java;
 
-import codecool.java.model.UserDAO;
+import codecool.java.controller.RootController;
+import codecool.java.dao.UserDao;
+
+import java.sql.SQLException;
 
 public class Main{
     public static void main(String[] args) {
-        System.out.println("hello");
-        UserDAO dao = new UserDAO();
-        dao.selectUser();
+        RootController rootController = new RootController();
+        rootController.run();
     }
 }
