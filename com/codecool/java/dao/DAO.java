@@ -1,9 +1,11 @@
 package codecool.java.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
 
-public interface DAO {
-    ResultSet selectAllFromTable(String tableName) throws SQLException;
+public interface DAO<T> {
+    void save(T t);
+    List<T> loadAll();
+    void update(T t);
+    void disable(T t);
+    void activate(T t);
 }
