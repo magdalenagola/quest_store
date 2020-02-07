@@ -55,12 +55,11 @@ public class DbMentorDAO implements MentorDAO {
         Connection c = pool.getConnection();
         Mentor mentor = (Mentor) t;
         PreparedStatement ps = c.prepareStatement("UPDATE users SET email =?," +
-                "password = ?,name = ?,surname = ?,usertype_id = 1,is_active = ?) ");
-        ps.setString(1, mentor.getLogin());
+                "password = ?,name = ?,surname = ?,usertype_id = 1)");
+        ps.setString(1, mentor.getEmail());
         ps.setString(2, mentor.getPassword());
         ps.setString(3, mentor.getName());
         ps.setString(4, mentor.getSurname());
-        ps.setString(5, mentor.isActive());
         ps.executeUpdate();
     };
 
