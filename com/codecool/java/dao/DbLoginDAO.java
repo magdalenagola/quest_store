@@ -25,7 +25,9 @@ public class DbLoginDAO implements LoginDAO {
         ps.setString(1, login);
         ps.setString(2, password);
         ResultSet rs = ps.executeQuery();
+
         UserFactory userFactory = new UserFactory();
+
         User user = null;
         if (!rs.next()) {
             throw new NotInDatabaseException();
@@ -38,6 +40,7 @@ public class DbLoginDAO implements LoginDAO {
                 String surname = rs.getString("surname");
                 int userTypeID = rs.getInt("usertype_id");
                 boolean isActive = rs.getBoolean("is_active");
+
                 user = userFactory.createUser(id, email, userPassword, name, surname, userTypeID, isActive);
             }
             while (rs.next());
