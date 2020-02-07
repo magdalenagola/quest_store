@@ -1,4 +1,4 @@
-package codecool.java.View;
+package codecool.java.view;
 
 import java.util.ArrayList;
 
