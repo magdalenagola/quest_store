@@ -4,11 +4,12 @@ import codecool.java.dao.TransactionsDAO;
 import codecool.java.model.Card;
 import codecool.java.model.CardTransaction;
 import codecool.java.model.QuestTransaction;
-import codecool.java.model.Student;
 import codecool.java.view.TerminalView;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class StudentController {
@@ -19,6 +20,7 @@ public class StudentController {
     private List<Transaction> transactions;
     private List<Card> cards;
     private List<Quest> quests;
+    private QuestTransaction questTransaction;
 
     public StudentController() throws SQLException, ClassNotFoundException {
         cardDAO = new DbCardDAO();
@@ -85,8 +87,17 @@ public class StudentController {
         int cardToBuyArrayIndex = terminalView.getOptionInput(cards.size()) - 1;
         Card cardToBuy = cards.get(cardToBuyArrayIndex);
         int cardToBuyDbIndex = cardToBuy.getId();
-        CardTransaction cardTransaction = new CardTransaction(cardToBuyDbIndex, studentId, cardToBuy.getCost());
+        Date todayDate = getTodayDate();
+        CardTransaction cardTransaction = new CardTransaction(cardToBuyDbIndex, studentId, todayDate cardToBuy.getCost());
         transactionsDAO.addCardTransaction(cardTransaction);
+    }
+
+    private Date getTodayDate() {
+        String datePattern = "MM-dd-yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(datePattern);
+        String stringDate = simpleDateFormat.format(new Date());
+        Date todayDate = new SimpleDateFormat("MM-dd-yyyy").parse(stringDate);
+        return todayDate;
     }
 
     private void submitQuest(int studentId) {
@@ -95,7 +106,8 @@ public class StudentController {
         int questToSubmitArrayIndex = terminalView.getOptionInput(quests.size()) - 1;
         Card questToSubmit = cards.get(questToSubmitArrayIndex);
         int questToSubmitDbIndex = questToSubmit.getId();
-        QuestTransaction questTransaction = new QuestTransaction(questToSubmitDbIndex, studentId, questToSubmit.getCost());
+        Date todayDate = getTodayDate();
+        QuestTransaction questTransaction = new QuestTransaction(questToSubmitDbIndex, studentId, todayDate, questToSubmit.getCost());
         transactionsDAO.addQuestTransaction(questTransaction);
     }
 }
