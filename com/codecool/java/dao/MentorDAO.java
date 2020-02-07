@@ -1,5 +1,7 @@
 package codecool.java.dao;
 
-public interface MentorDAO extends DAO {
+import java.sql.SQLException;
 
+public interface MentorDAO extends DAO {
+    String getPrimarySkillById(int mentorId) throws SQLException;
 }
