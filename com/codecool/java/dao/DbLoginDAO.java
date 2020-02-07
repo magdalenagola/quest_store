@@ -2,6 +2,7 @@ package codecool.java.dao;
 
 import codecool.java.model.BasicConnectionPool;
 import codecool.java.model.User;
+import codecool.java.model.UserFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,5 +1,7 @@
 package codecool.java.dao;
 
+import codecool.java.model.User;
+
 import java.util.List;
 
 public interface DAO<T> {
