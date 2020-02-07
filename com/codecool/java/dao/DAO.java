@@ -3,9 +3,9 @@ package codecool.java.dao;
 import java.util.List;
 
 public interface DAO<T> {
-    void save(T t);
-    List<T> loadAll();
-    void update(T t);
-    void disable(T t);
-    void activate(T t);
+    public void save(T t);
+    public List<T> loadAll();
+    public void update(T t);
+    public void disable(T t);
+    public void activate(T t);
 }
