@@ -53,7 +53,7 @@ public class MentorController {
         ArrayList<Card> cards = cardDAO.loadAll();
         view.displayCards(cards);
         int cardChoice = view.getOptionInput(cards.size());
-        Card card = cards.get(cardChoice);
+        Card card = cards.get(cardChoice-1);
         String[] options = {"Title", "Description","Image","Quantity"};
         view.displayOptions(options);
         int attributeChoice = view.getOptionInput(options.length);
