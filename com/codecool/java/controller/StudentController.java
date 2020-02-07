@@ -1,8 +1,11 @@
 package codecool.java.controller;
 
 import codecool.java.dao.TransactionsDAO;
+import codecool.java.model.Card;
 import codecool.java.model.CardTransaction;
 import codecool.java.model.QuestTransaction;
+import codecool.java.model.Student;
+import codecool.java.view.TerminalView;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

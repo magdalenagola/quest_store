@@ -3,8 +3,8 @@ package codecool.java.view;
 
 import codecool.java.dao.DbMentorDAO;
 import codecool.java.dao.MentorDAO;
-import codecool.java.view.terminalView;
 import codecool.java.model.Mentor;
+import codecool.java.view.TerminalView;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -77,7 +77,7 @@ public class ManagerController {
         Mentor mentor = mentors.get(chooseMentor());
 
         terminalView.displayOptions(mentorDataToEdit);
-        String[] optionsToChange = terminalView.getOpgetInputstionInput(mentorDataToEdit);
+        String[] optionsToChange = terminalView.getInputs(mentorDataToEdit);
         mentor.setName(optionsToChange[0]);
         mentor.setSurname(optionsToChange[1]);
         mentor.setEmail(optionsToChange[2]);
