@@ -19,6 +19,7 @@ public class DbMentorDAO implements MentorDAO {
                 "utiuhfgjckzuoq", "17954f632e3663cbadb55550dd636f4c3a645ade56c3342ee89f71fc732c9672");
     }
 
+    @Override
     public void save(T t) throws SQLException {
         Connection c = pool.getConnection();
         Mentor mentor = (Mentor) t;
@@ -30,6 +31,7 @@ public class DbMentorDAO implements MentorDAO {
         ps.executeUpdate();
     };
 
+    @Override
     public List<T> loadAll() throws SQLException {
         Connection c = pool.getConnection();
         List<Mentor> mentorList = new ArrayList<>();
@@ -48,6 +50,7 @@ public class DbMentorDAO implements MentorDAO {
         return mentorList;
     };
 
+    @Override
     public void update(T t) throws SQLException {
         Connection c = pool.getConnection();
         Mentor mentor = (Mentor) t;
@@ -60,6 +63,8 @@ public class DbMentorDAO implements MentorDAO {
         ps.setString(5, mentor.isActive());
         ps.executeUpdate();
     };
+
+    @Override
     public void disable(T t) throws SQLException {
         Connection c = pool.getConnection();
         Mentor mentor = (Mentor) t;
@@ -67,6 +72,7 @@ public class DbMentorDAO implements MentorDAO {
         ps.executeUpdate();
     };
 
+    @Override
     public void activate(T t) throws SQLException {
         Connection c = pool.getConnection();
         Mentor mentor = (Mentor) t;
