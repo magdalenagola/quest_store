@@ -18,6 +18,14 @@ public class Student extends User {
         this.isActive = isActive;
     }
 
+    public Student(String login, String password, String name, String surname, boolean isActive) {
+        this.login = login;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.isActive = isActive;
+    }
+
     @Override
     public void start(){
         StudentController sc = new StudentController();
