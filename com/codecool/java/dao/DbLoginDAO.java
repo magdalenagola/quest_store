@@ -18,7 +18,7 @@ public class DbLoginDAO implements LoginDAO {
     }
 
     @Override
-    public User loadOne(String login, String password) throws SQLException {
+    public User loadOne(String login, String password) throws SQLException, NotInDatabaseException {
         Connection c = pool.getConnection();
         PreparedStatement ps = c.prepareStatement("SELECT * FROM USER" +
                 "WHERE email = ? AND password = ?;");
