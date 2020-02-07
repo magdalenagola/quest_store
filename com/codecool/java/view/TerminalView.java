@@ -3,7 +3,7 @@ package codecool.java.view;
 import java.util.IllegalFormatConversionException;
 import java.util.Scanner;
 
-public class termialView implements Display{
+public class TerminalView implements Display{
     public void displayOptions(String[] options) {
         for(int i = 0; i < options.length; i++){
             System.out.println(String.format("(%d) %s", i+1, options[i]));
