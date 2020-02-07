@@ -20,6 +20,18 @@ public class DbMentorDAO implements MentorDAO {
     }
 
     @Override
+    public String getPrimarySkillById(int mentorId) throws SQLException {
+        String primarySkill = null;
+        Connection c = pool.getConnection();
+        PreparedStatement ps = c.prepareStatement(String.format("SELECT primary_skill FROM mentor_details WHERE user_id = %d;", mentorId));
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()) {
+            primarySkill = rs.getString("primary_skill");
+        }
+        return primarySkill;
+    }
+
+    @Override
     public void save(T t) throws SQLException {
         Connection c = pool.getConnection();
         Mentor mentor = (Mentor) t;
