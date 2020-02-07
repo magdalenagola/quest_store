@@ -28,7 +28,7 @@ public class Student extends User {
 
     @Override
     public void start(){
-        StudentController sc = new StudentController();
-        sc.run();
+        StudentController studentController = new StudentController();
+        studentController.run();
     }
 }
