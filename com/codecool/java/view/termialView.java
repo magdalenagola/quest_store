@@ -74,7 +74,7 @@ public class termialView implements Display{
 
     public void displayQuestTransaction(ArrayList<QuestTransaction> qts) {
         for(QuestTransaction questTransaction: qts){
-            displayCardTransaction(questTransaction);
+            displayQuestTransaction(questTransaction);
         }
     }
 
