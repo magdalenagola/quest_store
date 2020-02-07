@@ -27,7 +27,7 @@ public class StudentController {
         terminalView = new TerminalView();
     }
 
-    public void run(Student student) {
+    public void run(int studentId) {
         String[] options = {"Show all cards", "Show all quests", "Show my transactions", "Buy a card", "Mark quest as achieved"};
         terminalView.displayOptions(options);
         int userInput = terminalView.getOptionInput(options.length);
@@ -42,10 +42,10 @@ public class StudentController {
                 showTransactions();
                 break;
             case 4:
-                buyCard(student);
+                buyCard(studentId);
                 break;
             case 5:
-                submitQuest(student);
+                submitQuest(studentId);
         }
     }
 
@@ -79,23 +79,23 @@ public class StudentController {
         terminalView.displayCardTransactions(transactions);
     }
 
-    private void buyCard(Student student) {
+    private void buyCard(int studentId) {
         showAllCards();
         cards = getCards();
         int cardToBuyArrayIndex = terminalView.getOptionInput(cards.size()) - 1;
         Card cardToBuy = cards.get(cardToBuyArrayIndex);
         int cardToBuyDbIndex = cardToBuy.getId();
-        CardTransaction cardTransaction = new CardTransaction(cardToBuyDbIndex, student.getId(), cardToBuy.getCost());
+        CardTransaction cardTransaction = new CardTransaction(cardToBuyDbIndex, studentId, cardToBuy.getCost());
         transactionsDAO.addCardTransaction(cardTransaction);
     }
 
-    private void submitQuest(Student student) {
+    private void submitQuest(int studentId) {
         showAllCards();
         quests = getQuests();
         int questToSubmitArrayIndex = terminalView.getOptionInput(quests.size()) - 1;
         Card questToSubmit = cards.get(questToSubmitArrayIndex);
         int questToSubmitDbIndex = questToSubmit.getId();
-        QuestTransaction questTransaction = new QuestTransaction(questToSubmitDbIndex, student.getId(), questToSubmit.getCost());
+        QuestTransaction questTransaction = new QuestTransaction(questToSubmitDbIndex, studentId, questToSubmit.getCost());
         transactionsDAO.addQuestTransaction(questTransaction);
     }
 }

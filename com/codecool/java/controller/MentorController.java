@@ -1,9 +1,13 @@
 package codecool.java.controller;
 
+import codecool.java.dao.StudentDAO;
+import codecool.java.model.Card;
 import codecool.java.model.Mentor;
+import codecool.java.model.Student;
 import codecool.java.view.Display;
 import codecool.java.view.TerminalView;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MentorController {
     Display view = new TerminalView();
@@ -38,10 +42,10 @@ public class MentorController {
     }
 
     private void displayStatistics() {
-        ArrayList<Strudent> students= studentDAO.loadAll();
+        List<Student> students= studentDAO.loadAll();
         for(Student student:students){
             view.displayMessage(student.toString());
-            view.displayMessage("Coins:"+String.valueOf(studentsDAO.getCoins(student)));
+            view.displayMessage("Coins:"+String.valueOf(studentDAO.getCoins(student)));
         }
     }
 
@@ -50,7 +54,7 @@ public class MentorController {
     }
 
     private void updateCard() {
-        ArrayList<Card> cards = cardDAO.loadAll();
+        List<Card> cards = cardDAO.loadAll();
         view.displayCards(cards);
         int cardChoice = view.getOptionInput(cards.size());
         Card card = cards.get(cardChoice-1);
