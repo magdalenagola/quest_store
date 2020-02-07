@@ -31,7 +31,7 @@ public class Mentor extends User{
     @Override
     public void start() {
         MentorController controller = new MentorController();
-        controller.run(this);
+        controller.run();
     }
 
 }

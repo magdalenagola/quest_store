@@ -10,7 +10,7 @@ public class MentorController {
     StudentDAO studentDAO = new DBstudentDAO();
     QuestDAO questDAO = new DBquestDAO();
     CardDAO cardDAO = new DBcardDAO();
-    public void run(Mentor mentor){
+    public void run(){
         String[] options = {"Add new codecooler.","Add new quest.","Add new card","Update card",
         "Rate student's assigment","Display students statistics"};
         view.displayOptions(options);
