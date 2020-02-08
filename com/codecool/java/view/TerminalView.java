@@ -1,6 +1,9 @@
 package codecool.java.view;
 
+import codecool.java.model.User;
+
 import java.util.IllegalFormatConversionException;
+import java.util.List;
 import java.util.Scanner;
 
 public class TerminalView implements Display{
@@ -32,7 +35,7 @@ public class TerminalView implements Display{
         System.out.println(user.toString());
     }
 
-    public void displayUsers(ArrayList<User> users) {
+    public void displayUsers(List<User> users) {
         for(User user: users){
             displayUser(user);
         }
@@ -42,7 +45,7 @@ public class TerminalView implements Display{
         System.out.println(quest.toString());
     }
 
-    public void displayQuests(ArrayList<Quest> quests) {
+    public void displayQuests(List<Quest> quests) {
         for(Quest quest: quests){
             displayQuest(quest);
         }
@@ -52,7 +55,7 @@ public class TerminalView implements Display{
         System.out.println(card.toString());
     }
 
-    public void displayCards(ArrayList<Card> cards) {
+    public void displayCards(List<Card> cards) {
         for(Card card: cards){
             displayCard(card);
         }
@@ -62,7 +65,7 @@ public class TerminalView implements Display{
         System.out.println(ct.toString());
     }
 
-    public void displayCardTransactions(ArrayList<CardTransaction> cts) {
+    public void displayCardTransactions(List<CardTransaction> cts) {
         for(CardTransaction cardTransaction: cts){
             displayCardTransaction(cardTransaction);
         }
@@ -72,7 +75,7 @@ public class TerminalView implements Display{
         System.out.println(qt.toString());
     }
 
-    public void displayQuestTransaction(ArrayList<QuestTransaction> qts) {
+    public void displayQuestTransaction(List<QuestTransaction> qts) {
         for(QuestTransaction questTransaction: qts){
             displayQuestTransaction(questTransaction);
         }
