@@ -23,6 +23,13 @@
     text-shadow: -1px -1px #6d6d6d;
 }
 
+@media (min-width: 2000px) {
+    .index .logo {
+        font-size: 110px;
+        padding: 50px 0 0 85px;
+    }
+}
+
 @media (max-width: 992px) {
     .logo {
         width: 100%;
