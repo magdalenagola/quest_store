@@ -8,7 +8,6 @@ import codecool.java.model.Student;
 import codecool.java.view.TerminalView;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class StudentController {
@@ -16,9 +15,6 @@ public class StudentController {
     private QuestDAO questDAO;
     private TransactionsDAO transactionsDAO;
     private TerminalView terminalView;
-    private List<Transaction> transactions;
-    private List<Card> cards;
-    private List<Quest> quests;
 
     public StudentController() throws SQLException, ClassNotFoundException {
         cardDAO = new DbCardDAO();
@@ -50,40 +46,37 @@ public class StudentController {
     }
 
     private void showAllCards() {
-        cards = getCards();
+        List<Card> cards = getCards();
         terminalView.displayCards(cards);
     }
 
     private void showAllQuests() {
-        quests = getQuests();
+        List<Quest> quests = getQuests();
         terminalView.displayQuests(quests);
     }
 
     private List<Quest> getQuests() {
-        List<Quest> quests = new ArrayList<>();
         return questDAO.loadAll();
     }
 
     private List<Card> getCards() {
-        List<Card> cards = new ArrayList<>();
         return cardDAO.loadAll();
     }
 
     private List<Transaction> getTransactions() {
-        transactions = new ArrayList<>();
         return transactionsDAO.loadAll();
     }
 
     private void showTransactions() {
-        transactions = getTransactions();
+        List<Transaction> transactions = getTransactions();
         terminalView.displayCardTransactions(transactions);
     }
 
     private void buyCard(Student student) {
         showAllCards();
-        cards = getCards();
-        int cardToBuyArrayIndex = terminalView.getOptionInput(cards.size()) - 1;
-        Card cardToBuy = cards.get(cardToBuyArrayIndex);
+        List<Card> cards = getCards();
+        int cardToBuyIndex = terminalView.getOptionInput(cards.size()) - 1;
+        Card cardToBuy = cards.get(cardToBuyIndex);
         int cardToBuyDbIndex = cardToBuy.getId();
         CardTransaction cardTransaction = new CardTransaction(cardToBuyDbIndex, student.getId(), cardToBuy.getCost());
         transactionsDAO.addCardTransaction(cardTransaction);
@@ -91,9 +84,9 @@ public class StudentController {
 
     private void submitQuest(Student student) {
         showAllCards();
-        quests = getQuests();
-        int questToSubmitArrayIndex = terminalView.getOptionInput(quests.size()) - 1;
-        Card questToSubmit = cards.get(questToSubmitArrayIndex);
+        List<Quest> quests = getQuests();
+        int questToSubmitIndex = terminalView.getOptionInput(quests.size()) - 1;
+        Quest questToSubmit = quests.get(questToSubmitIndex);
         int questToSubmitDbIndex = questToSubmit.getId();
         QuestTransaction questTransaction = new QuestTransaction(questToSubmitDbIndex, student.getId(), questToSubmit.getCost());
         transactionsDAO.addQuestTransaction(questTransaction);
