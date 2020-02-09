@@ -1,0 +1,131 @@
+.add-mentor {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #e6e6e6;
+}
+
+.add-mentor__wraper {
+    width: 100%;
+    height: 100%;
+    background-color: #e6e6e6;
+    box-sizing: border-box;
+}
+
+
+.add-mentor__form {
+    font-family: 'Roboto', sans-serif;
+    color: #575757;
+    width: 40vw;
+    margin: 130px auto 0 auto;
+    padding: 70px 60px 50px 60px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    background-color:  #ffffff;
+    border-radius: 2px;
+}
+
+.add_mentor_close-btn {
+    width: 25px;
+    height: 25px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    font-size: 0;
+    top: 13px;
+    right: 15px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.add_mentor_close-btn span {
+    position: relative;
+}
+
+.add-mentor__form span::before,
+.add-mentor__form span::after {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    right: -12px;
+    content: "";
+    width: 25px;
+    height: 3px;
+    background-color: #414141;
+}
+
+.add-mentor__form span::before {
+    transform: rotate(45deg);
+}
+
+.add-mentor__form span::after {
+    transform: rotate(-45deg);
+}
+
+.add_mentor_close-btn:hover span::after,
+.add_mentor_close-btn:hover span::before {
+    width: 27px;
+    background-color: #333333;
+}
+
+.add_mentor_close-btn:active span::after,
+.add_mentor_close-btn:active span::before {
+    width: 27px;
+    background-color: #111111;
+}
+
+.add_mentor_input-wrapper,
+.add_mentor_btn-wrapper {
+    width: 100%;
+    margin-bottom: 35px;
+    display: flex;
+    align-items: baseline;
+    box-sizing: border-box;
+}
+
+.add-mentor__input {
+    padding: 10px;
+    font-size: 18px;
+    background-color: #f7f7f7;
+    border: 1px solid #f7f7f7;
+    border-radius: 6px;
+    flex-grow: 1;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #f7f7f7 inset;
+}
+
+.add_mentor_label {
+    margin-right: 20px;
+    font-size: 20px;
+}
+
+.add-mentor__btn {
+    width: 100%;
+    border: none;
+    border-radius: 20px;
+    padding: 15px;
+    font-size: 18px;
+    text-align: center;
+    cursor: pointer;
+    color: #fafafa;
+    background-color: #333333;
+}
+
+.add-mentor__btn:hover {
+    color: #ffffff;
+    background-color: #1b1b1b;
+}
+
+.add-mentor__btn:active {
+    color: #ffffff;
+    background-color: #000000;
+}

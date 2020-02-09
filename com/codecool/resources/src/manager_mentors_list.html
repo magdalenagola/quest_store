@@ -298,6 +298,35 @@
                 </li>
             </ul>
         </section>
+        <section class="add-mentor">
+            <div class="add-mentor__wraper">
+                <form class="add-mentor__form" novalidate>
+                    <button type="button" class="add_mentor_close-btn"><span></span>Close</button>
+                    <p class="form__error-message" style="top: 13px; left: 60px"></p>
+                    <div class="add_mentor_input-wrapper">
+                        <label class="add_mentor_label" for="add_mentor_name">Name:</label>
+                        <input class="add-mentor__input" id="add_mentor_name" name="name" type="text" required>
+                    </div>
+                    <div class="add_mentor_input-wrapper">
+                        <label class="add_mentor_label" for="add_mentor_surname">Last name:</label>
+                        <input class="add-mentor__input" id="add_mentor_surname" name="surname" type="text" required>
+                    </div>
+                    <div class="add_mentor_input-wrapper">
+                        <label class="add_mentor_label" for="add_mentor_email">Email:</label>
+                        <input class="add-mentor__input" id="add_mentor_email" name="email" type="text" required>
+                    </div>
+                    <div class="add_mentor_input-wrapper">
+                        <label class="add_mentor_label" for="add_mentor_password">Password:</label>
+                        <input class="add-mentor__input" id="add_mentor_password" name="password" type="password" required>
+                    </div>
+                    <div class="add_mentor_input-wrapper">
+                        <label class="add_mentor_label" for="add_mentor_primary-skill">Primary skill:</label>
+                        <input class="add-mentor__input" id="add_mentor_primary-skill" name="primary_skill" type="text" required>
+                    </div>
+                    <button type="submit" class="add-mentor__btn">Add</button>
+                </form>
+            </div>
+        </section>
 
     </main>
     <script src="js/index.js" type="module"></script>

@@ -1,0 +1,10 @@
+.input--error {
+    border: 1px solid #e21c1c;
+}
+
+.form__error-message {
+    position: absolute;
+    font-family: 'Roboto', sans-serif;
+    font-size: 17px;
+    color: #e21c1c;
+}

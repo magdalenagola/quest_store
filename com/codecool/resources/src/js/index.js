@@ -2,10 +2,11 @@
 
 import toggleMenu from './menu.js';
 import expandTableContent from './table_expander.js';
+import AddMentorPopUpController from './AddMentorPopUpController.js';
 
-(function() {
+toggleMenu();
+expandTableContent();
 
-    toggleMenu();
-    expandTableContent();
-
-})();
+const addMentorPopUpController = new AddMentorPopUpController();
+addMentorPopUpController.openAddMentorPopUp();
+addMentorPopUpController.closeAddMentorPopUp();
