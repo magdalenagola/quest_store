@@ -1,27 +1,39 @@
 import FormValidator from './FormValidator.js';
 
 export default class AddMentorPopUpController {
-    constructor() {
-    };
+    constructor() {};
 
     closeAddMentorPopUp() {
         const mentorsTable = document.querySelector('.mentors__list');
+        const mentorsTableMobile = document.querySelector('.mentors__list--mobile');
         const addMentorCloseBtn = document.querySelector('.add_mentor_close-btn');
         const addMentorWindow = document.querySelector('.add-mentor');
         addMentorCloseBtn.onclick = (e) => {
             e.preventDefault();
             addMentorWindow.style.display = 'none';
-            mentorsTable.style.display = 'table';
+            if (window.outerWidth > 768) {
+                mentorsTable.style.display = 'table';
+            } else {
+                mentorsTableMobile.style.display = 'table';
+            }
+            
         }
     }
-    
+
     openAddMentorPopUp() {
-        const mentorsTable = document.querySelector('.mentors__list');
-        const addMentorBtn = document.querySelector('.mentors__btn--add');
+        const mentorsTables = document.querySelectorAll('.mentors__list');
+        const mentorsTableMobile = document.querySelector('.mentors__list--mobile');
+        const addMentorBtns = document.querySelectorAll('.mentors__btn--add');
         const addMentorWindow = document.querySelector('.add-mentor');
-        addMentorBtn.onclick = () => {
+        addMentorBtns[0].onclick = () => {
             addMentorWindow.style.display = 'block';
-            mentorsTable.style.display = 'none';
+            mentorsTables[0].style.display = 'none';
+            this.validate();
+        }
+
+        addMentorBtns[1].onclick = () => {
+            addMentorWindow.style.display = 'block';
+            mentorsTableMobile.style.display = 'none';
             this.validate();
         }
     }

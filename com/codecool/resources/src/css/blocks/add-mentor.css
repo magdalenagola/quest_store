@@ -81,8 +81,7 @@
     background-color: #111111;
 }
 
-.add_mentor_input-wrapper,
-.add_mentor_btn-wrapper {
+.add_mentor_input-wrapper {
     width: 100%;
     margin-bottom: 35px;
     display: flex;
@@ -128,4 +127,35 @@ input:-webkit-autofill {
 .add-mentor__btn:active {
     color: #ffffff;
     background-color: #000000;
+}
+
+@media (max-width: 992px) {
+    .add-mentor__form {
+        width: 80vw;
+    }
+}
+
+@media (max-width: 768px) {
+    .add-mentor__form {
+        width: 85vw;
+        padding: 55px 20px 30px 20px;
+    }
+
+    .add_mentor_input-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .add_mentor_label {
+        width: 80%;
+        margin-bottom: 10px;
+    }
+
+    .add-mentor__input {
+        width: 80%;
+    }
+
+    .add-mentor__btn {
+        width: 84%;
+    }
 }
