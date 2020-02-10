@@ -8,6 +8,7 @@ import codecool.java.model.Student;
 import codecool.java.view.Display;
 import codecool.java.view.TerminalView;
 
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,11 +17,10 @@ import java.util.Date;
 import java.util.List;
 
 public class MentorController {
-    Display view = new TerminalView();
-    StudentDAO studentDAO = new DbstudentDAO();
-    QuestDAO questDAO = new DbquestDAO();
-    CardDAO cardDAO = new DbcardDAO();
-    TransactionsDAO transactionsDAO = new DbtransactionsDAO();
+    Display view;
+    public MentorController(){
+        view = new TerminalView();
+    }
     public void run(){
         String[] options = {"Add new codecooler.","Add new quest.","Add new card","Update card",
         "Rate student's assigment","Display students statistics"};
@@ -49,19 +49,25 @@ public class MentorController {
     }
 
     private void displayStatistics() {
-        List<Student> students= studentDAO.loadAll();
-        for(Student student:students){
-            view.displayMessage(student.toString());
-            view.displayMessage("Coins:"+String.valueOf(studentDAO.getCoins(student)));
+        try {
+            StudentDAO studentDAO = new DbstudentDAO();
+            List<Student> students = studentDAO.loadAll();
+            for (Student student : students) {
+                view.displayMessage(student.toString());
+                view.displayMessage("Coins:" + String.valueOf(studentDAO.getCoins(student)));
+            }
+        }catch(SQLException | ClassNotFoundException e){
+            view.displayErrorMessage(e);
         }
     }
 
     private void rateAssigment() {
-        List<Transactions> notApprovedTransactions = transactionsDAO.loadAllNotApproved();
-        view.displayCardTransactions(notApprovedTransactions);
-        int studentTransactionIndex = view.getOptionInput(notApprovedTransactions.size());
-        QuestTransaction studentTransaction = notApprovedTransactions.get(studentTransactionIndex-1);
         try {
+            TransactionsDAO transactionsDAO = new DbtransactionsDAO();
+            List<Transactions> notApprovedTransactions = transactionsDAO.loadAllNotApproved();
+            view.displayCardTransactions(notApprovedTransactions);
+            int studentTransactionIndex = view.getOptionInput(notApprovedTransactions.size());
+            QuestTransaction studentTransaction = notApprovedTransactions.get(studentTransactionIndex-1);
             studentTransaction.setTransactionDate(getTodayDate());
             transactionsDAO.updateStudentQuest(studentTransaction);
         } catch (ParseException e) {
@@ -77,53 +83,74 @@ public class MentorController {
         return todayDate;
     }
     private void updateCard() {
-        ArrayList<Card> cards = cardDAO.loadAll();
-        view.displayCards(cards);
-        int cardChoice = view.getOptionInput(cards.size());
-        Card card = cards.get(cardChoice-1);
-        String[] options = {"Title", "Description","Image","Quantity"};
-        view.displayOptions(options);
-        int attributeChoice = view.getOptionInput(options.length);
-        String newValue = "";
-        switch(attributeChoice){
-            case 1:
-                newValue = view.getStringInput();
-                card.setTitle(newValue);
-                break;
-            case 2:
-                newValue = view.getStringInput();
-                card.setDescription(newValue);
-                break;
-            case 3:
-                newValue = view.getStringInput();
-                card.setImage(newValue);
-                break;
-            case 4:
-                newValue = view.getStringInput();
-                card.setQuantity(newValue);
-                break;
+        try {
+            CardDAO cardDAO = new DbcardDAO();
+            ArrayList<Card> cards = cardDAO.loadAll();
+            view.displayCards(cards);
+            int cardChoice = view.getOptionInput(cards.size());
+            Card card = cards.get(cardChoice - 1);
+            String[] options = {"Title", "Description", "Image", "Quantity"};
+            view.displayOptions(options);
+            int attributeChoice = view.getOptionInput(options.length);
+            String newValue = "";
+            switch (attributeChoice) {
+                case 1:
+                    newValue = view.getStringInput();
+                    card.setTitle(newValue);
+                    break;
+                case 2:
+                    newValue = view.getStringInput();
+                    card.setDescription(newValue);
+                    break;
+                case 3:
+                    newValue = view.getStringInput();
+                    card.setImage(newValue);
+                    break;
+                case 4:
+                    newValue = view.getStringInput();
+                    card.setQuantity(newValue);
+                    break;
+            }
+            cardDAO.update(card);
+        }catch(SQLException | ClassNotFoundException e){
+            view.displayErrorMessage(e);
         }
-        cardDAO.update(card);
     }
 
     private void addCard() {
-        String[] options = {"Title", "Description","Image","Quantity","Cost"};
-        String[] inputs = view.getInputs(options);
-        Card card = new Card(inputs[0],inputs[1],inputs[2],inputs[3],true);
-        cardDAO.save(card);
+        try{
+            CardDAO cardDAO = new DbcardDAO();
+            String[] options = {"Title", "Description","Image","Quantity","Cost"};
+            String[] inputs = view.getInputs(options);
+            Card card = new Card(inputs[0],inputs[1],inputs[2],inputs[3],true);
+            cardDAO.save(card);
+        }catch(SQLException | ClassNotFoundException e){
+            view.displayErrorMessage(e);
+        }
     }
 
     private void addQuest() {
         String[] options = {"Title", "Description","Image","Category","Cost"};
         String[] inputs = view.getInputs(options);
+        try{
+        QuestDAO questDAO = new DbquestDAO();
         Quest quest = new Quest(inputs[0],inputs[1],inputs[2],inputs[3],true);
         questDAO.save(quest);
+        }catch(SQLException | ClassNotFoundException e){
+            view.displayErrorMessage(e);
+        }
     }
 
     private void addStudent() {
+        try{
+        StudentDAO studentDAO = new DbstudentDAO();
         String[] options = {"Login", "Password","Name","Surname"};
         String[] inputs = view.getInputs(options);
         Student student = new Student(inputs[0],inputs[1],inputs[2],inputs[3],true);
         studentDAO.save(student);
+        }catch(SQLException | ClassNotFoundException e){
+            view.displayErrorMessage(e);
+        }
+
     }
 }
