@@ -62,17 +62,14 @@ public class StudentController {
     }
 
     private List<Quest> getQuests() {
-        List<Quest> quests = new ArrayList<>();
         return questDAO.loadAll();
     }
 
     private List<Card> getCards() {
-        List<Card> cards = new ArrayList<>();
         return cardDAO.loadAll();
     }
 
     private List<Transaction> getTransactions() {
-        transactions = new ArrayList<>();
         return transactionsDAO.loadAll();
     }
 
