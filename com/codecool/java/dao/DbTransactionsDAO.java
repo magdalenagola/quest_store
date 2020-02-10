@@ -79,9 +79,21 @@ public class DbTransactionsDAO implements TransactionsDAO{
     }
 
     @Override
-    public void update(Object o) {
+    public void update(CardTransaction cardTransaction) throws SQLException {
+        //TODO
+//        Connection c = pool.getConnection();
+        PreparedStatement ps = c.prepareStatement("UPDATE student_cards SET email =?," +
+                "password = ?,name = ?,surname = ?,usertype_id = 1,is_active = ?) ");
+//        ps.setString(1, mentor.getLogin());
+//        ps.setString(2, mentor.getPassword());
+//        ps.setString(3, mentor.getName());
+//        ps.setString(4, mentor.getSurname());
+//        ps.setString(5, mentor.isActive());
+//        ps.executeUpdate();
+//    };
 
-    }
+    @Override
+    public void update(QuestTransaction questTransaction) {}
 
     @Override
     public void disable(Object o) {
