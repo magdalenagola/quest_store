@@ -153,10 +153,15 @@
         width: 50%;
         box-sizing: border-box;
         text-align: center;
+        overflow-x: scroll;
     }
 
-    .transactions__content-wrapper--opened .transactions__amount,
-    .mentors__content-wrapper--opened .mentors__account {
+    .mentors__email {
+        padding-top: 25px;
+        width: 100% !important;
+    }
+
+    .transactions__content-wrapper--opened .transactions__amount {
         border-left: 1px solid #b1a58f;
     }
 
