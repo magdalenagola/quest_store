@@ -84,8 +84,8 @@ public class StudentController {
     private void buyCard(int studentId) {
         showAllCards();
         cards = getCards();
-        int cardToBuyArrayIndex = terminalView.getOptionInput(cards.size()) - 1;
-        Card cardToBuy = cards.get(cardToBuyArrayIndex);
+        int cardToBuyIndex = terminalView.getOptionInput(cards.size()) - 1;
+        Card cardToBuy = cards.get(cardToBuyIndex);
         int cardToBuyDbIndex = cardToBuy.getId();
         Date todayDate = getTodayDate();
         CardTransaction cardTransaction = new CardTransaction(cardToBuyDbIndex, studentId, todayDate, cardToBuy.getCost());
@@ -103,8 +103,8 @@ public class StudentController {
     private void submitQuest(int studentId) {
         showAllCards();
         quests = getQuests();
-        int questToSubmitArrayIndex = terminalView.getOptionInput(quests.size()) - 1;
-        Card questToSubmit = cards.get(questToSubmitArrayIndex);
+        int questToSubmitIndex = terminalView.getOptionInput(quests.size()) - 1;
+        Card questToSubmit = cards.get(questToSubmitIndex);
         int questToSubmitDbIndex = questToSubmit.getId();
         Date todayDate = getTodayDate();
         QuestTransaction questTransaction = new QuestTransaction(questToSubmitDbIndex, studentId, todayDate, questToSubmit.getCost());
