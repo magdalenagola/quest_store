@@ -1,6 +1,8 @@
 package codecool.java.controller;
 
+import codecool.java.model.Card;
 import codecool.java.model.Mentor;
+import codecool.java.model.Student;
 import codecool.java.view.Display;
 import codecool.java.view.TerminalView;
 import java.util.ArrayList;
@@ -38,7 +40,7 @@ public class MentorController {
     }
 
     private void displayStatistics() {
-        ArrayList<Strudent> students= studentDAO.loadAll();
+        ArrayList<Student> students= studentDAO.loadAll();
         for(Student student:students){
             view.displayMessage(student.toString());
             view.displayMessage("Coins:"+String.valueOf(studentsDAO.getCoins(student)));
