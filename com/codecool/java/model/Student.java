@@ -1,5 +1,7 @@
 package codecool.java.model;
 
+import codecool.java.controller.StudentController;
+
 public class Student extends User {
 
     private int id;
@@ -29,6 +31,6 @@ public class Student extends User {
     @Override
     public void start(){
         StudentController studentController = new StudentController();
-        studentController.run();
+        studentController.run(this.id);
     }
 }

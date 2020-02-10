@@ -1,17 +1,17 @@
 package codecool.java.controller;
 
-import codecool.java.model.Card;
 import codecool.java.model.Mentor;
 import codecool.java.model.Student;
 import codecool.java.view.Display;
 import codecool.java.view.TerminalView;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MentorController {
-    Display view = new TerminalView();
-    StudentDAO studentDAO = new DBstudentDAO();
-    QuestDAO questDAO = new DBquestDAO();
-    CardDAO cardDAO = new DBcardDAO();
+    private Display view = new TerminalView();
+    private StudentDAO studentDAO = new DBstudentDAO();
+    private QuestDAO questDAO = new DBquestDAO();
+    private CardDAO cardDAO = new DBcardDAO();
     public void run(){
         String[] options = {"Add new codecooler.","Add new quest.","Add new card","Update card",
         "Rate student's assigment","Display students statistics"};
@@ -40,10 +40,10 @@ public class MentorController {
     }
 
     private void displayStatistics() {
-        ArrayList<Student> students= studentDAO.loadAll();
+        List<Student> students= studentDAO.loadAll();
         for(Student student:students){
             view.displayMessage(student.toString());
-            view.displayMessage("Coins:"+String.valueOf(studentsDAO.getCoins(student)));
+            view.displayMessage("Coins:"+String.valueOf(studentDAO.getCoins(student)));
         }
     }
 
@@ -52,7 +52,7 @@ public class MentorController {
     }
 
     private void updateCard() {
-        ArrayList<Card> cards = cardDAO.loadAll();
+        List<Card> cards = cardDAO.loadAll();
         view.displayCards(cards);
         int cardChoice = view.getOptionInput(cards.size());
         Card card = cards.get(cardChoice-1);

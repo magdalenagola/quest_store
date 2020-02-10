@@ -4,10 +4,12 @@ import codecool.java.dao.TransactionsDAO;
 import codecool.java.model.Card;
 import codecool.java.model.CardTransaction;
 import codecool.java.model.QuestTransaction;
-import codecool.java.model.Student;
 import codecool.java.view.TerminalView;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class StudentController {
@@ -23,7 +25,7 @@ public class StudentController {
         terminalView = new TerminalView();
     }
 
-    public void run(Student student) {
+    public void run(int studentId) {
         String[] options = {"Show all cards", "Show all quests", "Show my transactions", "Buy a card", "Mark quest as achieved"};
         terminalView.displayOptions(options);
         int userInput = terminalView.getOptionInput(options.length);
@@ -38,10 +40,10 @@ public class StudentController {
                 showTransactions();
                 break;
             case 4:
-                buyCard(student);
+                buyCard(studentId);
                 break;
             case 5:
-                submitQuest(student);
+                submitQuest(studentId);
         }
     }
 
@@ -72,23 +74,33 @@ public class StudentController {
         terminalView.displayCardTransactions(transactions);
     }
 
-    private void buyCard(Student student) {
+    private void buyCard(int studentId) {
         showAllCards();
         List<Card> cards = getCards();
         int cardToBuyIndex = terminalView.getOptionInput(cards.size()) - 1;
         Card cardToBuy = cards.get(cardToBuyIndex);
         int cardToBuyDbIndex = cardToBuy.getId();
-        CardTransaction cardTransaction = new CardTransaction(cardToBuyDbIndex, student.getId(), cardToBuy.getCost());
+        Date todayDate = getTodayDate();
+        CardTransaction cardTransaction = new CardTransaction(cardToBuyDbIndex, studentId, todayDate, cardToBuy.getCost());
         transactionsDAO.addCardTransaction(cardTransaction);
     }
 
-    private void submitQuest(Student student) {
+    private Date getTodayDate() {
+        String datePattern = "MM-dd-yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(datePattern);
+        String stringDate = simpleDateFormat.format(new Date());
+        Date todayDate = new SimpleDateFormat("MM-dd-yyyy").parse(stringDate);
+        return todayDate;
+    }
+
+    private void submitQuest(int studentId) {
         showAllCards();
         List<Quest> quests = getQuests();
         int questToSubmitIndex = terminalView.getOptionInput(quests.size()) - 1;
         Quest questToSubmit = quests.get(questToSubmitIndex);
         int questToSubmitDbIndex = questToSubmit.getId();
-        QuestTransaction questTransaction = new QuestTransaction(questToSubmitDbIndex, student.getId(), questToSubmit.getCost());
+        Date todayDate = getTodayDate();
+        QuestTransaction questTransaction = new QuestTransaction(questToSubmitDbIndex, studentId, todayDate, questToSubmit.getCost());
         transactionsDAO.addQuestTransaction(questTransaction);
     }
 }
