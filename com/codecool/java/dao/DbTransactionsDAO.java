@@ -4,10 +4,7 @@ import codecool.java.model.BasicConnectionPool;
 import codecool.java.model.Mentor;
 import codecool.java.model.Student;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -69,17 +66,29 @@ public class DbTransactionsDAO implements TransactionsDAO{
     }
 
     @Override
-    public void addCardTransaction(CardTransaction ct) {
-
+    public void addCardTransaction(CardTransaction cardTransaction) throws SQLException {
+        Connection c = pool.getConnection();
+        PreparedStatement ps = c.prepareStatement("INSERT INTO student_cards(cost, date_bought, user_id) VALUES(?, ?, ?)");
+        ps.setInt(1, cardTransaction.getCost());
+        ps.setInt(2, cardTransaction.getTransactionDate());
+        ps.setInt(4, cardTransaction.getUserId());
+        ps.executeUpdate();
     }
 
     @Override
-    public void addQuestTransaction(QuestTransaction qt) {
-
+    public void addQuestTransaction(QuestTransaction questTransaction) throws SQLException {
+        Connection c = pool.getConnection();
+        PreparedStatement ps = c.prepareStatement("INSERT INTO student_quests(cost, date_added, date_approved, user_id) VALUES(?, ?, ?, ?)");
+        ps.setInt(1, questTransaction.getCost());
+        ps.setInt(2, questTransaction.getTransactionDate());
+        ps.setInt(3, java.sql.Types.DATE);
+        ps.setInt(4, questTransaction.getUserId());
+        ps.executeUpdate();
     }
 
+
     @Override
-    public void updateStudentQuest(QuestTransaction qt) {
+    public void updateStudentQuest(QuestTransaction questTransaction) {
 
     }
 
