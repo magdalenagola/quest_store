@@ -14,4 +14,20 @@ public class CardTransaction extends Transaction {
         this.transactionDate = transactionDate;
         this.cost = cost;
     };
+
+    public int getId() {
+        return this.cardId;
+    }
+
+    public int getUserId() {
+        return this.userId;
+    }
+
+    public Date getTransactionDate() {
+        return this.transactionDate;
+    }
+
+    public int getCost() {
+        return this.cost;
+    }
 }

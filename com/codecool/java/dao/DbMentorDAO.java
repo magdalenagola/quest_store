@@ -47,15 +47,15 @@ public class DbMentorDAO implements MentorDAO {
             Mentor mentor = new Mentor(id, email, password, name, surname, isActive);
             mentorList.add(mentor);
         }
-        return mentorList;
+        return (List<t>) mentorList;
     };
 
     @Override
     public void update(T t) throws SQLException {
         Connection c = pool.getConnection();
         Mentor mentor = (Mentor) t;
-        PreparedStatement ps = c.prepareStatement("UPDATE users SET email =?," +
-                "password = ?,name = ?,surname = ?,usertype_id = 1)");
+        PreparedStatement ps = c.prepareStatement(String.format("UPDATE users SET email =?," +
+                "password = ?,name = ?,surname = ?,usertype_id = 1) WHERE id = %d;", mentor.getId()));
         ps.setString(1, mentor.getEmail());
         ps.setString(2, mentor.getPassword());
         ps.setString(3, mentor.getName());
