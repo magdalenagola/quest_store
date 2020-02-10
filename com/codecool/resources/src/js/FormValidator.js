@@ -5,50 +5,84 @@ export default class FormValidator {
     }
 
     validate() {
-        let isFormValid;
         const errorMessage = document.querySelector('.form__error-message');
         this.btn.onclick = (e) => {
             e.preventDefault();
-            if (checkRequiredFields()) {
+            if (getIsValid()) {
                 this.form.setAttribute('isValid', 'true');
             } else {
                 this.form.setAttribute('isValid', 'false');
             }
         }
 
-        function checkRequiredFields() {
+        function getIsValid() {
             const inputsList = document.getElementsByTagName('input');
             const areValid = [];
             for (let i = 0; i < inputsList.length; i++) {
-                areValid.push(false);
-                if (inputsList[i].hasAttribute('required') && !inputsList[i].value) {
-                    inputsList[i].classList.add('input--error');
-                    errorMessage.textContent = 'Please, fill all the required fields';
-                } else if (inputsList[i].name == 'email' && !(/\S+@\S+\.\S+/.test(inputsList[i].value))) {
-                    inputsList[i].classList.add('input--error');
-                    errorMessage.textContent = 'Please, enter a valid email';
-                } else if(inputsList[i].name == 'name' && !(/^[a-zA-Z ]*$/.test(inputsList[i].value))) {
-                    inputsList[i].classList.add('input--error');
-                    errorMessage.textContent = 'Please, enter a valid name';
-                } else if (inputsList[i].name == 'surname' && !(/^[a-zA-Z ]*$/.test(inputsList[i].value))) {
-                    inputsList[i].classList.add('input--error');
-                    errorMessage.textContent = 'Please, enter a valid last name';
-                } else {
-                    inputsList[i].classList.remove('input--error');
-                    areValid[i] = true;
-                }
+                areValid.push(true);
+                checkRequiredFields(i);
+                checkEmail(i);
+                checkName(i);
+                checkSalary(i);
             }
-            for (let isValid of areValid) {
-                if (isValid === true) {
-                    isFormValid = true;
-                } else {
-                    isFormValid = false;
-                    break;
+
+            function throwError(i, message) {
+                inputsList[i].classList.add('input--error');
+                errorMessage.textContent = message;
+                areValid[i] = false;
+            }
+
+            function removeErrorBorder() {
+                for (let i = 0; i < areValid.length; i++) {
+                    if (areValid[i] === true) {
+                        inputsList[i].classList.remove('input--error');
+                    }
                 }
             }
 
-            if (isFormValid) {
-                errorMessage.textContent = '';
+            function removeErrorMessage() {
+                for (let i = 0; i < inputsList.length; i++) {
+                    errorMessage.textContent = '';
+                }
+            }
+
+            function checkRequiredFields(i) {
+                if (inputsList[i].hasAttribute('required') && !inputsList[i].value) {
+                    throwError(i, 'Please, fill all the required fields');
+                }
+            }
+
+            function checkEmail(i) {
+                if (inputsList[i].name === 'email' && !(/\S+@\S+\.\S+/.test(inputsList[i].value))) {
+                    throwError(i, 'Please, enter a valid email');
+                }
+            }
+
+            function checkName(i) {
+                if (inputsList[i].name === 'name' && !(/^[a-zA-Z -]*$/.test(inputsList[i].value))) {
+                    throwError(i, 'Please, enter a valid name');
+                } else if (inputsList[i].name === 'surname' && !(/^[a-zA-Z -]*$/.test(inputsList[i].value))) {
+                    throwError(i, 'Please, enter a valid last name');
+                }
+            }
+
+            function checkSalary(i) {
+                if (inputsList[i].name == 'salary' && !(/^[1-9.]*$/.test(inputsList[i].value))) {
+                    throwError(i, 'Please, enter a valid salary number');
+                    inputsList[i].value = '';
+                }
+            }
+
+            function checkIsTrue(input) {
+                if (input) {
+                    return input;
+                }
+            }
+
+            removeErrorBorder();
+
+            if (areValid.every(checkIsTrue)) {
+                removeErrorMessage();
                 return true;
             }
         }
