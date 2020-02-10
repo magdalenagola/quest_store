@@ -97,7 +97,7 @@ public class StudentController {
         showAllCards();
         List<Quest> quests = getQuests();
         int questToSubmitIndex = terminalView.getOptionInput(quests.size()) - 1;
-        Card questToSubmit = cards.get(questToSubmitIndex);
+        Quest questToSubmit = quests.get(questToSubmitIndex);
         int questToSubmitDbIndex = questToSubmit.getId();
         Date todayDate = getTodayDate();
         QuestTransaction questTransaction = new QuestTransaction(questToSubmitDbIndex, studentId, todayDate, questToSubmit.getCost());
