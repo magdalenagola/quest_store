@@ -44,6 +44,7 @@
                         <th>Mentor name</th>
                         <th>Primary skill</th>
                         <th>Email</th>
+                        <th>Salary</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,6 +68,7 @@
                         <th class="mentors__name">Mariusz</th>
                         <th class="mentors__skill">Java</th>
                         <th class="mentors__account">some@mail.com</th>
+                        <th class="mentors__salary">3000 zł</th>
                         <th class="mentors__btn-wrapper">
                             <p class="mentors__btn mentors__btn--edit"><svg xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="27pt" height="27pt"
@@ -93,6 +95,7 @@
                         <th class="mentors__name">Mariusz</th>
                         <th class="mentors__skill">Java</th>
                         <th class="mentors__account">mariush@codecool.com</th>
+                        <th class="mentors__salary">900 zł</th>
                         <th class="mentors__btn-wrapper">
                             <p class="mentors__btn mentors__btn--edit"><svg xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="27pt" height="27pt"
@@ -119,6 +122,7 @@
                         <th class="mentors__name">Mariusz</th>
                         <th class="mentors__skill">Java</th>
                         <th class="mentors__account">another@mail.com</th>
+                        <th class="mentors__salary">3200 zł</th>
                         <th class="mentors__btn-wrapper">
                             <p class="mentors__btn mentors__btn--edit"><svg xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="27pt" height="27pt"
@@ -145,6 +149,7 @@
                         <th class="mentors__name">Mariusz</th>
                         <th class="mentors__skill">Java</th>
                         <th class="mentors__account">cool@mentor.com</th>
+                        <th class="mentors__salary">4100 zł</th>
                         <th class="mentors__btn-wrapper">
                             <p class="mentors__btn mentors__btn--edit"><svg xmlns="http://www.w3.org/2000/svg"
                                     xmlns:xlink="http://www.w3.org/1999/xlink" width="27pt" height="27pt"
@@ -301,7 +306,7 @@
         <section class="add-mentor">
             <div class="add-mentor__wraper">
                 <form class="add-mentor__form" novalidate>
-                    <button type="button" class="add_mentor_close-btn"><span></span>Close</button>
+                    <button type="button" class="add_mentor_close-btn"><span class="add_mentor_cross"></span>Close</button>
                     <p class="form__error-message"></p>
                     <div class="add_mentor_input-wrapper">
                         <label class="add_mentor_label" for="add_mentor_name">Name:</label>
@@ -322,6 +327,10 @@
                     <div class="add_mentor_input-wrapper">
                         <label class="add_mentor_label" for="add_mentor_primary-skill">Primary skill:</label>
                         <input class="add-mentor__input" id="add_mentor_primary-skill" name="primary_skill" type="text" required>
+                    </div>
+                    <div class="add_mentor_input-wrapper">
+                        <label class="add_mentor_label" for="add_mentor_salary">Salary ($):</label>
+                        <input class="add-mentor__input" id="add_mentor_salary" name="salary" type="text" required>
                     </div>
                     <button type="submit" class="add-mentor__btn">Add</button>
                 </form>

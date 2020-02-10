@@ -45,12 +45,12 @@
     cursor: pointer;
 }
 
-.add_mentor_close-btn span {
+.add_mentor_cross {
     position: relative;
 }
 
-.add-mentor__form span::before,
-.add-mentor__form span::after {
+.add_mentor_cross::before,
+.add_mentor_cross::after {
     display: inline-block;
     position: absolute;
     top: 0;
@@ -61,22 +61,22 @@
     background-color: #414141;
 }
 
-.add-mentor__form span::before {
+.add_mentor_cross::before {
     transform: rotate(45deg);
 }
 
-.add-mentor__form span::after {
+.add_mentor_cross::after {
     transform: rotate(-45deg);
 }
 
-.add_mentor_close-btn:hover span::after,
-.add_mentor_close-btn:hover span::before {
+.add_mentor_close-btn:hover .add_mentor_cross::after,
+.add_mentor_close-btn:hover .add_mentor_cross::before {
     width: 27px;
     background-color: #333333;
 }
 
-.add_mentor_close-btn:active span::after,
-.add_mentor_close-btn:active span::before {
+.add_mentor_close-btn:active .add_mentor_cross::after,
+.add_mentor_close-btn:active .add_mentor_cross::before {
     width: 27px;
     background-color: #111111;
 }
