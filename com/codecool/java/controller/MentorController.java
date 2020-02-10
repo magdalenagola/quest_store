@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MentorController {
-    Display view = new TerminalView();
-    StudentDAO studentDAO = new DBstudentDAO();
-    QuestDAO questDAO = new DBquestDAO();
-    CardDAO cardDAO = new DBcardDAO();
+    private Display view = new TerminalView();
+    private StudentDAO studentDAO = new DBstudentDAO();
+    private QuestDAO questDAO = new DBquestDAO();
+    private CardDAO cardDAO = new DBcardDAO();
     public void run(){
         String[] options = {"Add new codecooler.","Add new quest.","Add new card","Update card",
         "Rate student's assigment","Display students statistics"};

@@ -6,7 +6,7 @@ public class CardTransaction extends Transaction {
     private int cardId;
     private int userId;
     private Date transactionDate;
-    int cost;
+    private int cost;
 
     CardTransaction(int cardId, int userId, Date transactionDate, int cost) {
         this.cardId = cardId;

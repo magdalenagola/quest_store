@@ -6,8 +6,8 @@ public class QuestTransaction extends Transaction {
     private int questId;
     private int userId;
     private Date transactionDate;
-    int cost;
-    Date approvalDate;
+    private int cost;
+    private Date approvalDate;
 
     QuestTransaction(int questId, int userId, Date transactionDate, int cost) {
         this.questId = questId;
