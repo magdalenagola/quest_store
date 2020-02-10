@@ -65,8 +65,7 @@ public class DbTransactionsDAO implements TransactionsDAO{
         return transactionsList;
     }
 
-    @Override
-    public void addCardTransaction(CardTransaction cardTransaction) throws SQLException {
+    private void addCardTransaction(CardTransaction cardTransaction) throws SQLException {
         Connection c = pool.getConnection();
         PreparedStatement ps = c.prepareStatement("INSERT INTO student_cards(cost, date_bought, user_id) VALUES(?, ?, ?)");
         ps.setInt(1, cardTransaction.getCost());
@@ -75,26 +74,47 @@ public class DbTransactionsDAO implements TransactionsDAO{
         ps.executeUpdate();
     }
 
-    @Override
-    public void addQuestTransaction(QuestTransaction questTransaction) throws SQLException {
+    private void addQuestTransaction(QuestTransaction questTransaction) throws SQLException {
         Connection c = pool.getConnection();
         PreparedStatement ps = c.prepareStatement("INSERT INTO student_quests(cost, date_added, date_approved, user_id) VALUES(?, ?, ?, ?)");
         ps.setInt(1, questTransaction.getCost());
-        ps.setInt(2, questTransaction.getTransactionDate());
-        ps.setInt(3, java.sql.Types.DATE);
+        ps.setDate(2, questTransaction.getTransactionDate());
+        ps.setNull(3, java.sql.Types.DATE);
         ps.setInt(4, questTransaction.getUserId());
         ps.executeUpdate();
     }
 
 
-    @Override
-    public void updateStudentQuest(QuestTransaction questTransaction) {
+    private void updateStudentQuest(QuestTransaction questTransaction) throws SQLException {
+        Connection c = pool.getConnection();
+        PreparedStatement ps = c.prepareStatement("UPDATE student_quests SET cost = ?," +
+                "date_added = ?, date_approved = ?, user_id = ? WHERE card_id = ?");
+        ps.setInt(1, questTransaction.getCost());
+        ps.setDate(2, questTransaction.getTransactionDate());
+        ps.setDate(3, questTransaction.getApprovalDate());
+        ps.setInt(4, questTransaction.getUserId());
+        ps.setInt(5, questTransaction.getId());
+        ps.executeUpdate();
+    }
 
+    private void updateStudentCard(CardTransaction cardTransaction) throws SQLException {
+        Connection c = pool.getConnection();
+        PreparedStatement ps = c.prepareStatement("UPDATE student_quests SET cost = ?," +
+                "date_bought = ?, user_id = ? WHERE card_id = ?");
+        ps.setInt(1, cardTransaction.getCost());
+        ps.setDate(2, cardTransaction.getTransactionDate());
+        ps.setInt(3, cardTransaction.getUserId());
+        ps.setInt(4, cardTransaction.getId());
+        ps.executeUpdate();
     }
 
     @Override
-    public void save(Object o) {
-
+    public void save(Object object) {
+        if (object instanceof CardTransaction){
+            addCardTransaction((CardTransaction) object);
+        } else if (object instanceof QuestTransaction)){
+            addQuestTransaction((QuestTransaction) object);
+        }
     }
 
     @Override
@@ -127,21 +147,15 @@ public class DbTransactionsDAO implements TransactionsDAO{
     }
 
     @Override
-    public void update(CardTransaction cardTransaction) throws SQLException {
-        //TODO
-//        Connection c = pool.getConnection();
-        PreparedStatement ps = c.prepareStatement("UPDATE student_cards SET email =?," +
-                "password = ?,name = ?,surname = ?,usertype_id = 1,is_active = ?) ");
-//        ps.setString(1, mentor.getLogin());
-//        ps.setString(2, mentor.getPassword());
-//        ps.setString(3, mentor.getName());
-//        ps.setString(4, mentor.getSurname());
-//        ps.setString(5, mentor.isActive());
-//        ps.executeUpdate();
-//    };
+    public void update(Object object) throws SQLException {
+    if (object instanceof CardTransaction){
+        updateStudentCard((CardTransaction) object);
 
-    @Override
-    public void update(QuestTransaction questTransaction) {}
+    } else if (object instanceof QuestTransaction)){
+        updateStudentQuest((QuestTransaction) object);
+
+        }
+     }
 
     @Override
     public void disable(Object o) {
