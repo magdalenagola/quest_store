@@ -31,4 +31,8 @@ public class Student extends User {
         StudentController studentController = new StudentController();
         studentController.run();
     }
+
+    public int getId() {
+        return id;
+    }
 }
