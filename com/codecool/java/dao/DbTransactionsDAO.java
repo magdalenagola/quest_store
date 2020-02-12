@@ -69,7 +69,7 @@ public class DbTransactionsDAO implements TransactionsDAO{
         PreparedStatement ps = c.prepareStatement("INSERT INTO student_cards(cost, date_bought, user_id) VALUES(?, ?, ?)");
         ps.setInt(1, cardTransaction.getCost());
         ps.setInt(2, cardTransaction.getTransactionDate());
-        ps.setInt(4, cardTransaction.getUserId());
+        ps.setInt(3, cardTransaction.getUserId());
         ps.executeUpdate();
     }
 
