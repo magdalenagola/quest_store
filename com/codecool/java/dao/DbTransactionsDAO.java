@@ -18,7 +18,7 @@ public class DbTransactionsDAO implements TransactionsDAO{
     }
 
     @Override
-    public List<QuestTransaction> loadAllNotApproved() throws SQLException {
+    public List<Transaction> loadAllNotApproved() throws SQLException {
         Connection c = pool.getConnection();
         List<QuestTransaction> unapprovedQuestsList = new ArrayList<>();
         PreparedStatement ps = c.prepareStatement("SELECT * FROM student_quests WHERE date_approved IS NULL");
@@ -28,7 +28,7 @@ public class DbTransactionsDAO implements TransactionsDAO{
             Date dateAdded = rs.getDate("date_added");
             Integer questId = rs.getInt("quest_id");
             Integer userId = rs.getInt("user_id");
-            QuestTransaction questTransaction = new QuestTransaction(questId, userId, dateAdded, coinsReceived);
+            Transaction questTransaction = new QuestTransaction(questId, userId, dateAdded, coinsReceived);
             unapprovedQuestsList.add(questTransaction);
         }
         return unapprovedQuestsList;
@@ -46,7 +46,7 @@ public class DbTransactionsDAO implements TransactionsDAO{
             Integer coinsPaid = rs.getInt("coins_paid");
             Date dateBought = rs.getDate("date_bought");
             Integer userId = rs.getInt("user_id");
-            CardTransaction cardTransaction = new CardTransaction(id, userId, dateBought, coinsPaid);
+            Transaction cardTransaction = new CardTransaction(id, userId, dateBought, coinsPaid);
             transactionsList.add(cardTransaction);
         }
         ps = c.prepareStatement("SELECT * FROM student_quests WHERE user_id = ?");
@@ -58,7 +58,7 @@ public class DbTransactionsDAO implements TransactionsDAO{
             Date dateApproved = rs.getDate("date_approved");
             Integer questId = rs.getInt("quest_id");
             Integer userId = rs.getInt("user_id");
-            QuestTransaction questTransaction = new QuestTransaction(questId, userId, dateAdded, coinsReceived);
+            Transaction questTransaction = new QuestTransaction(questId, userId, dateAdded, coinsReceived);
             transactionsList.add(questTransaction);
         }
         return transactionsList;
@@ -127,7 +127,7 @@ public class DbTransactionsDAO implements TransactionsDAO{
             Integer coinsPaid = rs.getInt("coins_paid");
             Date dateBought = rs.getDate("date_bought");
             Integer userId = rs.getInt("user_id");
-            CardTransaction cardTransaction = new CardTransaction(id, userId, dateBought, coinsPaid);
+            Transaction cardTransaction = new CardTransaction(id, userId, dateBought, coinsPaid);
             transactionsList.add(cardTransaction);
         }
         ps = c.prepareStatement("SELECT * FROM student_quests");
@@ -138,7 +138,7 @@ public class DbTransactionsDAO implements TransactionsDAO{
             Date dateApproved = rs.getDate("date_approved");
             Integer questId = rs.getInt("quest_id");
             Integer userId = rs.getInt("user_id");
-            QuestTransaction questTransaction = new QuestTransaction(questId, userId, dateAdded, coinsReceived);
+            Transaction questTransaction = new QuestTransaction(questId, userId, dateAdded, coinsReceived);
             transactionsList.add(questTransaction);
         }
 
