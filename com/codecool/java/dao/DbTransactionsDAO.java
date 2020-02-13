@@ -1,9 +1,6 @@
 package codecool.java.dao;
 
-import codecool.java.model.BasicConnectionPool;
-import codecool.java.model.CardTransaction;
-import codecool.java.model.QuestTransaction;
-import codecool.java.model.Student;
+import codecool.java.model.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -152,7 +149,7 @@ public class DbTransactionsDAO implements TransactionsDAO{
     if (object instanceof CardTransaction){
         updateStudentCard((CardTransaction) object);
 
-    } else if (object instanceof QuestTransaction)){
+    } else if (object instanceof QuestTransaction) {
         updateStudentQuest((QuestTransaction) object);
 
         }
@@ -166,7 +163,7 @@ public class DbTransactionsDAO implements TransactionsDAO{
             PreparedStatement ps = c.prepareStatement(String.format("UPDATE student_cards SET is_active = false WHERE id = %d;", cardTransaction.getId()));
             ps.executeUpdate();
 
-        } else if (object instanceof QuestTransaction)){
+        } else if (object instanceof QuestTransaction) {
             QuestTransaction questTransaction = (QuestTransaction) object;
             PreparedStatement ps = c.prepareStatement(String.format("UPDATE student_quests SET is_active = false WHERE id = %d;", questTransaction.getId()));
             ps.executeUpdate();
@@ -182,7 +179,7 @@ public class DbTransactionsDAO implements TransactionsDAO{
             PreparedStatement ps = c.prepareStatement(String.format("UPDATE student_cards SET is_active = true WHERE id = %d;", cardTransaction.getId()));
             ps.executeUpdate();
 
-        } else if (object instanceof QuestTransaction)){
+        } else if (object instanceof QuestTransaction) {
             QuestTransaction questTransaction = (QuestTransaction) object;
             PreparedStatement ps = c.prepareStatement(String.format("UPDATE student_quests SET is_active = true WHERE id = %d;", questTransaction.getId()));
             ps.executeUpdate();

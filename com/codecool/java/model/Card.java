@@ -59,4 +59,28 @@ public class Card {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public float getCost() {
+        return cost;
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
 }

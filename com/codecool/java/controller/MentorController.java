@@ -125,7 +125,7 @@ public class MentorController {
         String[] options = {"Title", "Description","Image","Category","Cost"};
         String[] inputs = view.getInputs(options);
         try{
-        QuestDAO questDAO = new DbquestDAO();
+        QuestDao questDAO = new DbQuestDao();
         Quest quest = new Quest(inputs[0],inputs[1],inputs[2],inputs[3],true);
         questDAO.save(quest);
         }catch(SQLException | ClassNotFoundException e){

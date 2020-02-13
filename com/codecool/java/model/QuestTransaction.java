@@ -1,6 +1,6 @@
 package codecool.java.model;
 
-import codecool.java.dao.DbCardDao;
+import codecool.java.dao.DbQuestDao;
 
 import java.sql.SQLException;
 import java.util.Date;

@@ -1,6 +1,8 @@
 package codecool.java.dao;
 
 import codecool.java.model.Group;
+import codecool.java.model.Student;
+import codecool.java.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
