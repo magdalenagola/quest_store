@@ -18,7 +18,7 @@ public class DbCardDao extends DbIntermediateDao implements CardDao {
     }
 
     @Override
-    public Object selectCardById(int id) throws SQLException {
+    public Card selectCardById(int id) throws SQLException {
         ResultSet rs = super.selectEntryById(id, "cards");
         Card card = null;
         while(rs.next()){
@@ -62,7 +62,7 @@ public class DbCardDao extends DbIntermediateDao implements CardDao {
         ps.setString(3, card.getImageName());
         ps.setInt(4, card.getQuantity());
         ps.setBoolean(5, card.isActive());
-        ps.setInt(6, card.getCost());
+        ps.setFloat(6, card.getCost());
         ps.execute();
     }
 
@@ -104,19 +104,19 @@ public class DbCardDao extends DbIntermediateDao implements CardDao {
         ps.setString(3, card.getImageName());
         ps.setInt(4, card.getQuantity());
         ps.setBoolean(5, card.isActive());
-        ps.setInt(6, card.getCost());
+        ps.setFloat(6, card.getCost());
         ps.setInt(7, card.getId());
         ps.execute();
     }
 
     @Override
-    public void disable(Object o) {
+    public void disable(Object o) throws SQLException {
         Card card = (Card) o;
         super.disableTableEntryById(card.getId(), "cards");
     }
 
     @Override
-    public void activate(Object o) {
+    public void activate(Object o) throws SQLException {
         Card card = (Card) o;
         super.enableTableEntryById(card.getId(), "cards");
     }

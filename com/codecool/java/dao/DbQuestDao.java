@@ -18,7 +18,7 @@ public class DbQuestDao extends DbIntermediateDao implements QuestDao {
     }
 
     @Override
-    public Object selectQuestById(int id) throws SQLException {
+    public Quest selectQuestById(int id) throws SQLException {
         ResultSet rs = super.selectEntryById(id, "quests");
         Quest quest = null;
         while(rs.next()){

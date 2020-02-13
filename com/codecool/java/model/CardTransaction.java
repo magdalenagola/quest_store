@@ -3,7 +3,7 @@ package codecool.java.model;
 import codecool.java.dao.DbCardDao;
 
 import java.sql.SQLException;
-import java.util.Date;
+import java.sql.Date;
 
 public class CardTransaction extends Transaction {
     private int cardId;
@@ -12,10 +12,7 @@ public class CardTransaction extends Transaction {
     private int cost;
 
     public CardTransaction(int cardId, int userId, Date transactionDate, int cost) {
-        this.cardId = cardId;
-        this.userId = userId;
-        this.transactionDate = transactionDate;
-        this.cost = cost;
+        super(cardId, userId, transactionDate, cost);
     };
 
     public int getId() {
