@@ -9,7 +9,7 @@ public class QuestTransaction extends Transaction {
     private int cost;
     private Date approvalDate;
 
-    QuestTransaction(int questId, int userId, Date transactionDate, int cost) {
+    public QuestTransaction(int questId, int userId, Date transactionDate, int cost) {
         this.questId = questId;
         this.userId = userId;
         this.transactionDate = transactionDate;
