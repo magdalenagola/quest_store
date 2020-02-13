@@ -8,6 +8,7 @@ import java.util.List;
 public interface Display {
     public void displayOptions(String[] options);
     public int getOptionInput(int maxOptionsNumber);
+    public String[] getInputs(String[] options);
     public void displayUser(User user);
     public void displayUsers(List<User> users);
     public void displayQuest(Quest quest);

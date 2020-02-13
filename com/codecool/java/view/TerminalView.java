@@ -22,6 +22,19 @@ public class TerminalView implements Display{
         }while(!isInputValid(userInput, maxOptionsNumber));
         return Integer.parseInt(userInput);
     }
+
+    @Override
+    public String[] getInputs(String[] options) {
+        String[] inputs = new String[options.length];
+        Scanner scan = new Scanner(System.in);
+        displayMessage("Fill all fields");
+        for(int i = 0; i< options.length; i++){
+            displayMessage(options[i]+": ");
+            inputs[i] = scan.nextLine();
+        }
+        return inputs;
+    }
+
     private boolean isInputValid(String userInput,int optionsLength){
         try{
             int userChoice = Integer.parseInt(userInput);
