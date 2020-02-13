@@ -9,6 +9,7 @@ import codecool.java.model.QuestTransaction;
 import codecool.java.view.TerminalView;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -87,7 +88,7 @@ public class StudentController {
         transactionsDAO.addCardTransaction(cardTransaction);
     }
 
-    private Date getTodayDate() {
+    private Date getTodayDate() throws ParseException {
         String datePattern = "MM-dd-yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(datePattern);
         String stringDate = simpleDateFormat.format(new Date());
