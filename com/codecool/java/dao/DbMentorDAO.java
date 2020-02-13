@@ -58,8 +58,7 @@ public class DbMentorDAO implements MentorDAO {
             String name = rs.getString("name");
             String surname = rs.getString("surname");
             boolean isActive = rs.getBoolean("is_active");
-            //TODO add primary skill
-            Mentor mentor = new Mentor(id, email, password, name, surname, isActive);
+            Mentor mentor = new Mentor(id, email, password, name, surname, getPrimarySkillById(id), isActive);
             mentorList.add(mentor);
         }
         return (List<t>) mentorList;
