@@ -13,6 +13,11 @@ public abstract class Transaction {
         this.cost = cost;
     }
 
+    @Override
+    public String toString() {
+        return "itemID: " + itemId + ", userID: " + userId + ", date: " + date + ", cost: " + cost;
+    }
+
     public int getItemId() {
         return itemId;
     }
