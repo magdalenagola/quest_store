@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DbLoginDAO implements LoginDAO {
+public class DbLoginDAO implements LoginDao {
     private BasicConnectionPool pool;
 
     public DbLoginDAO() throws ClassNotFoundException, SQLException {
@@ -19,16 +19,19 @@ public class DbLoginDAO implements LoginDAO {
     }
 
     @Override
-    public User loadOne(String login, String password) throws SQLException, NotInDatabaseException, ClassNotFoundException {
+    public ResultSet findLoginInfo(String providedLogin, String providedPassword) throws SQLException {
         Connection c = pool.getConnection();
         PreparedStatement ps = c.prepareStatement("SELECT * FROM USER" +
                 "WHERE email = ? AND password = ?;");
-        ps.setString(1, login);
-        ps.setString(2, password);
-        ResultSet rs = ps.executeQuery();
+        ps.setString(1, providedLogin);
+        ps.setString(2, providedPassword);
+        return ps.executeQuery();
+    }
 
+    @Override
+    public User logIn(String providedLogin, String providedPassword) throws SQLException, ClassNotFoundException, NotInDatabaseException {
+        ResultSet rs = findLoginInfo(providedLogin, providedPassword);
         UserFactory userFactory = new UserFactory();
-
         User user = null;
         if (!rs.next()) {
             throw new NotInDatabaseException();
