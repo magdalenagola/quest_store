@@ -18,4 +18,32 @@ public class Card {
         this.quantity = quantity;
         this.title = title;
     }
+
+    public void setId(int id) {
+        Id = id;
+    }
+
+    public void setCost(float cost) {
+        this.cost = cost;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }

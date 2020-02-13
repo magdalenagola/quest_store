@@ -1,8 +1,10 @@
 package codecool.java.controller;
 
+import codecool.java.dao.DbstudentDAO;
 import codecool.java.dao.StudentDAO;
 import codecool.java.dao.TransactionsDAO;
 import codecool.java.model.Card;
+import codecool.java.model.QuestTransaction;
 import codecool.java.model.Student;
 import codecool.java.view.Display;
 import codecool.java.view.TerminalView;
@@ -59,10 +61,10 @@ public class MentorController {
     private void rateAssigment() {
         try {
             TransactionsDAO transactionsDAO = new DbtransactionsDAO();
-            List<Transactions> notApprovedTransactions = transactionsDAO.loadAllNotApproved();
+            List<Transaction> notApprovedTransactions = transactionsDAO.loadAllNotApproved();
             view.displayCardTransactions(notApprovedTransactions);
             int studentTransactionIndex = view.getOptionInput(notApprovedTransactions.size());
-            QuestTransaction studentTransaction = notApprovedTransactions.get(studentTransactionIndex-1);
+            Transaction studentTransaction = notApprovedTransactions.get(studentTransactionIndex-1);
             studentTransaction.setTransactionDate(getTodayDate());
             transactionsDAO.updateStudentQuest(studentTransaction);
         } catch (ParseException e) {
@@ -99,7 +101,7 @@ public class MentorController {
                     break;
                 case 3:
                     newValue = view.getStringInput();
-                    card.setImage(newValue);
+                    card.setImageName(newValue);
                     break;
                 case 4:
                     newValue = view.getStringInput();

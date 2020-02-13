@@ -75,7 +75,7 @@ public class ManagerController {
         String[] optionsToChange = terminalView.getInputs(mentorDataToEdit);
         mentor.setName(optionsToChange[0]);
         mentor.setSurname(optionsToChange[1]);
-        mentor.setEmail(optionsToChange[2]);
+        mentor.setLogin(optionsToChange[2]);
         mentor.setPassword(optionsToChange[3]);
         mentor.setPrimarySkill(optionsToChange[4]);
 

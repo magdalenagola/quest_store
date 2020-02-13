@@ -36,6 +36,10 @@ public class QuestTransaction extends Transaction {
         return this.approvalDate;
     }
 
+    public void setTransactionDate(Date transactionDate) {
+        this.transactionDate = transactionDate;
+    }
+
     public void setApprovalDate(Date approvalDate) {
         this.approvalDate = approvalDate;
     }
