@@ -14,7 +14,7 @@ public abstract class Transaction {
     }
 
     @Override
-    public String toString()  {
+    public String toString() {
         return "itemID: " + itemId + ", userID: " + userId + ", date: " + date + ", cost: " + cost;
     }
 

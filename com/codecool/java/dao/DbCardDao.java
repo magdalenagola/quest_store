@@ -110,13 +110,13 @@ public class DbCardDao extends DbIntermediateDao implements CardDao {
     }
 
     @Override
-    public void disable(Object o) throws SQLException {
+    public void disable(Object o) {
         Card card = (Card) o;
         super.disableTableEntryById(card.getId(), "cards");
     }
 
     @Override
-    public void activate(Object o) throws SQLException {
+    public void activate(Object o) {
         Card card = (Card) o;
         super.enableTableEntryById(card.getId(), "cards");
     }
