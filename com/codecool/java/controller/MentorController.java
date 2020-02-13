@@ -3,18 +3,13 @@ package codecool.java.controller;
 import codecool.java.dao.StudentDAO;
 import codecool.java.dao.TransactionsDAO;
 import codecool.java.model.Card;
-import codecool.java.model.Mentor;
 import codecool.java.model.Student;
 import codecool.java.view.Display;
 import codecool.java.view.TerminalView;
-
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class MentorController {
     Display view;
