@@ -1,7 +1,6 @@
 package codecool.java.view;
 
-import codecool.java.model.Card;
-import codecool.java.model.User;
+import codecool.java.model.*;
 
 import java.util.List;
 
