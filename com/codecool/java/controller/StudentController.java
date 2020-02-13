@@ -1,5 +1,7 @@
 package codecool.java.controller;
 
+import codecool.java.dao.DbCardDao;
+import codecool.java.dao.DbTransactionsDAO;
 import codecool.java.dao.TransactionsDAO;
 import codecool.java.model.Card;
 import codecool.java.model.CardTransaction;
@@ -19,9 +21,9 @@ public class StudentController {
     private TerminalView terminalView;
 
     public StudentController() throws SQLException, ClassNotFoundException {
-        cardDAO = new DbCardDAO();
-        questDAO = new DbQuestDAO();
-        transactionsDAO = new DBtransactionsDAO();
+        cardDAO = new DbCardDao();
+        questDAO = new DbQuestDao();
+        transactionsDAO = new DbTransactionsDAO();
         terminalView = new TerminalView();
     }
 
@@ -101,6 +103,6 @@ public class StudentController {
         int questToSubmitDbIndex = questToSubmit.getId();
         Date todayDate = getTodayDate();
         QuestTransaction questTransaction = new QuestTransaction(questToSubmitDbIndex, studentId, todayDate, questToSubmit.getCost());
-        transactionsDAO.addQuestTransaction(questTransaction);
+        transactionsDAO.save(questTransaction);
     }
 }
