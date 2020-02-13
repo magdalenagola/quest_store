@@ -65,7 +65,7 @@ public class TerminalView implements Display{
         System.out.println(ct.toString());
     }
 
-    public void displayCardTransactions(List<CardTransaction> cts) {
+    public void displayCardTransactions(List<Transactions> cts) {
         for(CardTransaction cardTransaction: cts){
             displayCardTransaction(cardTransaction);
         }

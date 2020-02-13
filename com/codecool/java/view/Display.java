@@ -3,7 +3,6 @@ package codecool.java.view;
 import codecool.java.model.Card;
 import codecool.java.model.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface Display {
@@ -16,7 +15,7 @@ public interface Display {
     public void displayCard(Card card);
     public void displayCards(List<Card> card);
     public void displayCardTransaction(CardTransaction ct);
-    public void displayCardTransactions(List<CardTransaction> cts);
+    public void displayCardTransactions(List<Transactions> cts);
     public void displayQuestTransaction(QuestTransaction qt);
     public void displayQuestTransaction(List<QuestTransaction> qts);
     public void displayMessage(String msg);
