@@ -25,4 +25,9 @@ public class Manager extends User {
     public void start() throws SQLException, ClassNotFoundException {
         ManagerController managerController = new ManagerController();
     }
+
+    public String toString() {
+        String mentorInfo = "id: " + this.id + ", name: " + this.name;
+        return mentorInfo;
+    }
 }
