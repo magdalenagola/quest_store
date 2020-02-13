@@ -22,7 +22,11 @@ public class Manager extends User {
     }
 
     @Override
-    public void start() throws SQLException, ClassNotFoundException {
-        ManagerController managerController = new ManagerController();
+    public void start(){
+        try {
+            ManagerController managerController = new ManagerController();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
