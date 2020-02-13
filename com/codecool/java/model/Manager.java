@@ -25,6 +25,7 @@ public class Manager extends User {
     public void start(){
         try {
             ManagerController managerController = new ManagerController();
+            managerController.run();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
