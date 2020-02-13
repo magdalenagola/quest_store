@@ -8,7 +8,7 @@ public class CardTransaction extends Transaction {
     private Date transactionDate;
     private int cost;
 
-    CardTransaction(int cardId, int userId, Date transactionDate, int cost) {
+    public CardTransaction(int cardId, int userId, Date transactionDate, int cost) {
         this.cardId = cardId;
         this.userId = userId;
         this.transactionDate = transactionDate;

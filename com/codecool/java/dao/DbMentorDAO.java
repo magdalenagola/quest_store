@@ -35,11 +35,13 @@ public class DbMentorDAO implements MentorDAO {
     public void save(T t) throws SQLException {
         Connection c = pool.getConnection();
         Mentor mentor = (Mentor) t;
-        PreparedStatement ps = c.prepareStatement("INSERT INTO users(email, password, name, surname, usertype_id, is_active) VALUES(?, ?, ?, ?, 2, true);");
+        PreparedStatement ps = c.prepareStatement("INSERT INTO users(email, password, name, surname, usertype_id, is_active) VALUES(?, ?, ?, ?, ?, ?);");
         ps.setString(1, mentor.getLogin());
         ps.setString(2, mentor.getPassword());
         ps.setString(3, mentor.getName());
         ps.setString(4, mentor.getSurname());
+        ps.setInt(5, 2);
+        ps.setBoolean(6, true);
         ps.executeUpdate();
     };
 
@@ -56,6 +58,7 @@ public class DbMentorDAO implements MentorDAO {
             String name = rs.getString("name");
             String surname = rs.getString("surname");
             boolean isActive = rs.getBoolean("is_active");
+            //TODO add primary skill
             Mentor mentor = new Mentor(id, email, password, name, surname, isActive);
             mentorList.add(mentor);
         }
@@ -68,7 +71,7 @@ public class DbMentorDAO implements MentorDAO {
         Mentor mentor = (Mentor) t;
         PreparedStatement ps = c.prepareStatement(String.format("UPDATE users SET email =?," +
                 "password = ?,name = ?,surname = ?,usertype_id = 1) WHERE id = %d;", mentor.getId()));
-        ps.setString(1, mentor.getEmail());
+        ps.setString(1, mentor.getLogin());
         ps.setString(2, mentor.getPassword());
         ps.setString(3, mentor.getName());
         ps.setString(4, mentor.getSurname());

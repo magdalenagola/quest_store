@@ -9,7 +9,7 @@ public class QuestTransaction extends Transaction {
     private int cost;
     private Date approvalDate;
 
-    QuestTransaction(int questId, int userId, Date transactionDate, int cost) {
+    public QuestTransaction(int questId, int userId, Date transactionDate, int cost) {
         this.questId = questId;
         this.userId = userId;
         this.transactionDate = transactionDate;
@@ -34,6 +34,10 @@ public class QuestTransaction extends Transaction {
 
     public Date getApprovalDate() {
         return this.approvalDate;
+    }
+
+    public void setTransactionDate(Date transactionDate) {
+        this.transactionDate = transactionDate;
     }
 
     public void setApprovalDate(Date approvalDate) {
