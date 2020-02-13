@@ -113,7 +113,7 @@ public class DbTransactionsDAO implements TransactionsDAO{
     public void save(Object object) throws SQLException {
         if (object instanceof CardTransaction){
             addCardTransaction((CardTransaction) object);
-        } else if (object instanceof QuestTransaction)){
+        } else if (object instanceof QuestTransaction){
             addQuestTransaction((QuestTransaction) object);
         }
     }

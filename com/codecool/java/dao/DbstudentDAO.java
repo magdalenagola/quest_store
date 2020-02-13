@@ -18,7 +18,7 @@ public class DbstudentDAO implements StudentDAO{
     }
 
     @Override
-    public List<T> loadAll() throws SQLException {
+    public List<Student> loadAll() throws SQLException {
         List<Student> result = new ArrayList<>();
         Connection c = pool.getConnection();
         PreparedStatement ps = c.prepareStatement("SELECT * FROM users JOIN usertypes ON (user.usertype_id = usertypes.id) " +
@@ -34,13 +34,13 @@ public class DbstudentDAO implements StudentDAO{
             Student student = new Student(id,email,password,name,surname,is_active);
             result.add(student);
         }
-        return (List<T>) result;
+        return result;
     }
 
     @Override
-    public void save(T t) throws SQLException {
+    public void save(Object o) throws SQLException {
         Connection c = pool.getConnection();
-        Student student = (Student) t;
+        Student student = (Student) o;
         PreparedStatement ps = c.prepareStatement("INSERT INTO users (email,password,name,surname,usertype_id,is_active) " +
                 "VALUES(?,?,?,?,?,?)");
         ps.setString(1, student.getLogin());
@@ -53,9 +53,9 @@ public class DbstudentDAO implements StudentDAO{
     }
 
     @Override
-    public void update(T t) throws SQLException {
+    public void update(Object o) throws SQLException {
         Connection c = pool.getConnection();
-        Student student = (Student) t;
+        Student student = (Student) o;
         PreparedStatement ps = c.prepareStatement("UPDATE users SET email =?," +
                 "password = ?,name = ?,surname = ?,usertype_id = 1,is_active = ?) ");
         ps.setString(1, student.getLogin());
@@ -89,18 +89,18 @@ public class DbstudentDAO implements StudentDAO{
 
 
     @Override
-    public void disable(T t) throws SQLException {
+    public void disable(Object o) throws SQLException {
         Connection c = pool.getConnection();
-        Student student = (Student) t;
+        Student student = (Student) o;
         PreparedStatement ps = c.prepareStatement(String.format("UPDATE users SET is_active = false WHERE id = %d;", student.getId()));
         ps.executeUpdate();
     };
 
 
     @Override
-    public void activate(T t) throws SQLException {
+    public void activate(Object o) throws SQLException {
         Connection c = pool.getConnection();
-        Student student = (Student) t;
+        Student student = (Student) o;
         PreparedStatement ps = c.prepareStatement(String.format("UPDATE users SET is_active = true WHERE id = %d;", student.getId()));
         ps.executeUpdate();
     };
