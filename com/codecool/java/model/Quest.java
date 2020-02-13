@@ -8,6 +8,17 @@ public class Quest extends Item {
         this.category = category;
     }
 
+    @Override
+    public String toString() {
+        return "ID: " + getId() +
+                ", title: " + getTitle() +
+                ", description: " + getDescription() +
+                ", image: " + getImage() +
+                ", quantity: " + getQuantity() +
+                ", isActive: " + isActive() +
+                ", category: " + category;
+    }
+
     public String getCategory() {
         return category;
     }
