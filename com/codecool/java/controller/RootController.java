@@ -1,7 +1,11 @@
 package codecool.java.controller;
 
+import codecool.java.model.User;
+
 public class RootController {
     public void run() {
-        System.out.println("root controller");
+        LoginController loginController = new LoginController();
+        User user =  loginController.authenticate();
+        user.start();
     }
 }

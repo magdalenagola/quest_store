@@ -75,9 +75,14 @@ public class Student extends User {
     }
 
     @Override
-    public void start() throws SQLException, ClassNotFoundException {
-        StudentController studentController = new StudentController();
-        studentController.run(this.id);
+    public void start(){
+        try {
+            StudentController studentController = new StudentController();
+            studentController.run(this.id);
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public int getId() {

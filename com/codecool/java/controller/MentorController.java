@@ -1,11 +1,8 @@
 package codecool.java.controller;
 
 import codecool.java.dao.*;
-import codecool.java.model.Card;
-import codecool.java.model.QuestTransaction;
-import codecool.java.model.Student;
-import codecool.java.view.Display;
-import codecool.java.view.TerminalView;
+import codecool.java.model.*;
+import codecool.java.view.*;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -63,7 +60,7 @@ public class MentorController {
             view.displayCardTransactions(notApprovedTransactions);
             int studentTransactionIndex = view.getOptionInput(notApprovedTransactions.size());
             Transaction studentTransaction = notApprovedTransactions.get(studentTransactionIndex-1);
-            studentTransaction.setTransactionDate(getTodayDate());
+            studentTransaction.setDate(getTodayDate());
             transactionsDAO.update(studentTransaction);
         } catch (SQLException | ClassNotFoundException | ParseException e) {
             view.displayErrorMessage(e);
@@ -79,8 +76,8 @@ public class MentorController {
     }
     private void updateCard() {
         try {
-            CardDAO cardDAO = new DbCardDao();
-            ArrayList<Card> cards = cardDAO.loadAll();
+            CardDao cardDAO = new DbCardDao();
+            List<Card> cards = cardDAO.loadAll();
             view.displayCards(cards);
             int cardChoice = view.getOptionInput(cards.size());
             Card card = cards.get(cardChoice - 1);
@@ -114,7 +111,7 @@ public class MentorController {
 
     private void addCard() {
         try{
-            CardDAO cardDAO = new DbCardDao();
+            CardDao cardDAO = new DbCardDao();
             String[] options = {"Cost","Description", "Image","Quantity","Title"};
             String[] inputs = view.getInputs(options);
             Card card = new Card(Float.parseFloat(inputs[0]),inputs[1],inputs[2],true,Integer.parseInt(inputs[3]),inputs[4]);
