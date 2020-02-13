@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class UserFactory {
     private MentorDAO mentorDAO;
 
-    UserFactory() throws SQLException, ClassNotFoundException {
+    public UserFactory() throws SQLException, ClassNotFoundException {
         mentorDAO = new DbMentorDAO();
     }
 

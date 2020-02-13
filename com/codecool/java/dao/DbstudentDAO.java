@@ -21,7 +21,7 @@ public class DbstudentDAO implements StudentDAO{
     public List<T> loadAll() throws SQLException {
         List<Student> result = new ArrayList<>();
         Connection c = pool.getConnection();
-        PreparedStatement ps = c.prepareStatement("SELECT * FROM USER JOIN ON user.usertype_id = usertypes.id " +
+        PreparedStatement ps = c.prepareStatement("SELECT * FROM users JOIN usertypes ON (user.usertype_id = usertypes.id) " +
                 "WHERE usertype = Student;");
         ResultSet rs = ps.executeQuery();
         while(rs.next()){
@@ -41,12 +41,14 @@ public class DbstudentDAO implements StudentDAO{
     public void save(T t) throws SQLException {
         Connection c = pool.getConnection();
         Student student = (Student) t;
-        PreparedStatement ps = c.prepareStatement("INSERT INTO USER(email,password,name,surname,usertype_id,is_active) " +
-                "VALUES(?,?,?,?,1,true)");
+        PreparedStatement ps = c.prepareStatement("INSERT INTO users (email,password,name,surname,usertype_id,is_active) " +
+                "VALUES(?,?,?,?,?,?)");
         ps.setString(1, student.getLogin());
         ps.setString(2, student.getPassword());
         ps.setString(3, student.getName());
         ps.setString(4, student.getSurname());
+        ps.setInt(5, 1);
+        ps.setBoolean(6, true);
         ps.executeUpdate();
     }
 
@@ -54,13 +56,13 @@ public class DbstudentDAO implements StudentDAO{
     public void update(T t) throws SQLException {
         Connection c = pool.getConnection();
         Student student = (Student) t;
-        PreparedStatement ps = c.prepareStatement("UPDATE USER SET email =?," +
+        PreparedStatement ps = c.prepareStatement("UPDATE users SET email =?," +
                 "password = ?,name = ?,surname = ?,usertype_id = 1,is_active = ?) ");
         ps.setString(1, student.getLogin());
         ps.setString(2, student.getPassword());
         ps.setString(3, student.getName());
         ps.setString(4, student.getSurname());
-        ps.setString(5, student.isActive());
+        ps.setBoolean(5, student.isActive());
         ps.executeUpdate();
     }
 
@@ -68,7 +70,6 @@ public class DbstudentDAO implements StudentDAO{
     @Override
     public int getCoins(Student student) throws SQLException {
         Connection c = pool.getConnection();
-        Student student = (Student) t;
         int studentCoins = 0;
         PreparedStatement ps = c.prepareStatement(String.format("SELECT  coins FROM student_details WHERE user_id = %d;", student.getId()));
         ResultSet rs = ps.executeQuery();
@@ -81,7 +82,6 @@ public class DbstudentDAO implements StudentDAO{
     @Override
     public void updateCoins(Student student, int amount) throws SQLException {
         Connection c = pool.getConnection();
-        Student student = (Student) t;
         PreparedStatement ps = c.prepareStatement(String.format("UPDATE student_details SET coins = (coins + ?)  WHERE user_id = %d;", student.getId()));
         ps.setInt(1, amount);
         ps.executeUpdate();

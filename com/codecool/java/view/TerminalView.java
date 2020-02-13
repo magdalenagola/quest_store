@@ -1,6 +1,6 @@
 package codecool.java.view;
 
-import codecool.java.model.User;
+import codecool.java.model.*;
 
 import java.util.IllegalFormatConversionException;
 import java.util.List;
@@ -22,6 +22,27 @@ public class TerminalView implements Display{
         }while(!isInputValid(userInput, maxOptionsNumber));
         return Integer.parseInt(userInput);
     }
+
+    @Override
+    public String[] getInputs(String[] options) {
+        String[] inputs = new String[options.length];
+        Scanner scan = new Scanner(System.in);
+        displayMessage("Fill all fields");
+        for(int i = 0; i< options.length; i++){
+            displayMessage(options[i]+": ");
+            inputs[i] = scan.nextLine();
+        }
+        return inputs;
+    }
+
+    @Override
+    public String getStringInput() {
+        String input ="";
+        Scanner scan = new Scanner(System.in);
+        input = scan.nextLine();
+        return input;
+    }
+
     private boolean isInputValid(String userInput,int optionsLength){
         try{
             int userChoice = Integer.parseInt(userInput);
@@ -65,7 +86,7 @@ public class TerminalView implements Display{
         System.out.println(ct.toString());
     }
 
-    public void displayCardTransactions(List<Transactions> cts) {
+    public void displayCardTransactions(List<Transaction> cts) {
         for(CardTransaction cardTransaction: cts){
             displayCardTransaction(cardTransaction);
         }
