@@ -2,6 +2,8 @@ package codecool.java.model;
 
 import codecool.java.controller.StudentController;
 
+import java.sql.SQLException;
+
 public class Student extends User {
 
     private int id;
@@ -29,7 +31,7 @@ public class Student extends User {
     }
 
     @Override
-    public void start(){
+    public void start() throws SQLException, ClassNotFoundException {
         StudentController studentController = new StudentController();
         studentController.run(this.id);
     }
