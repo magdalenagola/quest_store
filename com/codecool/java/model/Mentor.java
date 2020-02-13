@@ -4,9 +4,6 @@ import codecool.java.controller.MentorController;
 
 public class Mentor extends User{
     private int id;
-
-
-
     private String login;
     private String password;
     private String name;
@@ -94,4 +91,11 @@ public class Mentor extends User{
         controller.run();
     }
 
+    @Override
+    public String toString() {
+        String response = "";
+        response = String.format("ID: %d Login: %s Password: %s Name: %s Surname: %s Primary Skill: %s isActive: %b",
+                getId(),getLogin(),getPassword(),getName(),getSurname(),getPrimarySkill(),isActive());
+        return response;
+    }
 }
