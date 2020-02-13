@@ -1,5 +1,8 @@
 package codecool.java.model;
 
+import codecool.java.dao.DbCardDao;
+
+import java.sql.SQLException;
 import java.util.Date;
 
 public class QuestTransaction extends Transaction {
@@ -42,5 +45,12 @@ public class QuestTransaction extends Transaction {
 
     public void setApprovalDate(Date approvalDate) {
         this.approvalDate = approvalDate;
+    }
+
+    public String toString() throws SQLException, ClassNotFoundException {
+        DbQuestDao dbQuestDao = new DbQuestDao();
+        Quest quest = dbQuestDao.selectQuestById(this.questId);
+        String questTransactionInfo = "Id: " + this.questId + ", name: " + quest.getTitle();
+        return questTransactionInfo;
     }
 }

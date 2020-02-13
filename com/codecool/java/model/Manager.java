@@ -30,4 +30,9 @@ public class Manager extends User {
             e.printStackTrace();
         }
     }
+
+    public String toString() {
+        String mentorInfo = "id: " + this.id + ", name: " + this.name;
+        return mentorInfo;
+    }
 }
