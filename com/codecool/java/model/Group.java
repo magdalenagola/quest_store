@@ -1,5 +1,6 @@
 package codecool.java.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Group {
@@ -13,6 +14,15 @@ public class Group {
         this.id = id;
         this.name = name;
         this.isActive = isActive;
+    }
+
+    @Override
+    public String toString() {
+        String studentNames = "";
+        for (User student : students){
+            studentNames += student.getName() + " " + student.getSurname() + " ";
+        }
+        return "ID: " + id + ", name: " + name + ", isActive: " + isActive + ", students: " + studentNames;
     }
 
     public List<User> getStudents() {
