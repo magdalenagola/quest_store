@@ -19,6 +19,15 @@ public class Card {
         this.title = title;
     }
 
+    public Card(float cost, String description, String imageName, boolean isActive, int quantity, String title) {
+        this.cost = cost;
+        this.description = description;
+        this.imageName = imageName;
+        this.isActive = isActive;
+        this.quantity = quantity;
+        this.title = title;
+    }
+
     public String getTitle() {
         return this.title;
     }
