@@ -1,6 +1,7 @@
 package codecool.java.dao;
 
 import codecool.java.model.BasicConnectionPool;
+import codecool.java.model.Card;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -58,7 +59,7 @@ public class DbCardDao extends DbIntermediateDao implements CardDao {
         PreparedStatement ps = c.prepareStatement(orderToSql);
         ps.setString(1, card.getTitle());
         ps.setString(2, card.getDescription());
-        ps.setString(3, card.getImage());
+        ps.setString(3, card.getImageName());
         ps.setInt(4, card.getQuantity());
         ps.setBoolean(5, card.isActive());
         ps.setInt(6, card.getCost());
@@ -100,7 +101,7 @@ public class DbCardDao extends DbIntermediateDao implements CardDao {
         PreparedStatement ps = c.prepareStatement(orderToSql);
         ps.setString(1, card.getTitle());
         ps.setString(2, card.getDescription());
-        ps.setString(3, card.getImage());
+        ps.setString(3, card.getImageName());
         ps.setInt(4, card.getQuantity());
         ps.setBoolean(5, card.isActive());
         ps.setInt(6, card.getCost());
