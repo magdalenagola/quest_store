@@ -94,8 +94,8 @@ public class Mentor extends User{
     @Override
     public String toString() {
         String response = "";
-        response = String.format("ID: %d Login: %s Password: %s Name: %s Surname: %s Primary Skill: %s isActive: %b",
-                getId(),getLogin(),getPassword(),getName(),getSurname(),getPrimarySkill(),isActive());
+        response = String.format("ID: %d Login: %s Password: %s Name: %s Surname: %s Primary Skill: %s",
+                getId(),getLogin(),getPassword(),getName(),getSurname(),getPrimarySkill());
         return response;
     }
 }

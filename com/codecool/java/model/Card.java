@@ -83,4 +83,11 @@ public class Card {
     public int getQuantity() {
         return quantity;
     }
+
+    public String toString(){
+        return "ID: " + getId() +
+                ", title: " + getTitle() +
+                ", description: " + getDescription() +
+                ", quantity: " + getQuantity();
+    }
 }

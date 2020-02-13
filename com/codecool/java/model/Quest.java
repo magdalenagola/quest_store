@@ -13,9 +13,7 @@ public class Quest extends Item {
         return "ID: " + getId() +
                 ", title: " + getTitle() +
                 ", description: " + getDescription() +
-                ", image: " + getImage() +
                 ", quantity: " + getQuantity() +
-                ", isActive: " + isActive() +
                 ", category: " + category;
     }
 

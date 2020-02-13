@@ -3,7 +3,7 @@ package codecool.java.model;
 import codecool.java.dao.DbQuestDao;
 
 import java.sql.SQLException;
-import java.util.Date;
+import java.sql.Date;
 
 public class QuestTransaction extends Transaction {
     private int questId;
@@ -13,10 +13,7 @@ public class QuestTransaction extends Transaction {
     private Date approvalDate;
 
     public QuestTransaction(int questId, int userId, Date transactionDate, int cost) {
-        this.questId = questId;
-        this.userId = userId;
-        this.transactionDate = transactionDate;
-        this.cost = cost;
+        super(questId, userId, transactionDate, cost);
     };
 
     public int getId() {

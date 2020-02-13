@@ -1,12 +1,15 @@
 package codecool.java.model;
 
+import java.sql.Date;
+import java.sql.SQLException;
+
 public abstract class Transaction {
     private int itemId;
     private int userId;
-    private String date;
+    private Date date;
     private int cost;
 
-    public Transaction(int itemId, int userId, String date, int cost) {
+    public Transaction(int itemId, int userId, Date date, int cost) {
         this.itemId = itemId;
         this.userId = userId;
         this.date = date;
@@ -14,7 +17,7 @@ public abstract class Transaction {
     }
 
     @Override
-    public String toString() {
+    public String toString() throws SQLException {
         return "itemID: " + itemId + ", userID: " + userId + ", date: " + date + ", cost: " + cost;
     }
 
@@ -34,11 +37,11 @@ public abstract class Transaction {
         this.userId = userId;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

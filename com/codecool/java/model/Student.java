@@ -88,4 +88,12 @@ public class Student extends User {
     public int getId() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        String response = "";
+        response = String.format("ID: %d Login: %s Password: %s Name: %s Surname: %s",
+                getId(),getLogin(),getPassword(),getName(),getSurname());
+        return response;
+    }
 }
