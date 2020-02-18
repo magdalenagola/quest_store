@@ -2,7 +2,6 @@ package codecool.java.dao;
 
 import codecool.java.model.Group;
 import codecool.java.model.Student;
-import codecool.java.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,9 +10,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DbStudentGroupDao extends DbIntermediateDao implements StudentGroupDao {
+public class DbStudentGroupDao extends DbConnectionDao implements StudentGroupDao {
 
     public DbStudentGroupDao() throws SQLException, ClassNotFoundException {
+        super();
     }
 
     @Override

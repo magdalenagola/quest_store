@@ -1,6 +1,5 @@
 package codecool.java.dao;
 
-import codecool.java.model.BasicConnectionPool;
 import codecool.java.model.Card;
 
 import java.sql.Connection;
@@ -10,8 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DbCardDAO extends DbIntermediateDao implements CardDAO {
-    private BasicConnectionPool pool;
+public class DbCardDAO extends DbConnectionDao implements CardDAO {
 
     public DbCardDAO() throws SQLException, ClassNotFoundException {
         super();

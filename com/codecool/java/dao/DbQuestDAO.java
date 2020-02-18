@@ -1,6 +1,5 @@
 package codecool.java.dao;
 
-import codecool.java.model.BasicConnectionPool;
 import codecool.java.model.Quest;
 
 import java.sql.Connection;
@@ -10,8 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DbQuestDAO extends DbIntermediateDao implements QuestDAO {
-    private BasicConnectionPool pool;
+public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
 
     public DbQuestDAO() throws SQLException, ClassNotFoundException {
         super();
