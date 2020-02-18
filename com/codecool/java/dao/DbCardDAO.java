@@ -17,7 +17,7 @@ public class DbCardDAO extends DbConnectionDao implements CardDAO {
 
     @Override
     public Card selectCardById(int id) throws SQLException {
-        ResultSet rs = super.selectEntryById(id, "cards");
+        ResultSet rs = selectEntryById(id);
         Card card = null;
         while(rs.next()){
             String title = rs.getString("title");
@@ -39,14 +39,26 @@ public class DbCardDAO extends DbConnectionDao implements CardDAO {
         return card;
     }
 
+    private ResultSet selectEntryById(int id) throws SQLException {
+        String orderToSql = "SELECT * FROM cards WHERE id = ?;";
+        Connection c = pool.getConnection();
+        PreparedStatement ps = c.prepareStatement(orderToSql);
+        ps.setInt(1, id);
+        return ps.executeQuery();
+    }
+
     @Override
     public void enableAllCards() throws SQLException {
-        super.enableAllTableEntries("cards");
+        String orderToSql = "UPDATE cards SET is_active = true;";
+        Connection c = pool.getConnection();
+        c.createStatement().execute(orderToSql);
     }
 
     @Override
     public void disableAllCards() throws SQLException {
-        super.disableAllTableEntries("cards");
+        String orderToSql = "UPDATE cards SET is_active = false;";
+        Connection c = pool.getConnection();
+        c.createStatement().execute(orderToSql);
     }
 
     @Override
@@ -68,7 +80,7 @@ public class DbCardDAO extends DbConnectionDao implements CardDAO {
     public List loadAll() throws SQLException {
         List<Object> cards = new ArrayList<>();
         Card card;
-        ResultSet rs = super.selectAllFromTable("cards");
+        ResultSet rs = selectAllFromTable();
         while(rs.next()){
             int id = rs.getInt("id");
             String title = rs.getString("title");
@@ -91,6 +103,12 @@ public class DbCardDAO extends DbConnectionDao implements CardDAO {
         return cards;
     }
 
+    private ResultSet selectAllFromTable() throws SQLException {
+        String orderToSql = ("SELECT * FROM cards");
+        Connection c = pool.getConnection();
+        return c.createStatement().executeQuery(orderToSql);
+    }
+
     @Override
     public void update(Object o) throws SQLException {
         Card card = (Card) o;
@@ -110,12 +128,20 @@ public class DbCardDAO extends DbConnectionDao implements CardDAO {
     @Override
     public void disable(Object o) throws SQLException {
         Card card = (Card) o;
-        super.disableTableEntryById(card.getId(), "cards");
+        String orderToSql = "UPDATE cards SET is_active = true WHERE id = ?;";
+        Connection c = pool.getConnection();
+        PreparedStatement ps = c.prepareStatement(orderToSql);
+        ps.setInt(1, card.getId());
+        ps.execute();
     }
 
     @Override
     public void activate(Object o) throws SQLException {
         Card card = (Card) o;
-        super.enableTableEntryById(card.getId(), "cards");
+        String orderToSql = "UPDATE cards SET is_active = false WHERE id = ?;";
+        Connection c = pool.getConnection();
+        PreparedStatement ps = c.prepareStatement(orderToSql);
+        ps.setInt(1, card.getId());
+        ps.execute();
     }
 }
