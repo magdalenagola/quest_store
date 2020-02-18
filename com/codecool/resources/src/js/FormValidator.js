@@ -5,7 +5,7 @@ export default class FormValidator {
     }
 
     validate() {
-        const errorMessage = document.querySelector('.form__error-message');
+        const errorMessage = document.querySelectorAll('.form__error-message');
         this.btn.onclick = (e) => {
             e.preventDefault();
             if (getIsValid()) {
@@ -28,7 +28,9 @@ export default class FormValidator {
 
             function throwError(i, message) {
                 inputsList[i].classList.add('input--error');
-                errorMessage.textContent = message;
+                for(let i = 0; i < errorMessage.length; i++) {
+                    errorMessage[i].textContent = message;
+                }
                 areValid[i] = false;
             }
 
@@ -42,7 +44,9 @@ export default class FormValidator {
 
             function removeErrorMessage() {
                 for (let i = 0; i < inputsList.length; i++) {
-                    errorMessage.textContent = '';
+                    for(let i = 0; i < errorMessage.length; i++) {
+                        errorMessage[i].textContent = '';
+                    }
                 }
             }
 

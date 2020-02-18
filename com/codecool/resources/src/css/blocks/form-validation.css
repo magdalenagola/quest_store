@@ -3,19 +3,20 @@
 }
 
 .form__error-message {
+    top: 7px;
+    left: 60px;
     position: absolute;
     font-family: 'Roboto', sans-serif;
     font-size: 17px;
     color: #e21c1c;
 }
 
-.add-mentor__form .form__error-message {
+.add-user__form .form__error-message {
     top: 13px;
-    left: 60px;
 }
 
 @media (max-width: 768px) {
-    .add-mentor__form .form__error-message {
+    .add-user__form .form__error-message {
         top: 5px;
         left: 20px;
     }
