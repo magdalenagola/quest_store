@@ -2,6 +2,7 @@ package codecool.java.view;
 
 import codecool.java.model.*;
 
+import java.sql.SQLException;
 import java.util.IllegalFormatConversionException;
 import java.util.List;
 import java.util.Scanner;
@@ -82,12 +83,12 @@ public class TerminalView implements Display{
         }
     }
 
-    public void displayCardTransaction(CardTransaction ct) {
+    public void displayCardTransaction(Transaction ct) throws SQLException, ClassNotFoundException {
         System.out.println(ct.toString());
     }
 
-    public void displayCardTransactions(List<Transaction> cts) {
-        for(CardTransaction cardTransaction: cts){
+    public void displayCardTransactions(List<Transaction> cts) throws SQLException, ClassNotFoundException {
+        for(Transaction cardTransaction: cts){
             displayCardTransaction(cardTransaction);
         }
     }

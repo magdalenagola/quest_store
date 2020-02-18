@@ -4,10 +4,8 @@ import codecool.java.model.BasicConnectionPool;
 import codecool.java.model.User;
 import codecool.java.model.UserFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+
 
 public class DbLoginDAO implements LoginDao {
     private BasicConnectionPool pool;
@@ -21,8 +19,7 @@ public class DbLoginDAO implements LoginDao {
     @Override
     public ResultSet findLoginInfo(String providedLogin, String providedPassword) throws SQLException {
         Connection c = pool.getConnection();
-        PreparedStatement ps = c.prepareStatement("SELECT * FROM USER" +
-                "WHERE email = ? AND password = ?;");
+        PreparedStatement ps = c.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?;");
         ps.setString(1, providedLogin);
         ps.setString(2, providedPassword);
         return ps.executeQuery();

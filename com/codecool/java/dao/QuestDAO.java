@@ -5,7 +5,7 @@ import codecool.java.model.Quest;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface QuestDao extends DAO {
+public interface QuestDAO extends DAO {
     Object selectQuestById(int id) throws SQLException;
     void enableAllQuests() throws SQLException;
     void disableAllQuests() throws SQLException;

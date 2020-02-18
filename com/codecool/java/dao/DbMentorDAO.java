@@ -32,7 +32,7 @@ public class DbMentorDAO implements MentorDAO {
     }
 
     @Override
-    public void save(T t) throws SQLException {
+    public void save(Object t) throws SQLException {
         Connection c = pool.getConnection();
         Mentor mentor = (Mentor) t;
         PreparedStatement ps = c.prepareStatement("INSERT INTO users(email, password, name, surname, usertype_id, is_active) VALUES(?, ?, ?, ?, ?, ?);");
@@ -46,7 +46,7 @@ public class DbMentorDAO implements MentorDAO {
     };
 
     @Override
-    public List<T> loadAll() throws SQLException {
+    public List<Mentor> loadAll() throws SQLException {
         Connection c = pool.getConnection();
         List<Mentor> mentorList = new ArrayList<>();
         PreparedStatement ps = c.prepareStatement("SELECT * FROM users JOIN usertypes ON (user.type_id = usertypes.id) WHERE usertype.id = 2;");
@@ -61,11 +61,11 @@ public class DbMentorDAO implements MentorDAO {
             Mentor mentor = new Mentor(id, email, password, name, surname, getPrimarySkillById(id), isActive);
             mentorList.add(mentor);
         }
-        return (List<t>) mentorList;
+        return  mentorList;
     };
 
     @Override
-    public void update(T t) throws SQLException {
+    public void update(Object t) throws SQLException {
         Connection c = pool.getConnection();
         Mentor mentor = (Mentor) t;
         PreparedStatement ps = c.prepareStatement(String.format("UPDATE users SET email =?," +
@@ -78,7 +78,7 @@ public class DbMentorDAO implements MentorDAO {
     };
 
     @Override
-    public void disable(T t) throws SQLException {
+    public void disable(Object t) throws SQLException {
         Connection c = pool.getConnection();
         Mentor mentor = (Mentor) t;
         PreparedStatement ps = c.prepareStatement(String.format("UPDATE users SET is_active = false WHERE id = %d;", mentor.getId()));
@@ -86,7 +86,7 @@ public class DbMentorDAO implements MentorDAO {
     };
 
     @Override
-    public void activate(T t) throws SQLException {
+    public void activate(Object t) throws SQLException {
         Connection c = pool.getConnection();
         Mentor mentor = (Mentor) t;
         PreparedStatement ps = c.prepareStatement(String.format("UPDATE users SET is_active = true WHERE id = %d;", mentor.getId()));

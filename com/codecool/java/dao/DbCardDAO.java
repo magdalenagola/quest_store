@@ -10,10 +10,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DbCardDao extends DbIntermediateDao implements CardDao {
+public class DbCardDAO extends DbIntermediateDao implements CardDAO {
     private BasicConnectionPool pool;
 
-    public DbCardDao() throws SQLException, ClassNotFoundException {
+    public DbCardDAO() throws SQLException, ClassNotFoundException {
         super();
     }
 
@@ -30,12 +30,12 @@ public class DbCardDao extends DbIntermediateDao implements CardDao {
             int cost = rs.getInt("cost");
             card = new Card(
                     id,
-                    title,
+                    cost,
                     description,
                     image,
-                    quantity,
                     isActive,
-                    cost
+                    quantity,
+                    title
             );
         }
         return card;
@@ -81,12 +81,12 @@ public class DbCardDao extends DbIntermediateDao implements CardDao {
             int cost = rs.getInt("cost");
             card = new Card(
                     id,
-                    title,
+                    cost,
                     description,
                     image,
-                    quantity,
                     isActive,
-                    cost
+                    quantity,
+                    title
             );
             cards.add(card);
         }

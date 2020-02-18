@@ -17,7 +17,7 @@ public class LoginController {
         this.display = new TerminalView();
     }
 
-    public User authenticate() {
+    public User authenticate() throws NotInDatabaseException{
         display.displayMessage("Program start.");
         User user = null;
         try {
@@ -27,12 +27,8 @@ public class LoginController {
             display.displayMessage("Password: ");
             String password = display.getStringInput();
             user = dao.logIn(login, password);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (NotInDatabaseException e) {
-            display.displayMessage("User not found in the records.");
+        } catch (SQLException | ClassNotFoundException e) {
+            display.displayMessage(e.getMessage());
         }
         return user;
     }

@@ -17,7 +17,7 @@ public abstract class Transaction {
     }
 
     @Override
-    public String toString() throws SQLException {
+    public String toString() {
         return "itemID: " + itemId + ", userID: " + userId + ", date: " + date + ", cost: " + cost;
     }
 

@@ -10,10 +10,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DbQuestDao extends DbIntermediateDao implements QuestDao {
+public class DbQuestDAO extends DbIntermediateDao implements QuestDAO {
     private BasicConnectionPool pool;
 
-    public DbQuestDao() throws SQLException, ClassNotFoundException {
+    public DbQuestDAO() throws SQLException, ClassNotFoundException {
         super();
     }
 

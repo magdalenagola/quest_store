@@ -2,14 +2,14 @@ package codecool.java.model;
 
 public class Card {
     private int Id;
-    private float cost;
+    private int cost;
     private String description;
     private String imageName;
     private boolean isActive;
     private int quantity;
     private String title;
 
-    public Card(int id, float cost, String description, String imageName, boolean isActive, int quantity, String title) {
+    public Card(int id, int cost, String description, String imageName, boolean isActive, int quantity, String title) {
         Id = id;
         this.cost = cost;
         this.description = description;
@@ -19,7 +19,7 @@ public class Card {
         this.title = title;
     }
 
-    public Card(float cost, String description, String imageName, boolean isActive, int quantity, String title) {
+    public Card(int cost, String description, String imageName, boolean isActive, int quantity, String title) {
         this.cost = cost;
         this.description = description;
         this.imageName = imageName;
@@ -36,7 +36,7 @@ public class Card {
         Id = id;
     }
 
-    public void setCost(float cost) {
+    public void setCost(int cost) {
         this.cost = cost;
     }
 
@@ -60,7 +60,7 @@ public class Card {
         this.title = title;
     }
 
-    public float getCost() {
+    public int getCost() {
         return cost;
     }
 

@@ -17,10 +17,10 @@ public class DbStudentGroupDao extends DbIntermediateDao implements StudentGroup
     }
 
     @Override
-    public List<User> selectGroupUsers(int id) throws SQLException {
+    public List<Student> selectGroupUsers(int id) throws SQLException {
         ResultSet rs;
-        User student;
-        List<User> students = new ArrayList<>();
+        Student student;
+        List<Student> students = new ArrayList<>();
         String query = "SELECT * FROM users JOIN usertypes ON users.usertype_id = usertypes.id JOIN student_details sd on users.id = sd.user_id JOIN student_groups sg on sd.group_id = sg.id WHERE student_groups.id = ?;";
         Connection c = pool.getConnection();
         PreparedStatement ps = c.prepareStatement(query);
@@ -34,7 +34,7 @@ public class DbStudentGroupDao extends DbIntermediateDao implements StudentGroup
             String surname = rs.getString("surname");
             boolean isActive = rs.getBoolean("is_active");
             String group = rs.getString("student_groups.name");
-            student = new Student(studentId, isActive, email, password, name, surname, 0, group);
+            student = new Student(studentId, email, password, name, surname,isActive);
             students.add(student);
         }
         return students;
@@ -42,7 +42,7 @@ public class DbStudentGroupDao extends DbIntermediateDao implements StudentGroup
 
     @Override
     public Group selectGroup(int id) throws SQLException {
-        List<User> students = selectGroupUsers(id);
+        List<Student> students = selectGroupUsers(id);
         Group group = null;
         ResultSet rs = super.selectEntryById(id, "student_groups");
         while(rs.next()) {
