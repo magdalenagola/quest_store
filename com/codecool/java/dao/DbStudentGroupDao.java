@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DbStudentGroupDao extends DbConnectionDao implements StudentGroupDao {
+public class DbStudentGroupDao extends DbIntermediateDao implements StudentGroupDao {
 
     public DbStudentGroupDao() throws SQLException, ClassNotFoundException {
         super();

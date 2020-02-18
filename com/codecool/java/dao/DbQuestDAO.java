@@ -17,7 +17,7 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
 
     @Override
     public Quest selectQuestById(int id) throws SQLException {
-        ResultSet rs = super.selectEntryById(id, "quests");
+        ResultSet rs = selectEntryById(id);
         Quest quest = null;
         while(rs.next()){
             String title = rs.getString("title");
@@ -41,14 +41,26 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
         return quest;
     }
 
+    private ResultSet selectEntryById(int id) throws SQLException {
+        String orderToSql = "SELECT * FROM quests WHERE id = ?;";
+        Connection c = pool.getConnection();
+        PreparedStatement ps = c.prepareStatement(orderToSql);
+        ps.setInt(1, id);
+        return ps.executeQuery();
+    }
+
     @Override
     public void enableAllQuests() throws SQLException {
-        super.enableAllTableEntries("quests");
+        String orderToSql = "UPDATE quests SET is_active = true;";
+        Connection c = pool.getConnection();
+        c.createStatement().execute(orderToSql);
     }
 
     @Override
     public void disableAllQuests() throws SQLException {
-        super.disableAllTableEntries("quests");
+        String orderToSql = "UPDATE quests SET is_active = false;";
+        Connection c = pool.getConnection();
+        c.createStatement().execute(orderToSql);
     }
 
     @Override
