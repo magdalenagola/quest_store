@@ -2,7 +2,6 @@ package codecool.java.dao;
 
 import codecool.java.model.BasicConnectionPool;
 import codecool.java.model.Student;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
