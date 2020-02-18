@@ -1,4 +1,5 @@
-.add-mentor {
+.add-mentor,
+.edit-mentor {
     display: none;
     position: absolute;
     width: 100%;
@@ -8,7 +9,8 @@
     background-color: #e6e6e6;
 }
 
-.add-mentor__wraper {
+.add-mentor__wraper,
+.edit-mentor__wraper {
     width: 100%;
     height: 100%;
     background-color: #e6e6e6;
@@ -16,7 +18,8 @@
 }
 
 
-.add-mentor__form {
+.add-mentor__form,
+.edit-mentor__form {
     font-family: 'Roboto', sans-serif;
     color: #575757;
     width: 40vw;
@@ -31,7 +34,8 @@
     border-radius: 2px;
 }
 
-.add_mentor_close-btn {
+.add_mentor_close-btn,
+.edit_mentor_close-btn {
     width: 25px;
     height: 25px;
     margin: 0;
@@ -45,12 +49,15 @@
     cursor: pointer;
 }
 
-.add_mentor_cross {
+.add_mentor_cross,
+.edit_mentor_cross {
     position: relative;
 }
 
 .add_mentor_cross::before,
-.add_mentor_cross::after {
+.add_mentor_cross::after,
+.edit_mentor_cross::before,
+.edit_mentor_cross::after {
     display: inline-block;
     position: absolute;
     top: 0;
@@ -61,27 +68,34 @@
     background-color: #414141;
 }
 
-.add_mentor_cross::before {
+.add_mentor_cross::before,
+.edit_mentor_cross::before {
     transform: rotate(45deg);
 }
 
-.add_mentor_cross::after {
+.add_mentor_cross::after,
+.edit_mentor_cross::after {
     transform: rotate(-45deg);
 }
 
 .add_mentor_close-btn:hover .add_mentor_cross::after,
-.add_mentor_close-btn:hover .add_mentor_cross::before {
+.add_mentor_close-btn:hover .add_mentor_cross::before,
+.edit_mentor_close-btn:hover .add_mentor_cross::after,
+.edit_mentor_close-btn:hover .add_mentor_cross::before {
     width: 27px;
     background-color: #333333;
 }
 
 .add_mentor_close-btn:active .add_mentor_cross::after,
-.add_mentor_close-btn:active .add_mentor_cross::before {
+.add_mentor_close-btn:active .add_mentor_cross::before,
+.edit_mentor_close-btn:active .add_mentor_cross::after,
+.edit_mentor_close-btn:active .add_mentor_cross::before {
     width: 27px;
     background-color: #111111;
 }
 
-.add_mentor_input-wrapper {
+.add_mentor_input-wrapper,
+.edit_mentor_input-wrapper {
     width: 100%;
     margin-bottom: 35px;
     display: flex;
@@ -89,7 +103,8 @@
     box-sizing: border-box;
 }
 
-.add-mentor__input {
+.add-mentor__input,
+.edit-mentor__input {
     padding: 10px;
     font-size: 18px;
     background-color: #f7f7f7;
@@ -102,12 +117,14 @@ input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px #f7f7f7 inset;
 }
 
-.add_mentor_label {
+.add_mentor_label,
+.edit_mentor_label {
     margin-right: 20px;
     font-size: 20px;
 }
 
-.add-mentor__btn {
+.add-mentor__btn,
+.edit-mentor__btn {
     width: 100%;
     border: none;
     border-radius: 20px;
@@ -119,43 +136,51 @@ input:-webkit-autofill {
     background-color: #333333;
 }
 
-.add-mentor__btn:hover {
+.add-mentor__btn:hover,
+.edit-mentor__btn:hover {
     color: #ffffff;
     background-color: #1b1b1b;
 }
 
-.add-mentor__btn:active {
+.add-mentor__btn:active,
+.edit-mentor__btn:active {
     color: #ffffff;
     background-color: #000000;
 }
 
 @media (max-width: 992px) {
-    .add-mentor__form {
+    .add-mentor__form,
+    .edit-mentor__form {
         width: 80vw;
     }
 }
 
 @media (max-width: 768px) {
-    .add-mentor__form {
+    .add-mentor__form,
+    .edit-mentor__form {
         width: 85vw;
         padding: 55px 20px 30px 20px;
     }
 
-    .add_mentor_input-wrapper {
+    .add_mentor_input-wrapper,
+    .edit_mentor_input-wrapper {
         flex-direction: column;
         align-items: center;
     }
 
-    .add_mentor_label {
+    .add_mentor_label,
+    .edit_mentor_label {
         width: 80%;
         margin-bottom: 10px;
     }
 
-    .add-mentor__input {
+    .add-mentor__input,
+    .edit-mentor__input {
         width: 80%;
     }
 
-    .add-mentor__btn {
+    .add-mentor__btn,
+    .edit-mentor__btn {
         width: 84%;
     }
 }
