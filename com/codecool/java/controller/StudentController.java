@@ -1,17 +1,12 @@
 package codecool.java.controller;
 
-import codecool.java.dao.DbCardDao;
-import codecool.java.dao.DbTransactionsDAO;
-import codecool.java.dao.TransactionsDAO;
-import codecool.java.model.Card;
-import codecool.java.model.CardTransaction;
-import codecool.java.model.QuestTransaction;
+import codecool.java.dao.*;
+import codecool.java.model.*;
 import codecool.java.view.TerminalView;
 
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,8 +17,8 @@ public class StudentController {
     private TerminalView terminalView;
 
     public StudentController() throws SQLException, ClassNotFoundException {
-        cardDAO = new DbCardDao();
-        questDAO = new DbQuestDao();
+        cardDAO = new DbCardDAO();
+        questDAO = new DbQuestDAO();
         transactionsDAO = new DbTransactionsDAO();
         terminalView = new TerminalView();
     }
@@ -34,58 +29,78 @@ public class StudentController {
         int userInput = terminalView.getOptionInput(options.length);
         switch(userInput){
             case 1:
-                showAllCards();
+                try {
+                    showAllCards();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 break;
             case 2:
-                showAllQuests();
+                try {
+                    showAllQuests();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 break;
             case 3:
-                showTransactions();
+                try {
+                    showTransactions();
+                } catch (SQLException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
                 break;
             case 4:
-                buyCard(studentId);
+                try {
+                    buyCard(studentId);
+                } catch (SQLException | ParseException e) {
+                    e.printStackTrace();
+                }
                 break;
             case 5:
-                submitQuest(studentId);
+                try {
+                    submitQuest(studentId);
+                } catch (SQLException | ParseException e) {
+                    e.printStackTrace();
+                }
         }
     }
 
-    private void showAllCards() {
+    private void showAllCards() throws SQLException {
         List<Card> cards = getCards();
         terminalView.displayCards(cards);
     }
 
-    private void showAllQuests() {
+    private void showAllQuests() throws SQLException {
         List<Quest> quests = getQuests();
         terminalView.displayQuests(quests);
     }
 
-    private List<Quest> getQuests() {
+    private List<Quest> getQuests() throws SQLException {
         return questDAO.loadAll();
     }
 
-    private List<Card> getCards() {
+    private List<Card> getCards() throws SQLException {
         return cardDAO.loadAll();
     }
 
-    private List<Transaction> getTransactions() {
+    private List<Transaction> getTransactions() throws SQLException {
         return transactionsDAO.loadAll();
     }
 
-    private void showTransactions() {
+    private void showTransactions() throws SQLException, ClassNotFoundException {
         List<Transaction> transactions = getTransactions();
         terminalView.displayCardTransactions(transactions);
     }
 
-    private void buyCard(int studentId) {
+    private void buyCard(int studentId) throws SQLException, ParseException {
         showAllCards();
         List<Card> cards = getCards();
         int cardToBuyIndex = terminalView.getOptionInput(cards.size()) - 1;
         Card cardToBuy = cards.get(cardToBuyIndex);
         int cardToBuyDbIndex = cardToBuy.getId();
         Date todayDate = getTodayDate();
-        CardTransaction cardTransaction = new CardTransaction(cardToBuyDbIndex, studentId, todayDate, cardToBuy.getCost());
-        transactionsDAO.addCardTransaction(cardTransaction);
+        CardTransaction cardTransaction = new CardTransaction(cardToBuyDbIndex, studentId, (java.sql.Date) todayDate, cardToBuy.getCost());
+        transactionsDAO.save(cardTransaction);
     }
 
     private Date getTodayDate() throws ParseException {
@@ -96,14 +111,14 @@ public class StudentController {
         return todayDate;
     }
 
-    private void submitQuest(int studentId) {
+    private void submitQuest(int studentId) throws SQLException, ParseException {
         showAllCards();
         List<Quest> quests = getQuests();
         int questToSubmitIndex = terminalView.getOptionInput(quests.size()) - 1;
         Quest questToSubmit = quests.get(questToSubmitIndex);
         int questToSubmitDbIndex = questToSubmit.getId();
         Date todayDate = getTodayDate();
-        QuestTransaction questTransaction = new QuestTransaction(questToSubmitDbIndex, studentId, todayDate, questToSubmit.getCost());
+        QuestTransaction questTransaction = new QuestTransaction(questToSubmitDbIndex, studentId, (java.sql.Date) todayDate, questToSubmit.getCost());
         transactionsDAO.save(questTransaction);
     }
 }

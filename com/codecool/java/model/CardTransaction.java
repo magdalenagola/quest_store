@@ -1,6 +1,6 @@
 package codecool.java.model;
 
-import codecool.java.dao.DbCardDao;
+import codecool.java.dao.DbCardDAO;
 
 import java.sql.SQLException;
 import java.sql.Date;
@@ -31,10 +31,15 @@ public class CardTransaction extends Transaction {
         return this.cost;
     }
 
-    public String toString() throws SQLException, ClassNotFoundException {
-        DbCardDao dbCardDao = new DbCardDao();
-        Card card = dbCardDao.selectCardById(this.cardId);
-        String cardTransactionInfo = "Id: " + this.cardId + ", name: " + card.getTitle();
+    public String toString()  {
+        String cardTransactionInfo = "";
+        try {
+            DbCardDAO dbCardDao = new DbCardDAO();
+            Card card = dbCardDao.selectCardById(this.cardId);
+            cardTransactionInfo = "Id: " + this.cardId + ", name: " + card.getTitle();
+        }catch(SQLException | ClassNotFoundException e){
+            e.printStackTrace();
+        }
         return cardTransactionInfo;
     }
 }

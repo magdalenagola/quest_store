@@ -4,7 +4,7 @@ import codecool.java.model.*;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public class DbTransactionsDAO implements TransactionsDAO{

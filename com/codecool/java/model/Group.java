@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Group {
-    private List<User> students;
+    private List<Student> students;
     private int id;
     private String name;
     private boolean isActive;
 
-    public Group(List<User> students, int id, String name, boolean isActive) {
+    public Group(List<Student> students, int id, String name, boolean isActive) {
         this.students = students;
         this.id = id;
         this.name = name;
@@ -19,17 +19,17 @@ public class Group {
     @Override
     public String toString() {
         String studentNames = "";
-        for (User student : students){
+        for (Student student : students){
             studentNames += student.getName() + " " + student.getSurname() + " ";
         }
         return "ID: " + id + ", name: " + name + ", isActive: " + isActive + ", students: " + studentNames;
     }
 
-    public List<User> getStudents() {
+    public List<Student> getStudents() {
         return students;
     }
 
-    public void setStudents(List<User> students) {
+    public void setStudents(List<Student> students) {
         this.students = students;
     }
 

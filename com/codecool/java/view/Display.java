@@ -2,6 +2,7 @@ package codecool.java.view;
 
 import codecool.java.model.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface Display {
@@ -15,8 +16,8 @@ public interface Display {
     public void displayQuests(List<Quest> quests);
     public void displayCard(Card card);
     public void displayCards(List<Card> card);
-    public void displayCardTransaction(CardTransaction ct);
-    public void displayCardTransactions(List<Transaction> cts);
+    public void displayCardTransaction(Transaction ct) throws SQLException, ClassNotFoundException;
+    public void displayCardTransactions(List<Transaction> cts) throws SQLException, ClassNotFoundException;
     public void displayQuestTransaction(QuestTransaction qt);
     public void displayQuestTransaction(List<QuestTransaction> qts);
     public void displayMessage(String msg);

@@ -4,10 +4,8 @@ import codecool.java.model.BasicConnectionPool;
 import codecool.java.model.User;
 import codecool.java.model.UserFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+
 
 public class DbLoginDAO implements LoginDao {
     private BasicConnectionPool pool;

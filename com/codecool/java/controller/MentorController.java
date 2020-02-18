@@ -3,10 +3,13 @@ package codecool.java.controller;
 import codecool.java.dao.*;
 import codecool.java.model.*;
 import codecool.java.view.*;
+
+
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
 
 public class MentorController {
     Display view;
@@ -60,7 +63,7 @@ public class MentorController {
             view.displayCardTransactions(notApprovedTransactions);
             int studentTransactionIndex = view.getOptionInput(notApprovedTransactions.size());
             Transaction studentTransaction = notApprovedTransactions.get(studentTransactionIndex-1);
-            studentTransaction.setDate(getTodayDate());
+            studentTransaction.setDate((java.sql.Date) getTodayDate());
             transactionsDAO.update(studentTransaction);
         } catch (SQLException | ClassNotFoundException | ParseException e) {
             view.displayErrorMessage(e);
@@ -71,12 +74,12 @@ public class MentorController {
         String datePattern = "MM-dd-yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(datePattern);
         String stringDate = simpleDateFormat.format(new Date());
-        Date todayDate = new SimpleDateFormat("MM-dd-yyyy").parse(stringDate);
+        Date todayDate = (Date) new SimpleDateFormat("MM-dd-yyyy").parse(stringDate);
         return todayDate;
     }
     private void updateCard() {
         try {
-            CardDao cardDAO = new DbCardDao();
+            CardDAO cardDAO = new DbCardDAO();
             List<Card> cards = cardDAO.loadAll();
             view.displayCards(cards);
             int cardChoice = view.getOptionInput(cards.size());
@@ -111,10 +114,10 @@ public class MentorController {
 
     private void addCard() {
         try{
-            CardDao cardDAO = new DbCardDao();
+            CardDAO cardDAO = new DbCardDAO();
             String[] options = {"Cost","Description", "Image","Quantity","Title"};
             String[] inputs = view.getInputs(options);
-            Card card = new Card(Float.parseFloat(inputs[0]),inputs[1],inputs[2],true,Integer.parseInt(inputs[3]),inputs[4]);
+            Card card = new Card(Integer.parseInt(inputs[0]),inputs[1],inputs[2],true,Integer.parseInt(inputs[3]),inputs[4]);
             cardDAO.save(card);
         }catch(SQLException | ClassNotFoundException e){
             view.displayErrorMessage(e);
@@ -122,11 +125,11 @@ public class MentorController {
     }
 
     private void addQuest() {
-        String[] options = {"Title", "Description","Image","Category","Cost"};
+        String[] options = {"Title", "Description","Image","Quantity","Cost","Category"};
         String[] inputs = view.getInputs(options);
         try{
-        QuestDao questDAO = new DbQuestDao();
-        Quest quest = new Quest(inputs[0],inputs[1],inputs[2],inputs[3],true);
+        QuestDAO questDAO = new DbQuestDAO();
+        Quest quest = new Quest(0,inputs[0],inputs[1],inputs[2],Integer.parseInt(inputs[3]),true,Integer.parseInt(inputs[4]),inputs[5]);
         questDAO.save(quest);
         }catch(SQLException | ClassNotFoundException e){
             view.displayErrorMessage(e);
