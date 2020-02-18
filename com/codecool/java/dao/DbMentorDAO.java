@@ -49,7 +49,7 @@ public class DbMentorDAO implements MentorDAO {
     public List<Mentor> loadAll() throws SQLException {
         Connection c = pool.getConnection();
         List<Mentor> mentorList = new ArrayList<>();
-        PreparedStatement ps = c.prepareStatement("SELECT * FROM users JOIN usertypes ON (user.type_id = usertypes.id) WHERE usertype.id = 2;");
+        PreparedStatement ps = c.prepareStatement("SELECT * FROM users JOIN usertypes ON (users.usertype_id = usertypes.id) WHERE usertypes.id = 2;");
         ResultSet rs = ps.executeQuery();
         while(rs.next()) {
             Integer id = rs.getInt("id");

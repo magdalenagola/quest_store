@@ -23,7 +23,7 @@ public class DbTransactionsDAO implements TransactionsDAO{
         PreparedStatement ps = c.prepareStatement("SELECT * FROM student_quests WHERE date_approved IS NULL");
         ResultSet rs = ps.executeQuery();
         while(rs.next()) {
-            Integer coinsReceived = rs.getInt("coins_received");
+            Integer coinsReceived = rs.getInt("cost");
             Date dateAdded = rs.getDate("date_added");
             Integer questId = rs.getInt("quest_id");
             Integer userId = rs.getInt("user_id");
@@ -42,7 +42,7 @@ public class DbTransactionsDAO implements TransactionsDAO{
         ResultSet rs = ps.executeQuery();
         while(rs.next()) {
             Integer id = rs.getInt("card_id");
-            Integer coinsPaid = rs.getInt("coins_paid");
+            Integer coinsPaid = rs.getInt("cost");
             Date dateBought = rs.getDate("date_bought");
             Integer userId = rs.getInt("user_id");
             Transaction cardTransaction = new CardTransaction(id, userId, dateBought, coinsPaid);
@@ -52,7 +52,7 @@ public class DbTransactionsDAO implements TransactionsDAO{
         ps.setInt(1, student.getId());
         rs = ps.executeQuery();
         while(rs.next()) {
-            Integer coinsReceived = rs.getInt("coins_received");
+            Integer coinsReceived = rs.getInt("cost");
             Date dateAdded = rs.getDate("date_added");
             Date dateApproved = rs.getDate("date_approved");
             Integer questId = rs.getInt("quest_id");
@@ -123,7 +123,7 @@ public class DbTransactionsDAO implements TransactionsDAO{
         ResultSet rs = ps.executeQuery();
         while(rs.next()) {
             Integer id = rs.getInt("card_id");
-            Integer coinsPaid = rs.getInt("coins_paid");
+            Integer coinsPaid = rs.getInt("cost");
             Date dateBought = rs.getDate("date_bought");
             Integer userId = rs.getInt("user_id");
             Transaction cardTransaction = new CardTransaction(id, userId, dateBought, coinsPaid);
@@ -132,7 +132,7 @@ public class DbTransactionsDAO implements TransactionsDAO{
         ps = c.prepareStatement("SELECT * FROM student_quests");
         rs = ps.executeQuery();
         while(rs.next()) {
-            Integer coinsReceived = rs.getInt("coins_received");
+            Integer coinsReceived = rs.getInt("cost");
             Date dateAdded = rs.getDate("date_added");
             Date dateApproved = rs.getDate("date_approved");
             Integer questId = rs.getInt("quest_id");
