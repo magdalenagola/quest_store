@@ -19,8 +19,7 @@ public class DbLoginDAO implements LoginDao {
     @Override
     public ResultSet findLoginInfo(String providedLogin, String providedPassword) throws SQLException {
         Connection c = pool.getConnection();
-        PreparedStatement ps = c.prepareStatement("SELECT * FROM USER" +
-                "WHERE email = ? AND password = ?;");
+        PreparedStatement ps = c.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?;");
         ps.setString(1, providedLogin);
         ps.setString(2, providedPassword);
         return ps.executeQuery();
