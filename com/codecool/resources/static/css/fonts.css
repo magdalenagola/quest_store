@@ -1,30 +1,30 @@
 @font-face {
     font-family: "Roboto";
-    src: url('../fonts/Roboto-Regular.ttf');
+    src: url('static/fonts/Roboto-Regular.ttf');
     font-weight: normal;
 }
 
 @font-face {
     font-family: "Roboto";
-    src: url('../fonts/Roboto-Light.ttf');
+    src: url('static/fonts/Roboto-Light.ttf');
     font-weight: lighter;
 }
 
 @font-face {
     font-family: "Roboto";
-    src: url('../fonts/Roboto-Bold.ttf');
+    src: url('static/fonts/Roboto-Bold.ttf');
     font-weight: bold;
 }
 
 @font-face {
     font-family: "Roboto";
-    src: url('../fonts/Roboto-Italic.ttf');
+    src: url('static/fonts/Roboto-Italic.ttf');
     font-weight: normal;
     font-style: italic;
 }
 
 @font-face {
     font-family: "Optimus";
-    src: url('../fonts/OptimusPrinceps.ttf');
+    src: url('static/fonts/OptimusPrinceps.ttf');
     font-weight: normal;
 }
