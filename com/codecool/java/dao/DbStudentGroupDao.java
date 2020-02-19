@@ -2,7 +2,6 @@ package codecool.java.dao;
 
 import codecool.java.model.Group;
 import codecool.java.model.Student;
-import codecool.java.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,7 +21,7 @@ public class DbStudentGroupDao extends DbIntermediateDao implements StudentGroup
         Student student;
         List<Student> students = new ArrayList<>();
         String query = "SELECT * FROM users JOIN usertypes ON users.usertype_id = usertypes.id JOIN student_details sd on users.id = sd.user_id JOIN student_groups sg on sd.group_id = sg.id WHERE student_groups.id = ?;";
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         PreparedStatement ps = c.prepareStatement(query);
         ps.setInt(1, id);
         rs = ps.executeQuery(query);
@@ -91,7 +90,7 @@ public class DbStudentGroupDao extends DbIntermediateDao implements StudentGroup
     public void update(Object o) throws SQLException {
         Group group = (Group) o;
         String orderToSql = "UPDATE student_groups SET name = ? WHERE id = ?;";
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         PreparedStatement ps = c.prepareStatement(orderToSql);
         ps.setString(1, group.getName());
         ps.setInt(2, group.getId());

@@ -51,7 +51,7 @@ public class MentorController {
                 view.displayMessage(student.toString());
                 view.displayMessage("Coins:" + String.valueOf(studentDAO.getCoins(student)));
             }
-        }catch(SQLException | ClassNotFoundException e){
+        }catch(SQLException e){
             view.displayErrorMessage(e);
         }
     }
@@ -125,7 +125,7 @@ public class MentorController {
     }
 
     private void addQuest() {
-        String[] options = {"Title", "Description","Image","Quantity","Cost","Category"};
+        String[] options = {"Title", "Description","Image","Cost","Category"};
         String[] inputs = view.getInputs(options);
         try{
         QuestDAO questDAO = new DbQuestDAO();
@@ -143,7 +143,7 @@ public class MentorController {
         String[] inputs = view.getInputs(options);
         Student student = new Student(inputs[0],inputs[1],inputs[2],inputs[3],true);
         studentDAO.save(student);
-        }catch(SQLException | ClassNotFoundException e){
+        }catch(SQLException e){
             view.displayErrorMessage(e);
         }
 

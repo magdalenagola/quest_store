@@ -1,27 +1,25 @@
 package codecool.java.dao;
 
-import codecool.java.model.BasicConnectionPool;
+import codecool.java.model.DatabaseConnection;
 import codecool.java.model.Student;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DbstudentDAO implements StudentDAO{
-    private BasicConnectionPool pool;
+    private DatabaseConnection dbconnection;
 
-    public DbstudentDAO() throws SQLException, ClassNotFoundException {
-        Class.forName("org.postgresql.Driver");
-        this.pool = BasicConnectionPool.create("jdbc:postgresql://ec2-176-34-237-141.eu-west-1.compute.amazonaws.com:5432/dbc5jifafq3j1h?sslmode=require",
-                "utiuhfgjckzuoq", "17954f632e3663cbadb55550dd636f4c3a645ade56c3342ee89f71fc732c9672");
-
+    public DbstudentDAO(){
+        dbconnection = new DatabaseConnection();
     }
 
     @Override
-    public List<Student> loadAll() throws SQLException {
+    public List<Student> loadAll(){
         List<Student> result = new ArrayList<>();
-        Connection c = pool.getConnection();
-        PreparedStatement ps = c.prepareStatement("SELECT * FROM users JOIN usertypes ON (user.usertype_id = usertypes.id) " +
-                "WHERE usertype = Student;");
+        Connection c = dbconnection.getConnection();
+        try{
+        PreparedStatement ps = c.prepareStatement("SELECT * FROM users JOIN usertypes ON (users.usertype_id = usertypes.id) " +
+                "WHERE usertype = 'Student';");
         ResultSet rs = ps.executeQuery();
         while(rs.next()){
             int id = rs.getInt("id");
@@ -33,12 +31,18 @@ public class DbstudentDAO implements StudentDAO{
             Student student = new Student(id,email,password,name,surname,is_active);
             result.add(student);
         }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            dbconnection.closeConnection(c);
+        }
         return result;
     }
 
     @Override
-    public void save(Object o) throws SQLException {
-        Connection c = pool.getConnection();
+    public void save(Object o){
+        Connection c = dbconnection.getConnection();
+        try{
         Student student = (Student) o;
         PreparedStatement ps = c.prepareStatement("INSERT INTO users (email,password,name,surname,usertype_id,is_active) " +
                 "VALUES(?,?,?,?,?,?)");
@@ -49,47 +53,71 @@ public class DbstudentDAO implements StudentDAO{
         ps.setInt(5, 1);
         ps.setBoolean(6, true);
         ps.executeUpdate();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally {
+            dbconnection.closeConnection(c);
+        }
     }
 
     @Override
-    public void update(Object o) throws SQLException {
-        Connection c = pool.getConnection();
+    public void update(Object o){
+        Connection c = dbconnection.getConnection();
         Student student = (Student) o;
-        PreparedStatement ps = c.prepareStatement("UPDATE users SET email =?," +
-                "password = ?,name = ?,surname = ?,usertype_id = 1,is_active = ?) ");
-        ps.setString(1, student.getLogin());
-        ps.setString(2, student.getPassword());
-        ps.setString(3, student.getName());
-        ps.setString(4, student.getSurname());
-        ps.setBoolean(5, student.isActive());
-        ps.executeUpdate();
+        try {
+            PreparedStatement ps = c.prepareStatement("UPDATE users SET email =?," +
+                    "password = ?,name = ?,surname = ?,usertype_id = 1,is_active = ? WHERE id = ?; ");
+            ps.setString(1, student.getLogin());
+            ps.setString(2, student.getPassword());
+            ps.setString(3, student.getName());
+            ps.setString(4, student.getSurname());
+            ps.setBoolean(5, student.isActive());
+            ps.setInt(5, student.getId());
+            ps.executeUpdate();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally {
+            dbconnection.closeConnection(c);
+        }
     }
 
 
     @Override
-    public int getCoins(Student student) throws SQLException {
-        Connection c = pool.getConnection();
+    public int getCoins(Student student){
+        Connection c = dbconnection.getConnection();
         int studentCoins = 0;
-        PreparedStatement ps = c.prepareStatement(String.format("SELECT  coins FROM student_details WHERE user_id = %d;", student.getId()));
-        ResultSet rs = ps.executeQuery();
-        while(rs.next()){
-            studentCoins = rs.getInt("coins");
+        try{
+            PreparedStatement ps = c.prepareStatement(String.format("SELECT  coins FROM student_details WHERE user_id = %d;", student.getId()));
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                studentCoins = rs.getInt("coins");
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally {
+            dbconnection.closeConnection(c);
         }
         return studentCoins;
     }
 
     @Override
-    public void updateCoins(Student student, int amount) throws SQLException {
-        Connection c = pool.getConnection();
-        PreparedStatement ps = c.prepareStatement(String.format("UPDATE student_details SET coins = (coins + ?)  WHERE user_id = %d;", student.getId()));
-        ps.setInt(1, amount);
-        ps.executeUpdate();
+    public void updateCoins(Student student, int amount){
+        Connection c = dbconnection.getConnection();
+        try {
+            PreparedStatement ps = c.prepareStatement(String.format("UPDATE student_details SET coins = (coins + ?)  WHERE user_id = %d;", student.getId()));
+            ps.setInt(1, amount);
+            ps.executeUpdate();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally {
+            dbconnection.closeConnection(c);
+        }
     }
 
 
     @Override
     public void disable(Object o) throws SQLException {
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         Student student = (Student) o;
         PreparedStatement ps = c.prepareStatement(String.format("UPDATE users SET is_active = false WHERE id = %d;", student.getId()));
         ps.executeUpdate();
@@ -98,7 +126,7 @@ public class DbstudentDAO implements StudentDAO{
 
     @Override
     public void activate(Object o) throws SQLException {
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         Student student = (Student) o;
         PreparedStatement ps = c.prepareStatement(String.format("UPDATE users SET is_active = true WHERE id = %d;", student.getId()));
         ps.executeUpdate();

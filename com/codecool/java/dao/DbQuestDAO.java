@@ -1,8 +1,6 @@
 package codecool.java.dao;
 
-import codecool.java.model.BasicConnectionPool;
 import codecool.java.model.Quest;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DbQuestDAO extends DbIntermediateDao implements QuestDAO {
-    private BasicConnectionPool pool;
 
     public DbQuestDAO() throws SQLException, ClassNotFoundException {
         super();
@@ -56,17 +53,15 @@ public class DbQuestDAO extends DbIntermediateDao implements QuestDAO {
     @Override
     public void save(Object o) throws SQLException {
         Quest quest = (Quest) o;
-        String orderToSql = "INSERT INTO quests (title, description, image, category, is_active, cost, category) VALUES (?, ?, ?, ?, ?, ?, ?) WHERE id = ?;";
-        Connection c = pool.getConnection();
+        String orderToSql = "INSERT INTO quests (title, description, image,is_active, cost, category) VALUES (?, ?, ?, ?, ?, ?);";
+        Connection c = dbconnection.getConnection();
         PreparedStatement ps = c.prepareStatement(orderToSql);
         ps.setString(1, quest.getTitle());
         ps.setString(2, quest.getDescription());
         ps.setString(3, quest.getImage());
-        ps.setInt(4, quest.getQuantity());
-        ps.setBoolean(5, quest.isActive());
-        ps.setInt(6, quest.getCost());
-        ps.setString(7, quest.getCategory());
-        ps.setInt(8, quest.getId());
+        ps.setBoolean(4, quest.isActive());
+        ps.setInt(5, quest.getCost());
+        ps.setString(6, quest.getCategory());
         ps.execute();
     }
 
@@ -103,7 +98,7 @@ public class DbQuestDAO extends DbIntermediateDao implements QuestDAO {
     public void update(Object o) throws SQLException {
         Quest quest = (Quest) o;
         String orderToSql = "INSERT INTO quests (title, description, image, category, is_active, cost, category) VALUES (?, ?, ?, ?, ?, ?, ?);";
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         PreparedStatement ps = c.prepareStatement(orderToSql);
         ps.setString(1, quest.getTitle());
         ps.setString(2, quest.getDescription());
