@@ -1,8 +1,7 @@
 package codecool.java.dao;
 
-import codecool.java.model.BasicConnectionPool;
-import codecool.java.model.Card;
 
+import codecool.java.model.Card;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DbCardDAO extends DbIntermediateDao implements CardDAO {
-    private BasicConnectionPool pool;
 
     public DbCardDAO() throws SQLException, ClassNotFoundException {
         super();
@@ -55,7 +53,7 @@ public class DbCardDAO extends DbIntermediateDao implements CardDAO {
     public void save(Object o) throws SQLException {
         Card card = (Card) o;
         String orderToSql = "INSERT INTO cards (title, description, image, quantity, is_active, cost) VALUES (?, ?, ?, ?, ?, ?);";
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         PreparedStatement ps = c.prepareStatement(orderToSql);
         ps.setString(1, card.getTitle());
         ps.setString(2, card.getDescription());
@@ -97,7 +95,7 @@ public class DbCardDAO extends DbIntermediateDao implements CardDAO {
     public void update(Object o) throws SQLException {
         Card card = (Card) o;
         String orderToSql = "UPDATE cards SET title = ?, description = ?, image = ?, quantity = ?, is_active = ?, cost = ? WHERE id = ?;";
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         PreparedStatement ps = c.prepareStatement(orderToSql);
         ps.setString(1, card.getTitle());
         ps.setString(2, card.getDescription());
