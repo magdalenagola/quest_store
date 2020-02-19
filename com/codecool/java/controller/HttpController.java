@@ -1,5 +1,6 @@
 package codecool.java.controller;
 
+import codecool.java.handler.LoginHandler;
 import codecool.java.handler.StaticHandler;
 import com.sun.net.httpserver.HttpServer;
 
@@ -10,7 +11,7 @@ public class HttpController {
         public void init() throws IOException {
             int port = 8000;
             HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
-           // server.createContext("/student", new StudentController());
+            server.createContext("/login", new LoginHandler());
             server.createContext("/static", new StaticHandler());
             server.setExecutor(null);
             server.start();
