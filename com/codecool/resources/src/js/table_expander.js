@@ -9,14 +9,15 @@ export default function expandTableContent() {
             transtactionItemsContent[i].classList.toggle('transactions__content-wrapper--opened');
         })
     }
-    for (let i = 1; i < userItems.length; i++) {
-        userSalary[i-1].textContent += ' $';
-        userItems[i].addEventListener('click', (e) => {
-            if(e.toElement.tagName == 'H3') {
-                userItemsContent[i].classList.toggle('user__content-wrapper--opened');
-            }
-        })
-    }
 
-    
+    for (let i = 1; i < userItems.length; i++) {
+        if (userSalary[i] !== undefined) {
+            userSalary[i - 1].textContent += ' $';
+            userItems[i].addEventListener('click', (e) => {
+                if (e.toElement.tagName == 'H3') {
+                    userItemsContent[i].classList.toggle('user__content-wrapper--opened');
+                }
+            })
+        }
+    }
 }
