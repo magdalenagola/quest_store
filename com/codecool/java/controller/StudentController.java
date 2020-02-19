@@ -99,7 +99,8 @@ public class StudentController {
         Card cardToBuy = cards.get(cardToBuyIndex);
         int cardToBuyDbIndex = cardToBuy.getId();
         Date todayDate = getTodayDate();
-        CardTransaction cardTransaction = new CardTransaction(cardToBuyDbIndex, studentId, (java.sql.Date) todayDate, cardToBuy.getCost());
+        java.sql.Date sDate = new java.sql.Date(todayDate.getTime());
+        CardTransaction cardTransaction = new CardTransaction(cardToBuyDbIndex, studentId, sDate, cardToBuy.getCost());
         transactionsDAO.save(cardTransaction);
     }
 

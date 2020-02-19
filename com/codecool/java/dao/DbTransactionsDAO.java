@@ -7,11 +7,10 @@ import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
 
-public class DbTransactionsDAO implements TransactionsDAO{
-    private DatabaseConnection dbconnection;
+public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDAO{
 
     public DbTransactionsDAO() throws SQLException, ClassNotFoundException {
-        dbconnection = new DatabaseConnection();
+        super();
     }
 
     @Override
@@ -65,7 +64,7 @@ public class DbTransactionsDAO implements TransactionsDAO{
         Connection c = dbconnection.getConnection();
         PreparedStatement ps = c.prepareStatement("INSERT INTO student_cards(cost, date_bought, user_id) VALUES(?, ?, ?)");
         ps.setInt(1, cardTransaction.getCost());
-        ps.setDate(2, (java.sql.Date) cardTransaction.getTransactionDate());
+        ps.setDate(2, cardTransaction.getTransactionDate());
         ps.setInt(3, cardTransaction.getUserId());
         ps.executeUpdate();
     }
@@ -74,7 +73,7 @@ public class DbTransactionsDAO implements TransactionsDAO{
         Connection c = dbconnection.getConnection();
         PreparedStatement ps = c.prepareStatement("INSERT INTO student_quests(cost, date_added, date_approved, user_id) VALUES(?, ?, ?, ?)");
         ps.setInt(1, questTransaction.getCost());
-        ps.setDate(2, (java.sql.Date) questTransaction.getTransactionDate());
+        ps.setDate(2, questTransaction.getTransactionDate());
         ps.setNull(3, java.sql.Types.DATE);
         ps.setInt(4, questTransaction.getUserId());
         ps.executeUpdate();
@@ -84,10 +83,10 @@ public class DbTransactionsDAO implements TransactionsDAO{
     private void updateStudentQuest(QuestTransaction questTransaction) throws SQLException {
         Connection c = dbconnection.getConnection();
         PreparedStatement ps = c.prepareStatement("UPDATE student_quests SET cost = ?," +
-                "date_added = ?, date_approved = ?, user_id = ? WHERE card_id = ?");
+                "date_added = ?, date_approved = ?, user_id = ? WHERE quest_id = ?");
         ps.setInt(1, questTransaction.getCost());
-        ps.setDate(2, (java.sql.Date) questTransaction.getTransactionDate());
-        ps.setDate(3, (java.sql.Date) questTransaction.getApprovalDate());
+        ps.setDate(2, questTransaction.getTransactionDate());
+        ps.setDate(3, questTransaction.getApprovalDate());
         ps.setInt(4, questTransaction.getUserId());
         ps.setInt(5, questTransaction.getId());
         ps.executeUpdate();
@@ -96,9 +95,9 @@ public class DbTransactionsDAO implements TransactionsDAO{
     private void updateStudentCard(CardTransaction cardTransaction) throws SQLException {
         Connection c = dbconnection.getConnection();
         PreparedStatement ps = c.prepareStatement("UPDATE student_quests SET cost = ?," +
-                "date_bought = ?, user_id = ? WHERE card_id = ?");
+                "date_added = ?, user_id = ? WHERE quest_id = ?");
         ps.setInt(1, cardTransaction.getCost());
-        ps.setDate(2, (java.sql.Date) cardTransaction.getTransactionDate());
+        ps.setDate(2, cardTransaction.getTransactionDate());
         ps.setInt(3, cardTransaction.getUserId());
         ps.setInt(4, cardTransaction.getId());
         ps.executeUpdate();
@@ -107,9 +106,11 @@ public class DbTransactionsDAO implements TransactionsDAO{
     @Override
     public void save(Object object) throws SQLException {
         if (object instanceof CardTransaction){
-            addCardTransaction((CardTransaction) object);
+            CardTransaction cardTransaction = (CardTransaction) object;
+            addCardTransaction(cardTransaction);
         } else if (object instanceof QuestTransaction){
-            addQuestTransaction((QuestTransaction) object);
+            QuestTransaction questTransaction = (QuestTransaction) object;
+            addQuestTransaction(questTransaction);
         }
     }
 

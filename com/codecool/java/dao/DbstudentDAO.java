@@ -1,16 +1,14 @@
 package codecool.java.dao;
 
-import codecool.java.model.DatabaseConnection;
 import codecool.java.model.Student;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DbstudentDAO implements StudentDAO{
-    private DatabaseConnection dbconnection;
+public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
 
-    public DbstudentDAO(){
-        dbconnection = new DatabaseConnection();
+    public DbstudentDAO() throws SQLException, ClassNotFoundException {
+        super();
     }
 
     @Override

@@ -1,7 +1,5 @@
 package codecool.java.dao;
 
-
-import codecool.java.model.DatabaseConnection;
 import codecool.java.model.Mentor;
 
 import java.sql.Connection;
@@ -11,11 +9,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DbMentorDAO implements MentorDAO {
-    private DatabaseConnection dbconnection;
+public class DbMentorDAO extends DbConnectionDao implements MentorDAO {
 
     public DbMentorDAO() throws SQLException, ClassNotFoundException {
-        dbconnection = new DatabaseConnection();
+        super();
     }
 
     @Override
