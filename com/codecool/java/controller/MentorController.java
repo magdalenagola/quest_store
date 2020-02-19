@@ -63,7 +63,9 @@ public class MentorController {
             view.displayCardTransactions(notApprovedTransactions);
             int studentTransactionIndex = view.getOptionInput(notApprovedTransactions.size());
             Transaction studentTransaction = notApprovedTransactions.get(studentTransactionIndex-1);
-            studentTransaction.setDate((java.sql.Date) getTodayDate());
+            Date todayDate = getTodayDate();
+            java.sql.Date sDate = new java.sql.Date(todayDate.getTime());
+            studentTransaction.setDate(sDate);
             transactionsDAO.update(studentTransaction);
         } catch (SQLException | ClassNotFoundException | ParseException e) {
             view.displayErrorMessage(e);
