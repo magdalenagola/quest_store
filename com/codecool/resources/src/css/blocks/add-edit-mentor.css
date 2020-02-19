@@ -1,0 +1,186 @@
+.add-user,
+.edit-user {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #e6e6e6;
+}
+
+.add-user__wraper,
+.edit-user__wraper {
+    width: 100%;
+    height: 100%;
+    background-color: #e6e6e6;
+    box-sizing: border-box;
+}
+
+
+.add-user__form,
+.edit-user__form {
+    font-family: 'Roboto', sans-serif;
+    color: #575757;
+    width: 40vw;
+    margin: 130px auto 0 auto;
+    padding: 70px 60px 50px 60px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    background-color:  #ffffff;
+    border-radius: 2px;
+}
+
+.add_user_close-btn,
+.edit_user_close-btn {
+    width: 25px;
+    height: 25px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    font-size: 0;
+    top: 13px;
+    right: 15px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.add_user_cross,
+.edit_user_cross {
+    position: relative;
+}
+
+.add_user_cross::before,
+.add_user_cross::after,
+.edit_user_cross::before,
+.edit_user_cross::after {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    right: -12px;
+    content: "";
+    width: 25px;
+    height: 3px;
+    background-color: #414141;
+}
+
+.add_user_cross::before,
+.edit_user_cross::before {
+    transform: rotate(45deg);
+}
+
+.add_user_cross::after,
+.edit_user_cross::after {
+    transform: rotate(-45deg);
+}
+
+.add_user_close-btn:hover .add_user_cross::after,
+.add_user_close-btn:hover .add_user_cross::before,
+.edit_user_close-btn:hover .add_user_cross::after,
+.edit_user_close-btn:hover .add_user_cross::before {
+    width: 27px;
+    background-color: #333333;
+}
+
+.add_user_close-btn:active .add_user_cross::after,
+.add_user_close-btn:active .add_user_cross::before,
+.edit_user_close-btn:active .add_user_cross::after,
+.edit_user_close-btn:active .add_user_cross::before {
+    width: 27px;
+    background-color: #111111;
+}
+
+.add_user_input-wrapper,
+.edit_user_input-wrapper {
+    width: 100%;
+    margin-bottom: 35px;
+    display: flex;
+    align-items: baseline;
+    box-sizing: border-box;
+}
+
+.add-user__input,
+.edit-user__input {
+    padding: 10px;
+    font-size: 18px;
+    background-color: #f7f7f7;
+    border: 1px solid #f7f7f7;
+    border-radius: 6px;
+    flex-grow: 1;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #f7f7f7 inset;
+}
+
+.add_user_label,
+.edit_user_label {
+    margin-right: 20px;
+    font-size: 20px;
+}
+
+.add-user__btn,
+.edit-user__btn {
+    width: 100%;
+    border: none;
+    border-radius: 20px;
+    padding: 15px;
+    font-size: 18px;
+    text-align: center;
+    cursor: pointer;
+    color: #fafafa;
+    background-color: #333333;
+}
+
+.add-user__btn:hover,
+.edit-user__btn:hover {
+    color: #ffffff;
+    background-color: #1b1b1b;
+}
+
+.add-user__btn:active,
+.edit-user__btn:active {
+    color: #ffffff;
+    background-color: #000000;
+}
+
+@media (max-width: 992px) {
+    .add-user__form,
+    .edit-user__form {
+        width: 80vw;
+    }
+}
+
+@media (max-width: 768px) {
+    .add-user__form,
+    .edit-user__form {
+        width: 85vw;
+        padding: 55px 20px 30px 20px;
+    }
+
+    .add_user_input-wrapper,
+    .edit_user_input-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .add_user_label,
+    .edit_user_label {
+        width: 80%;
+        margin-bottom: 10px;
+    }
+
+    .add-user__input,
+    .edit-user__input {
+        width: 80%;
+    }
+
+    .add-user__btn,
+    .edit-user__btn {
+        width: 84%;
+    }
+}

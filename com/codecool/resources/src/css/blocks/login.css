@@ -70,6 +70,36 @@
     background-color: #424141;
 }
 
+@media (min-width: 2000px) {
+    .login {
+        padding: 0 0 100px 85px;
+    }
+    
+    .login__wrapper {
+        width: 42vw;
+        padding: 85px 0px;
+    }
+
+    .login__form {
+        width: 70%;
+    }
+
+    .login__input {
+        margin-bottom: 60px;
+        font-size: 24px;
+        padding: 20px;
+    }
+
+    .login__input::placeholder {
+        font-size: 24px;
+    }
+
+    .login__btn {
+        font-size: 26px;
+        padding: 20px;
+    }
+}
+
 @media (max-width: 992px) {
     .login {
         padding: 0;
