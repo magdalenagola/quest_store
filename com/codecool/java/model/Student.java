@@ -1,5 +1,9 @@
 package codecool.java.model;
 
+import codecool.java.controller.StudentController;
+
+import java.sql.SQLException;
+
 public class Student extends User {
 
     private int id;
@@ -26,9 +30,70 @@ public class Student extends User {
         this.isActive = isActive;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
     @Override
     public void start(){
-        StudentController studentController = new StudentController();
-        studentController.run();
+        try {
+            StudentController studentController = new StudentController();
+            studentController.run(this.id);
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        String response = "";
+        response = String.format("ID: %d Login: %s Password: %s Name: %s Surname: %s",
+                getId(),getLogin(),getPassword(),getName(),getSurname());
+        return response;
     }
 }
