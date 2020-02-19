@@ -4,6 +4,10 @@ import toggleMenu from './menu.js';
 import expandTableContent from './table_expander.js';
 import AddUserPopUpController from './AddUserPopUpController.js';
 import EditUserPopUpController from './UserEditor.js';
+import LoginDataHandler from "./login_Data_handler.js";
+
+const loginDataHandler = new LoginDataHandler();
+loginDataHandler.handleUserData();
 
 toggleMenu();
 expandTableContent();
