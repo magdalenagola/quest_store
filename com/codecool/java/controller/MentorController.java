@@ -129,7 +129,7 @@ public class MentorController {
         String[] inputs = view.getInputs(options);
         try{
         QuestDAO questDAO = new DbQuestDAO();
-        Quest quest = new Quest(0,inputs[0],inputs[1],inputs[2],Integer.parseInt(inputs[3]),true,Integer.parseInt(inputs[4]),inputs[5]);
+        Quest quest = new Quest(0,inputs[0],inputs[1],inputs[2],true,Integer.parseInt(inputs[4]), inputs[5]);
         questDAO.save(quest);
         }catch(SQLException | ClassNotFoundException e){
             view.displayErrorMessage(e);

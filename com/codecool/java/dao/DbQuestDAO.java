@@ -22,7 +22,6 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
             String title = rs.getString("title");
             String description = rs.getString("description");
             String image = rs.getString("image");
-            int quantity = rs.getInt("quantity");
             boolean isActive = rs.getBoolean("is_active");
             int cost = rs.getInt("cost");
             String category = rs.getString("category");
@@ -31,7 +30,6 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
                     title,
                     description,
                     image,
-                    quantity,
                     isActive,
                     cost,
                     category
@@ -87,7 +85,6 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
             String title = rs.getString("title");
             String description = rs.getString("description");
             String image = rs.getString("image");
-            int quantity = rs.getInt("quantity");
             boolean isActive = rs.getBoolean("is_active");
             int cost = rs.getInt("cost");
             String category = rs.getString("category");
@@ -96,7 +93,6 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
                     title,
                     description,
                     image,
-                    quantity,
                     isActive,
                     cost,
                     category
@@ -116,16 +112,15 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
     @Override
     public void update(Object o) throws SQLException {
         Quest quest = (Quest) o;
-        String orderToSql = "INSERT INTO quests (title, description, image, category, is_active, cost, category) VALUES (?, ?, ?, ?, ?, ?, ?);";
+        String orderToSql = "INSERT INTO quests (title, description, image, category, is_active, cost, category) VALUES (?, ?, ?, ?, ?, ?);";
         Connection c = dbconnection.getConnection();
         PreparedStatement ps = c.prepareStatement(orderToSql);
         ps.setString(1, quest.getTitle());
         ps.setString(2, quest.getDescription());
         ps.setString(3, quest.getImage());
-        ps.setInt(4, quest.getQuantity());
-        ps.setBoolean(5, quest.isActive());
-        ps.setInt(6, quest.getCost());
-        ps.setString(7, quest.getCategory());
+        ps.setBoolean(4, quest.isActive());
+        ps.setInt(5, quest.getCost());
+        ps.setString(6, quest.getCategory());
         ps.execute();
     }
 

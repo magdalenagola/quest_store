@@ -5,16 +5,14 @@ public abstract class Item {
     private String title;
     private String description;
     private String image;
-    private int quantity;
     private boolean isActive;
     private int cost;
 
-    public Item(int id, String title, String description, String image, int quantity, boolean isActive, int cost) {
+    public Item(int id, String title, String description, String image, boolean isActive, int cost) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.image = image;
-        this.quantity = quantity;
         this.isActive = isActive;
         this.cost = cost;
     }
@@ -49,14 +47,6 @@ public abstract class Item {
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 
     public boolean isActive() {
