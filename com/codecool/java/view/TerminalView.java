@@ -47,7 +47,7 @@ public class TerminalView implements Display{
     private boolean isInputValid(String userInput,int optionsLength){
         try{
             int userChoice = Integer.parseInt(userInput);
-            return userChoice > 0 && userChoice < optionsLength;
+            return userChoice > 0 && userChoice <= optionsLength;
         }catch (IllegalFormatConversionException e) {
             displayErrorMessage(e);
         }

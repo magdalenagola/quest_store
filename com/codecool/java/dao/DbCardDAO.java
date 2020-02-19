@@ -16,8 +16,11 @@ public class DbCardDAO extends DbConnectionDao implements CardDAO {
 
     @Override
     public Card selectCardById(int id) throws SQLException {
-        ResultSet rs = selectEntryById(id);
+        Connection c = dbconnection.getConnection();
+        PreparedStatement ps = c.prepareStatement("SELECT * FROM cards WHERE id = ?;");
+        ps.setInt(1, id);
         Card card = null;
+        ResultSet rs = ps.executeQuery();
         while(rs.next()){
             String title = rs.getString("title");
             String description = rs.getString("description");

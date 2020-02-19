@@ -62,20 +62,22 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
 
     private void addCardTransaction(CardTransaction cardTransaction) throws SQLException {
         Connection c = dbconnection.getConnection();
-        PreparedStatement ps = c.prepareStatement("INSERT INTO student_cards(cost, date_bought, user_id) VALUES(?, ?, ?)");
-        ps.setInt(1, cardTransaction.getCost());
-        ps.setDate(2, cardTransaction.getTransactionDate());
-        ps.setInt(3, cardTransaction.getUserId());
+        PreparedStatement ps = c.prepareStatement("INSERT INTO student_cards(card_id, cost, date_bought, user_id) VALUES(?, ?, ?, ?)");
+        ps.setInt(1, cardTransaction.getId());
+        ps.setInt(2, cardTransaction.getCost());
+        ps.setDate(3, cardTransaction.getTransactionDate());
+        ps.setInt(4, cardTransaction.getUserId());
         ps.executeUpdate();
     }
 
     private void addQuestTransaction(QuestTransaction questTransaction) throws SQLException {
         Connection c = dbconnection.getConnection();
-        PreparedStatement ps = c.prepareStatement("INSERT INTO student_quests(cost, date_added, date_approved, user_id) VALUES(?, ?, ?, ?)");
+        PreparedStatement ps = c.prepareStatement("INSERT INTO student_quests(cost, date_added, date_approved, user_id, quest_id) VALUES(?, ?, ?, ?, ?)");
         ps.setInt(1, questTransaction.getCost());
         ps.setDate(2, questTransaction.getTransactionDate());
         ps.setNull(3, java.sql.Types.DATE);
         ps.setInt(4, questTransaction.getUserId());
+        ps.setInt(5, questTransaction.getId());
         ps.executeUpdate();
     }
 

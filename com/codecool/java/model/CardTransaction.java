@@ -13,6 +13,10 @@ public class CardTransaction extends Transaction {
 
     public CardTransaction(int cardId, int userId, Date transactionDate, int cost) {
         super(cardId, userId, transactionDate, cost);
+        this.cardId = cardId;
+        this.userId = userId;
+        this.transactionDate = transactionDate;
+        this.cost = cost;
     };
 
     public int getId() {

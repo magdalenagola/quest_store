@@ -14,6 +14,10 @@ public class QuestTransaction extends Transaction {
 
     public QuestTransaction(int questId, int userId, Date transactionDate, int cost) {
         super(questId, userId, transactionDate, cost);
+        this.questId = questId;
+        this.userId = userId;
+        this.transactionDate = transactionDate;
+        this.cost = cost;
     };
 
     public int getId() {

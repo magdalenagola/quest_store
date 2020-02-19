@@ -55,7 +55,7 @@ public class StudentController {
                 } catch (SQLException | ParseException e) {
                     e.printStackTrace();
                 }
-                break;
+                 break;
             case 5:
                 try {
                     submitQuest(studentId);
@@ -113,13 +113,14 @@ public class StudentController {
     }
 
     private void submitQuest(int studentId) throws SQLException, ParseException {
-        showAllCards();
+        showAllQuests();
         List<Quest> quests = getQuests();
         int questToSubmitIndex = terminalView.getOptionInput(quests.size()) - 1;
         Quest questToSubmit = quests.get(questToSubmitIndex);
         int questToSubmitDbIndex = questToSubmit.getId();
         Date todayDate = getTodayDate();
-        QuestTransaction questTransaction = new QuestTransaction(questToSubmitDbIndex, studentId, (java.sql.Date) todayDate, questToSubmit.getCost());
+        java.sql.Date sDate = new java.sql.Date(todayDate.getTime());
+        QuestTransaction questTransaction = new QuestTransaction(questToSubmitDbIndex, studentId, sDate, questToSubmit.getCost());
         transactionsDAO.save(questTransaction);
     }
 }
