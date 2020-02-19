@@ -1,5 +1,6 @@
 package codecool.java.dao;
 
+import codecool.java.model.Card;
 import codecool.java.model.Quest;
 
 import java.sql.Connection;
@@ -66,7 +67,7 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
     @Override
     public void save(Object o) throws SQLException {
         Quest quest = (Quest) o;
-        String orderToSql = "INSERT INTO quests (title, description, image, category, is_active, cost, category) VALUES (?, ?, ?, ?, ?, ?, ?) WHERE id = ?;";
+        String orderToSql = "INSERT INTO quests (title, description, image, category, is_active, cost, category) VALUES (?, ?, ?, ?, ?, ?, ?)";
         Connection c = pool.getConnection();
         PreparedStatement ps = c.prepareStatement(orderToSql);
         ps.setString(1, quest.getTitle());
@@ -76,7 +77,6 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
         ps.setBoolean(5, quest.isActive());
         ps.setInt(6, quest.getCost());
         ps.setString(7, quest.getCategory());
-        ps.setInt(8, quest.getId());
         ps.execute();
     }
 
@@ -84,7 +84,7 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
     public List loadAll() throws SQLException {
         List<Quest> quests = new ArrayList<>();
         Quest quest;
-        ResultSet rs = super.selectAllFromTable("quests");
+        ResultSet rs = selectAllFromTable();
         while(rs.next()){
             int id = rs.getInt("id");
             String title = rs.getString("title");
@@ -109,6 +109,13 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
         return quests;
     }
 
+    private ResultSet selectAllFromTable() throws SQLException {
+        String orderToSql = ("SELECT * FROM quests");
+        Connection c = pool.getConnection();
+        ResultSet rs = c.createStatement().executeQuery(orderToSql);
+        return rs;
+    }
+
     @Override
     public void update(Object o) throws SQLException {
         Quest quest = (Quest) o;
@@ -128,12 +135,20 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
     @Override
     public void disable(Object o) throws SQLException {
         Quest quest = (Quest) o;
-        super.disableTableEntryById(quest.getId(), "quests");
+        String orderToSql = "UPDATE quests SET is_active = false WHERE id = ?;";
+        Connection c = pool.getConnection();
+        PreparedStatement ps = c.prepareStatement(orderToSql);
+        ps.setInt(1, quest.getId());
+        ps.execute();
     }
 
     @Override
     public void activate(Object o) throws SQLException {
         Quest quest = (Quest) o;
-        super.enableTableEntryById(quest.getId(), "quests");
+        String orderToSql = "UPDATE quests SET is_active = true WHERE id = ?;";
+        Connection c = pool.getConnection();
+        PreparedStatement ps = c.prepareStatement(orderToSql);
+        ps.setInt(1, quest.getId());
+        ps.execute();
     }
 }
