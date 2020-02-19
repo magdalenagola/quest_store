@@ -1,7 +1,6 @@
 package codecool.java.dao;
 
 import codecool.java.model.Card;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,7 +40,7 @@ public class DbCardDAO extends DbConnectionDao implements CardDAO {
 
     private ResultSet selectEntryById(int id) throws SQLException {
         String orderToSql = "SELECT * FROM cards WHERE id = ?;";
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         PreparedStatement ps = c.prepareStatement(orderToSql);
         ps.setInt(1, id);
         return ps.executeQuery();
@@ -50,14 +49,14 @@ public class DbCardDAO extends DbConnectionDao implements CardDAO {
     @Override
     public void enableAllCards() throws SQLException {
         String orderToSql = "UPDATE cards SET is_active = true;";
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         c.createStatement().execute(orderToSql);
     }
 
     @Override
     public void disableAllCards() throws SQLException {
         String orderToSql = "UPDATE cards SET is_active = false;";
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         c.createStatement().execute(orderToSql);
     }
 
@@ -65,7 +64,7 @@ public class DbCardDAO extends DbConnectionDao implements CardDAO {
     public void save(Object o) throws SQLException {
         Card card = (Card) o;
         String orderToSql = "INSERT INTO cards (title, description, image, quantity, is_active, cost) VALUES (?, ?, ?, ?, ?, ?);";
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         PreparedStatement ps = c.prepareStatement(orderToSql);
         ps.setString(1, card.getTitle());
         ps.setString(2, card.getDescription());
@@ -105,7 +104,7 @@ public class DbCardDAO extends DbConnectionDao implements CardDAO {
 
     private ResultSet selectAllFromTable() throws SQLException {
         String orderToSql = ("SELECT * FROM cards");
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         return c.createStatement().executeQuery(orderToSql);
     }
 
@@ -113,7 +112,7 @@ public class DbCardDAO extends DbConnectionDao implements CardDAO {
     public void update(Object o) throws SQLException {
         Card card = (Card) o;
         String orderToSql = "UPDATE cards SET title = ?, description = ?, image = ?, quantity = ?, is_active = ?, cost = ? WHERE id = ?;";
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         PreparedStatement ps = c.prepareStatement(orderToSql);
         ps.setString(1, card.getTitle());
         ps.setString(2, card.getDescription());
@@ -129,7 +128,7 @@ public class DbCardDAO extends DbConnectionDao implements CardDAO {
     public void disable(Object o) throws SQLException {
         Card card = (Card) o;
         String orderToSql = "UPDATE cards SET is_active = true WHERE id = ?;";
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         PreparedStatement ps = c.prepareStatement(orderToSql);
         ps.setInt(1, card.getId());
         ps.execute();
@@ -139,7 +138,7 @@ public class DbCardDAO extends DbConnectionDao implements CardDAO {
     public void activate(Object o) throws SQLException {
         Card card = (Card) o;
         String orderToSql = "UPDATE cards SET is_active = false WHERE id = ?;";
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         PreparedStatement ps = c.prepareStatement(orderToSql);
         ps.setInt(1, card.getId());
         ps.execute();

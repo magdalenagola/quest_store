@@ -125,7 +125,7 @@ public class MentorController {
     }
 
     private void addQuest() {
-        String[] options = {"Title", "Description","Image","Quantity","Cost","Category"};
+        String[] options = {"Title", "Description","Image","Cost","Category"};
         String[] inputs = view.getInputs(options);
         try{
         QuestDAO questDAO = new DbQuestDAO();

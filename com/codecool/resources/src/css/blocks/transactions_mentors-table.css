@@ -1,10 +1,10 @@
 .transactions__list--mobile,
-.mentors__list--mobile {
+.user__list--mobile {
     display: none;
 }
 
 .transactions,
-.mentors_management {
+.user_management {
     display: flex;
     box-sizing: border-box;
     margin: 100px 0;
@@ -14,12 +14,12 @@
 }
 
 .transactions__title,
-.mentors__name {
+.user__name {
     margin: 0;
 }
 
 .transactions__list,
-.mentors__list {
+.user__list {
     width: 100%;
     font-size: 18px;
     padding-bottom: 15px;
@@ -37,7 +37,7 @@
 }
 
 .transactions__item th,
-.mentors__list tbody th {
+.user__list tbody th {
     padding: 10px;
     font-weight: 400;
     font-style: italic;
@@ -51,7 +51,7 @@
     padding-top: 15px;
 }
 
-.mentors__item {
+.user__item {
     color: #626060;
 }
 
@@ -59,28 +59,28 @@
     color: #f70303;
 }
 
-.mentors__btn,
-.mentors__btn--edit,
-.mentors__btn--remove {
+.user__btn,
+.user__btn--edit,
+.user__btn--remove {
     margin: 5px auto;
     width: 28px;
     height: 28px;
     cursor: pointer;
 }
 
-.mentors__btn--edit svg,
-.mentors__btn--remove svg {
+.user__btn--edit svg,
+.user__btn--remove svg {
     width: 27px;
     height: 27px;
 }
 
-.mentors__btn--edit,
-.mentors__btn--remove {
+.user__btn--edit,
+.user__btn--remove {
     margin: 0;
     opacity: 0.8;
 }
 
-.mentors__btn-wrapper {
+.user__btn-wrapper {
     width: 82px;
     display: flex;
     margin-left: auto;
@@ -89,21 +89,21 @@
     justify-content: space-between;
 }
 
-.mentors__btn:hover svg,
-.mentors__btn--remove:hover svg,
-.mentors__btn--edit:hover svg {
+.user__btn:hover svg,
+.user__btn--remove:hover svg,
+.user__btn--edit:hover svg {
     opacity: 0.5;
 }
 
 @media (max-width: 768px) {
 
     .transactions__list,
-    .mentors__list {
+    .user__list {
         display: none;
     }
 
     .transactions__list--mobile,
-    .mentors__list--mobile {
+    .user__list--mobile {
         display: flex;
         flex-direction: column;
         list-style: none;
@@ -111,36 +111,36 @@
     }
 
     .transactions__list--mobile p,
-    .mentors__list--mobile p {
+    .user__list--mobile p {
         margin: 0;
     }
 
-    .mentors__btn,
-    .mentors__btn--edit,
-    .mentors__btn--remove {
+    .user__btn,
+    .user__btn--edit,
+    .user__btn--remove {
         margin: 5px auto !important;
     }
 
     .transactions__list--mobile .transactions__item,
-    .mentors__list--mobile .mentors__item {
+    .user__list--mobile .user__item {
         box-shadow: 0 0px 2px #b1a58f;
         cursor: pointer;
     }
 
     .transactions__list--mobile .transactions__title,
-    .mentors__list--mobile .mentors__name,
-    .mentors__item--btn {
+    .user__list--mobile .user__name,
+    .user__item--btn {
         padding: 20px 30px;
         text-align: center;
     }
 
     .transactions__content-wrapper,
-    .mentors__content-wrapper {
+    .user__content-wrapper {
         display: none;
     }
 
     .transactions__content-wrapper--opened,
-    .mentors__content-wrapper--opened {
+    .user__content-wrapper--opened {
         display: flex;
         align-items: center;
         flex-wrap: wrap;
@@ -149,18 +149,23 @@
     }
 
     .transactions__content-wrapper--opened p,
-    .mentors__content-wrapper--opened p {
+    .user__content-wrapper--opened p {
         width: 50%;
         box-sizing: border-box;
         text-align: center;
+        overflow-x: scroll;
     }
 
-    .transactions__content-wrapper--opened .transactions__amount,
-    .mentors__content-wrapper--opened .mentors__account {
+    .user__email {
+        padding-top: 25px;
+        width: 100% !important;
+    }
+
+    .transactions__content-wrapper--opened .transactions__amount {
         border-left: 1px solid #b1a58f;
     }
 
-    .mentors__btn-wrapper {
+    .user__btn-wrapper {
         margin: auto;
         margin-top: 20px;
         display: flex;
@@ -168,7 +173,7 @@
         justify-content: center;
     }
 
-    .mentors__btn--edit {
+    .user__btn--edit {
         margin-right: 20px !important;
     }
 }

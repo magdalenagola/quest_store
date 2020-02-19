@@ -1,0 +1,23 @@
+.input--error {
+    border: 1px solid #e21c1c;
+}
+
+.form__error-message {
+    top: 7px;
+    left: 60px;
+    position: absolute;
+    font-family: 'Roboto', sans-serif;
+    font-size: 17px;
+    color: #e21c1c;
+}
+
+.add-user__form .form__error-message {
+    top: 13px;
+}
+
+@media (max-width: 768px) {
+    .add-user__form .form__error-message {
+        top: 5px;
+        left: 20px;
+    }
+}

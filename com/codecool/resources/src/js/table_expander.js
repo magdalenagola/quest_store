@@ -1,21 +1,23 @@
 export default function expandTableContent() {
     const transactionItems = document.querySelectorAll('li.transactions__item');
     const transtactionItemsContent = document.querySelectorAll('.transactions__content-wrapper');
-    const mentorsItems = document.querySelectorAll('li.mentors__item');
-    const mentorsItemsContent = document.querySelectorAll('.mentors__content-wrapper');
-
+    const userItems = document.querySelectorAll('li.user__item');
+    const userItemsContent = document.querySelectorAll('.user__content-wrapper');
+    let userSalary = document.querySelectorAll('p.user__salary');
     for (let i = 0; i < transactionItems.length; i++) {
         transactionItems[i].addEventListener('click', () => {
             transtactionItemsContent[i].classList.toggle('transactions__content-wrapper--opened');
         })
     }
-    for (let i = 1; i < mentorsItems.length; i++) {
-        mentorsItems[i].addEventListener('click', (e) => {
-            if(e.toElement.tagName == 'H3') {
-            mentorsItemsContent[i].classList.toggle('mentors__content-wrapper--opened');
-            }
-        })
-    }
 
-    
+    for (let i = 1; i < userItems.length; i++) {
+        if (userSalary[i] !== undefined) {
+            userSalary[i - 1].textContent += ' $';
+            userItems[i].addEventListener('click', (e) => {
+                if (e.toElement.tagName == 'H3') {
+                    userItemsContent[i].classList.toggle('user__content-wrapper--opened');
+                }
+            })
+        }
+    }
 }

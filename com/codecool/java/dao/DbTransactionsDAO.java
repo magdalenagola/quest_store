@@ -15,7 +15,7 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
 
     @Override
     public List<Transaction> loadAllNotApproved() throws SQLException {
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         List<Transaction> unapprovedQuestsList = new ArrayList<>();
         PreparedStatement ps = c.prepareStatement("SELECT * FROM student_quests WHERE date_approved IS NULL");
         ResultSet rs = ps.executeQuery();
@@ -32,7 +32,7 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
 
     @Override
     public List<Transaction> displayAllTransactionsByStudent(Student student) throws SQLException {
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         List<Transaction> transactionsList = new ArrayList<>();
         PreparedStatement ps = c.prepareStatement("SELECT * FROM student_cards WHERE user_id = ?");
         ps.setInt(1, student.getId());
@@ -61,7 +61,7 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
     }
 
     private void addCardTransaction(CardTransaction cardTransaction) throws SQLException {
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         PreparedStatement ps = c.prepareStatement("INSERT INTO student_cards(cost, date_bought, user_id) VALUES(?, ?, ?)");
         ps.setInt(1, cardTransaction.getCost());
         ps.setDate(2, (java.sql.Date) cardTransaction.getTransactionDate());
@@ -70,7 +70,7 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
     }
 
     private void addQuestTransaction(QuestTransaction questTransaction) throws SQLException {
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         PreparedStatement ps = c.prepareStatement("INSERT INTO student_quests(cost, date_added, date_approved, user_id) VALUES(?, ?, ?, ?)");
         ps.setInt(1, questTransaction.getCost());
         ps.setDate(2, (java.sql.Date) questTransaction.getTransactionDate());
@@ -81,9 +81,9 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
 
 
     private void updateStudentQuest(QuestTransaction questTransaction) throws SQLException {
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         PreparedStatement ps = c.prepareStatement("UPDATE student_quests SET cost = ?," +
-                "date_added = ?, date_approved = ?, user_id = ? WHERE card_id = ?");
+                "date_added = ?, date_approved = ?, user_id = ? WHERE quest_id = ?");
         ps.setInt(1, questTransaction.getCost());
         ps.setDate(2, (java.sql.Date) questTransaction.getTransactionDate());
         ps.setDate(3, (java.sql.Date) questTransaction.getApprovalDate());
@@ -93,9 +93,9 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
     }
 
     private void updateStudentCard(CardTransaction cardTransaction) throws SQLException {
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         PreparedStatement ps = c.prepareStatement("UPDATE student_quests SET cost = ?," +
-                "date_bought = ?, user_id = ? WHERE card_id = ?");
+                "date_added = ?, user_id = ? WHERE quest_id = ?");
         ps.setInt(1, cardTransaction.getCost());
         ps.setDate(2, (java.sql.Date) cardTransaction.getTransactionDate());
         ps.setInt(3, cardTransaction.getUserId());
@@ -114,7 +114,7 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
 
     @Override
     public List loadAll() throws SQLException {
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         List<Transaction> transactionsList = new ArrayList<>();
         PreparedStatement ps = c.prepareStatement("SELECT * FROM student_cards");
         ResultSet rs = ps.executeQuery();
@@ -154,7 +154,7 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
 
     @Override
     public void disable(Object object) throws SQLException {
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         if (object instanceof CardTransaction){
             CardTransaction cardTransaction = (CardTransaction) object;
             PreparedStatement ps = c.prepareStatement(String.format("UPDATE student_cards SET is_active = false WHERE id = %d;", cardTransaction.getId()));
@@ -170,7 +170,7 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
 
     @Override
     public void activate(Object object) throws SQLException {
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         if (object instanceof CardTransaction){
             CardTransaction cardTransaction = (CardTransaction) object;
             PreparedStatement ps = c.prepareStatement(String.format("UPDATE student_cards SET is_active = true WHERE id = %d;", cardTransaction.getId()));

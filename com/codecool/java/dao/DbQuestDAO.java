@@ -1,8 +1,6 @@
 package codecool.java.dao;
 
-import codecool.java.model.Card;
 import codecool.java.model.Quest;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,7 +42,7 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
 
     private ResultSet selectEntryById(int id) throws SQLException {
         String orderToSql = "SELECT * FROM quests WHERE id = ?;";
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         PreparedStatement ps = c.prepareStatement(orderToSql);
         ps.setInt(1, id);
         return ps.executeQuery();
@@ -53,30 +51,29 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
     @Override
     public void enableAllQuests() throws SQLException {
         String orderToSql = "UPDATE quests SET is_active = true;";
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         c.createStatement().execute(orderToSql);
     }
 
     @Override
     public void disableAllQuests() throws SQLException {
         String orderToSql = "UPDATE quests SET is_active = false;";
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         c.createStatement().execute(orderToSql);
     }
 
     @Override
     public void save(Object o) throws SQLException {
         Quest quest = (Quest) o;
-        String orderToSql = "INSERT INTO quests (title, description, image, category, is_active, cost, category) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        Connection c = pool.getConnection();
+        String orderToSql = "INSERT INTO quests (title, description, image,is_active, cost, category) VALUES (?, ?, ?, ?, ?, ?);";
+        Connection c = dbconnection.getConnection();
         PreparedStatement ps = c.prepareStatement(orderToSql);
         ps.setString(1, quest.getTitle());
         ps.setString(2, quest.getDescription());
         ps.setString(3, quest.getImage());
-        ps.setInt(4, quest.getQuantity());
-        ps.setBoolean(5, quest.isActive());
-        ps.setInt(6, quest.getCost());
-        ps.setString(7, quest.getCategory());
+        ps.setBoolean(4, quest.isActive());
+        ps.setInt(5, quest.getCost());
+        ps.setString(6, quest.getCategory());
         ps.execute();
     }
 
@@ -111,7 +108,7 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
 
     private ResultSet selectAllFromTable() throws SQLException {
         String orderToSql = ("SELECT * FROM quests");
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         ResultSet rs = c.createStatement().executeQuery(orderToSql);
         return rs;
     }
@@ -120,7 +117,7 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
     public void update(Object o) throws SQLException {
         Quest quest = (Quest) o;
         String orderToSql = "INSERT INTO quests (title, description, image, category, is_active, cost, category) VALUES (?, ?, ?, ?, ?, ?, ?);";
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         PreparedStatement ps = c.prepareStatement(orderToSql);
         ps.setString(1, quest.getTitle());
         ps.setString(2, quest.getDescription());
@@ -136,7 +133,7 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
     public void disable(Object o) throws SQLException {
         Quest quest = (Quest) o;
         String orderToSql = "UPDATE quests SET is_active = false WHERE id = ?;";
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         PreparedStatement ps = c.prepareStatement(orderToSql);
         ps.setInt(1, quest.getId());
         ps.execute();
@@ -146,7 +143,7 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
     public void activate(Object o) throws SQLException {
         Quest quest = (Quest) o;
         String orderToSql = "UPDATE quests SET is_active = true WHERE id = ?;";
-        Connection c = pool.getConnection();
+        Connection c = dbconnection.getConnection();
         PreparedStatement ps = c.prepareStatement(orderToSql);
         ps.setInt(1, quest.getId());
         ps.execute();
