@@ -1,17 +1,14 @@
 package codecool.java.handler;
 
 import codecool.java.controller.LoginController;
-import codecool.java.dao.DbLoginDAO;
 import codecool.java.dao.NotInDatabaseException;
 import codecool.java.model.User;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import sun.net.httpserver.ExchangeImpl;
-
 import java.io.*;
 import java.net.URI;
 import java.sql.SQLException;
-import java.util.List;
+
 
 public class LoginHandler implements HttpHandler {
     
@@ -22,12 +19,12 @@ public class LoginHandler implements HttpHandler {
         if(method.equals("POST") && (uri.equals("/login"))){
             try {
                 User user = getUserData(httpExchange.getRequestBody());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+                httpExchange.getResponseHeaders().set("Location","/cards");
+                sendResponse200(httpExchange, "OK");
+            } catch (SQLException | ClassNotFoundException e) {
+                sendResponse500(httpExchange);
             } catch (NotInDatabaseException e) {
-//send 404
+                sendResponse404(httpExchange);
             }
         }
     }
@@ -45,5 +42,28 @@ public class LoginHandler implements HttpHandler {
         System.out.println(user.toString());
         return user;
 
+    }
+
+    private void sendResponse200(HttpExchange httpExchange, String response) throws IOException {
+        httpExchange.getResponseHeaders().set("Content-Type", "application/json");
+        httpExchange.sendResponseHeaders(200, response.length());
+        OutputStream os = httpExchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
+    }
+    private void sendResponse303(HttpExchange httpExchange) throws IOException {
+        httpExchange.sendResponseHeaders(303,0);
+        OutputStream os = httpExchange.getResponseBody();
+        os.close();
+    }
+    private void sendResponse404(HttpExchange httpExchange) throws IOException {
+        httpExchange.sendResponseHeaders(404, 0);
+        OutputStream os = httpExchange.getResponseBody();
+        os.close();
+    }
+    private void sendResponse500(HttpExchange httpExchange) throws IOException {
+        httpExchange.sendResponseHeaders(500,0);
+        OutputStream os = httpExchange.getResponseBody();
+        os.close();
     }
 }

@@ -24,44 +24,46 @@ public class StudentController {
     }
 
     public void run(int studentId) {
-        String[] options = {"Show all cards", "Show all quests", "Show my transactions", "Buy a card", "Mark quest as achieved"};
-        terminalView.displayOptions(options);
-        int userInput = terminalView.getOptionInput(options.length);
-        switch(userInput){
-            case 1:
-                try {
-                    showAllCards();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case 2:
-                try {
-                    showAllQuests();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case 3:
-                try {
-                    showTransactions();
-                } catch (SQLException | ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case 4:
-                try {
-                    buyCard(studentId);
-                } catch (SQLException | ParseException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case 5:
-                try {
-                    submitQuest(studentId);
-                } catch (SQLException | ParseException e) {
-                    e.printStackTrace();
-                }
+        while(true) {
+            String[] options = {"Show all cards", "Show all quests", "Show my transactions", "Buy a card", "Mark quest as achieved"};
+            terminalView.displayOptions(options);
+            int userInput = terminalView.getOptionInput(options.length);
+            switch (userInput) {
+                case 1:
+                    try {
+                        showAllCards();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case 2:
+                    try {
+                        showAllQuests();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case 3:
+                    try {
+                        showTransactions();
+                    } catch (SQLException | ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case 4:
+                    try {
+                        buyCard(studentId);
+                    } catch (SQLException | ParseException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case 5:
+                    try {
+                        submitQuest(studentId);
+                    } catch (SQLException | ParseException e) {
+                        e.printStackTrace();
+                    }
+            }
         }
     }
 
@@ -99,7 +101,7 @@ public class StudentController {
         Card cardToBuy = cards.get(cardToBuyIndex);
         int cardToBuyDbIndex = cardToBuy.getId();
         Date todayDate = getTodayDate();
-        CardTransaction cardTransaction = new CardTransaction(cardToBuyDbIndex, studentId, (java.sql.Date) todayDate, cardToBuy.getCost());
+        CardTransaction cardTransaction = new CardTransaction(cardToBuyDbIndex, studentId, "02/18/2020", cardToBuy.getCost());
         transactionsDAO.save(cardTransaction);
     }
 
