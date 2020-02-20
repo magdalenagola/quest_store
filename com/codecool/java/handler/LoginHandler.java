@@ -20,7 +20,7 @@ public class LoginHandler implements HttpHandler {
             try {
                 User user = getUserData(httpExchange.getRequestBody());
                 httpExchange.getResponseHeaders().set("Location","/cards");
-                sendResponse200(httpExchange, "OK");
+                sendResponse303(httpExchange);
             } catch (SQLException | ClassNotFoundException e) {
                 sendResponse500(httpExchange);
             } catch (NotInDatabaseException e) {
