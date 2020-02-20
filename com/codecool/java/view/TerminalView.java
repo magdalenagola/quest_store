@@ -65,7 +65,7 @@ public class TerminalView implements Display{
 
     public void displayUsersWithIndexes(List<User> users) {
         for(int i = 0; i < users.size(); i++){
-            System.out.println(String.format("%d %s", i+1, users.get(i)));
+            System.out.println(String.format("(%d) %s", i+1, users.get(i)));
         }
     }
 
@@ -75,7 +75,7 @@ public class TerminalView implements Display{
 
     public void displayQuests(List<Quest> quests) {
         for(int i = 0; i < quests.size(); i++){
-            System.out.println(String.format("%d %s", i+1, quests.get(i)));
+            System.out.println(String.format("(%d) %s", i+1, quests.get(i)));
         }
     }
 
@@ -85,17 +85,17 @@ public class TerminalView implements Display{
 
     public void displayCards(List<Card> cards) {
         for(int i = 0; i < cards.size(); i++){
-            System.out.println(String.format("%d %s", i+1, cards.get(i)));
+            System.out.println(String.format("(%d) %s", i+1, cards.get(i)));
         }
     }
 
-    public void displayCardTransaction(Transaction ct) throws SQLException, ClassNotFoundException {
+    public void displayCardTransaction(Transaction ct) {
         System.out.println(ct.toString());
     }
 
-    public void displayCardTransactions(List<Transaction> cts) throws SQLException, ClassNotFoundException {
+    public void displayCardTransactions(List<Transaction> cts) {
         for(int i = 0; i < cts.size(); i++){
-            System.out.println(String.format("%d %s", i+1, cts.get(i)));
+            System.out.println(String.format("(%d) %s", i+1, cts.get(i)));
         }
     }
 
@@ -105,7 +105,7 @@ public class TerminalView implements Display{
 
     public void displayQuestTransaction(List<QuestTransaction> qts) {
         for(int i = 0; i < qts.size(); i++){
-            System.out.println(String.format("%d %s", i+1, qts.get(i)));
+            System.out.println(String.format("(%d) %s", i+1, qts.get(i)));
         }
     }
 

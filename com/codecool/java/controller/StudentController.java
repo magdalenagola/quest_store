@@ -23,7 +23,7 @@ public class StudentController {
         terminalView = new TerminalView();
     }
 
-    public void run(int studentId) {
+    public void run(Student student) {
         String[] options = {"Show all cards", "Show all quests", "Show my transactions", "Buy a card", "Mark quest as achieved"};
         terminalView.displayOptions(options);
         int userInput = terminalView.getOptionInput(options.length);
@@ -44,21 +44,21 @@ public class StudentController {
                 break;
             case 3:
                 try {
-                    showTransactions();
-                } catch (SQLException | ClassNotFoundException e) {
+                    showTransactions(student);
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
                 break;
             case 4:
                 try {
-                    buyCard(studentId);
+                    buyCard(student.getId());
                 } catch (SQLException | ParseException e) {
                     e.printStackTrace();
                 }
                  break;
             case 5:
                 try {
-                    submitQuest(studentId);
+                    submitQuest(student.getId());
                 } catch (SQLException | ParseException e) {
                     e.printStackTrace();
                 }
@@ -83,12 +83,15 @@ public class StudentController {
         return cardDAO.loadAll();
     }
 
-    private List<Transaction> getTransactions() throws SQLException {
+    private List<Transaction> getAllTransactions() throws SQLException {
         return transactionsDAO.loadAll();
     }
 
-    private void showTransactions() throws SQLException, ClassNotFoundException {
-        List<Transaction> transactions = getTransactions();
+    private List<Transaction> getUserTransactions(Student student) throws SQLException {
+        return transactionsDAO.displayAllTransactionsByStudent(student);
+    }
+    private void showTransactions(Student student) throws SQLException {
+        List<Transaction> transactions = getUserTransactions(student);
         terminalView.displayCardTransactions(transactions);
     }
 

@@ -101,7 +101,7 @@ public class MentorController {
                     break;
                 case 3:
                     newValue = view.getStringInput();
-                    card.setImageName(newValue);
+                    card.setImage(newValue);
                     break;
                 case 4:
                     newValue = view.getStringInput();

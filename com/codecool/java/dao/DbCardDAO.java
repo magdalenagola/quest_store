@@ -71,7 +71,7 @@ public class DbCardDAO extends DbConnectionDao implements CardDAO {
         PreparedStatement ps = c.prepareStatement(orderToSql);
         ps.setString(1, card.getTitle());
         ps.setString(2, card.getDescription());
-        ps.setString(3, card.getImageName());
+        ps.setString(3, card.getImage());
         ps.setInt(4, card.getQuantity());
         ps.setBoolean(5, card.isActive());
         ps.setFloat(6, card.getCost());
@@ -119,7 +119,7 @@ public class DbCardDAO extends DbConnectionDao implements CardDAO {
         PreparedStatement ps = c.prepareStatement(orderToSql);
         ps.setString(1, card.getTitle());
         ps.setString(2, card.getDescription());
-        ps.setString(3, card.getImageName());
+        ps.setString(3, card.getImage());
         ps.setInt(4, card.getQuantity());
         ps.setBoolean(5, card.isActive());
         ps.setFloat(6, card.getCost());
