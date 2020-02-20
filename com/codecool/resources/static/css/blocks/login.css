@@ -25,7 +25,8 @@
     align-items: center;
 }
 
-.login__input {
+.login__input,
+.password__input {
     font-family: 'Roboto', sans-serif;
     font-weight: bold;
     width: 100%;

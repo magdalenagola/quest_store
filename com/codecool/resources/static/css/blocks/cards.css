@@ -108,7 +108,6 @@
 
 .card__title {
     height: 24px;
-    overflow-y: scroll;
     margin: 0;
     padding: 15px;
     padding-bottom: 0;
@@ -120,7 +119,6 @@
 
 .card__description {
     height: 132px;
-    overflow-y: scroll;
     margin: 0;
     padding: 25px;
     padding-bottom: 0;
