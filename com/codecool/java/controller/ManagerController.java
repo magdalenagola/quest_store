@@ -62,22 +62,20 @@ public class ManagerController {
         }
     }
 
-    private int chooseMentor() throws SQLException {
+    private User chooseMentor() throws SQLException {
         List<User> mentors =  mentorDAO.loadAll();
-
-        terminalView.displayUsers(mentors);
-        return terminalView.getOptionInput(mentors.size()) - 1;
+        terminalView.displayUsersWithIndexes(mentors);
+        int userChoice = terminalView.getOptionInput(mentors.size()) - 1;
+        return mentors.get(userChoice);
     }
 
     private void disableMentor() throws SQLException {
-        List<Mentor> mentors = mentorDAO.loadAll();
-        Mentor mentor = mentors.get(chooseMentor());
-        mentorDAO.disable(mentor);
+        User mentorToDelete = chooseMentor();
+        mentorDAO.disable(mentorToDelete);
     }
 
     private void activateMentor() throws SQLException {
-        List<Mentor> mentors = mentorDAO.loadAll();
-        Mentor mentor = mentors.get(chooseMentor());
+        User mentor = chooseMentor();
         mentorDAO.activate(mentor);
     }
 
@@ -88,8 +86,7 @@ public class ManagerController {
 
     private void editMentor() throws SQLException {
         String[] mentorDataToEdit = {"Name", "Surname", "Email", "Password", "Primary skill"};
-        List<Mentor> mentors = mentorDAO.loadAll();
-        Mentor mentor = mentors.get(chooseMentor());
+        Mentor mentor = (Mentor) chooseMentor();
 
         terminalView.displayOptions(mentorDataToEdit);
         String[] optionsToChange = terminalView.getInputs(mentorDataToEdit);

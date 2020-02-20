@@ -15,6 +15,7 @@ public interface Display {
     public void displayQuest(Quest quest);
     public void displayQuests(List<Quest> quests);
     public void displayCard(Card card);
+    public void displayUsersWithIndexes(List<User> users);
     public void displayCards(List<Card> card);
     public void displayCardTransaction(Transaction ct) throws SQLException, ClassNotFoundException;
     public void displayCardTransactions(List<Transaction> cts) throws SQLException, ClassNotFoundException;
