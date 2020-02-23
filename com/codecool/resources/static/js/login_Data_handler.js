@@ -1,15 +1,17 @@
 export default class LoginDataHandler {
-    constructor (){};
+    constructor() {};
     handleUserData() {
         const xmlHttpRequest = new XMLHttpRequest();
         const submitBtn = document.querySelector('.login__btn');
-        submitBtn.onclick = () => {
-            const loginData = getLoginData();
-            postToServer(xmlHttpRequest, JSON.stringify(loginData));
+        if (submitBtn) {
+            submitBtn.onclick = () => {
+                const loginData = getLoginData();
+                postToServer(xmlHttpRequest, JSON.stringify(loginData));
+            }
         }
 
         xmlHttpRequest.onreadystatechange = function () {
-            if (xmlHttpRequest.readyState == xmlHttpRequest.DONE ) {
+            if (xmlHttpRequest.readyState == xmlHttpRequest.DONE) {
                 if (xmlHttpRequest.status === 200) {
                     // let response = xmlHttpRequest.responseText;
                     // response = JSON.parse(response);
@@ -29,9 +31,9 @@ export default class LoginDataHandler {
         function postToServer(xmlHttpRequest, loginData) {
             xmlHttpRequest.open('POST', '/login');
             xmlHttpRequest.send(loginData);
-            if (xmlHttpRequest.response == "") {
-                alert('wrong data provided')
-            }
+            // if (xmlHttpRequest.response == "") {
+            //     alert('wrong data provided')
+            // }
         }
 
         function getLoginData() {

@@ -11,7 +11,7 @@
 }
 
 .index .logo a {
-    font-size: 87px;
+    font-size: 90px;
 }
 
 .logo a {
@@ -23,9 +23,15 @@
     text-shadow: -1px -1px #6d6d6d;
 }
 
-@media (min-width: 2000px) {
+@media (min-width: 1550px) {
+    .index .logo a {
+        font-size: 120px;
+        padding: 50px 0 0 0px;
+    }
+}
+
+@media (min-width: 1550px) {
     .index .logo {
-        font-size: 110px;
         padding: 50px 0 0 85px;
     }
 }
