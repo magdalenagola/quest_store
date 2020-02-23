@@ -7,22 +7,22 @@ var autoprefixer = require("autoprefixer");
 var del = require('del');
 
 gulp.task("css", function () {
-	return gulp.src(['src/css/*.css', 'src/css/blocks/*.css', '!src/css/style.css'])
+	return gulp.src(['static/css/*.css', 'static/css/blocks/*.css', '!static/css/style.css'])
 		.pipe(csso())
 		.pipe(postcss([
 			autoprefixer()
 		]))
 		.pipe(concat('style.css'))
-		.pipe(gulp.dest('src/css'));
+		.pipe(gulp.dest('static/css'));
 });
 
 gulp.task('clean', function () {
-	return del('src/css/style.css');
+	return del('static/css/style.css');
 });
 
 gulp.task("server", function () {
   server.init({
-      server: "src/",
+      server: "static/",
       notify: false,
       open: true,
       cors: true,
@@ -30,4 +30,4 @@ gulp.task("server", function () {
 });
 });
 
-gulp.watch(["src/css/**/*.css", '!src/css/style.css'], gulp.series('clean', 'css'));
+gulp.watch(["static/css/**/*.css", '!static/css/style.css'], gulp.series('clean', 'css'));
