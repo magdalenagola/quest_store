@@ -51,7 +51,7 @@ public class MentorController {
                 view.displayMessage(student.toString());
                 view.displayMessage("Coins:" + String.valueOf(studentDAO.getCoins(student)));
             }
-        }catch(SQLException e){
+        }catch(SQLException | ClassNotFoundException e){
             view.displayErrorMessage(e);
         }
     }
@@ -63,7 +63,9 @@ public class MentorController {
             view.displayCardTransactions(notApprovedTransactions);
             int studentTransactionIndex = view.getOptionInput(notApprovedTransactions.size());
             Transaction studentTransaction = notApprovedTransactions.get(studentTransactionIndex-1);
-            studentTransaction.setDate((java.sql.Date) getTodayDate());
+            Date todayDate = getTodayDate();
+            java.sql.Date sDate = new java.sql.Date(todayDate.getTime());
+            studentTransaction.setDate(sDate);
             transactionsDAO.update(studentTransaction);
         } catch (SQLException | ClassNotFoundException | ParseException e) {
             view.displayErrorMessage(e);
@@ -99,7 +101,7 @@ public class MentorController {
                     break;
                 case 3:
                     newValue = view.getStringInput();
-                    card.setImageName(newValue);
+                    card.setImage(newValue);
                     break;
                 case 4:
                     newValue = view.getStringInput();
@@ -129,7 +131,7 @@ public class MentorController {
         String[] inputs = view.getInputs(options);
         try{
         QuestDAO questDAO = new DbQuestDAO();
-        Quest quest = new Quest(0,inputs[0],inputs[1],inputs[2],Integer.parseInt(inputs[3]),true,Integer.parseInt(inputs[4]),inputs[5]);
+        Quest quest = new Quest(0,inputs[0],inputs[1],inputs[2],true,Integer.parseInt(inputs[4]), inputs[5]);
         questDAO.save(quest);
         }catch(SQLException | ClassNotFoundException e){
             view.displayErrorMessage(e);
@@ -143,7 +145,7 @@ public class MentorController {
         String[] inputs = view.getInputs(options);
         Student student = new Student(inputs[0],inputs[1],inputs[2],inputs[3],true);
         studentDAO.save(student);
-        }catch(SQLException e){
+        }catch(SQLException | ClassNotFoundException e){
             view.displayErrorMessage(e);
         }
 
