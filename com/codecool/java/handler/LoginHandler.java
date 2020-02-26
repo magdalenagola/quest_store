@@ -25,7 +25,7 @@ public class LoginHandler implements HttpHandler {
             try {
                 User user = getUserData(httpExchange.getRequestBody());
                 createNewCookie(httpExchange, user);
-                sendResponse200(httpExchange, "student");
+                sendResponse200(httpExchange, user.getClass().getSimpleName());
             } catch (SQLException | ClassNotFoundException e) {
                 sendResponse500(httpExchange);
             } catch (NotInDatabaseException e) {

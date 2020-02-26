@@ -40,4 +40,5 @@ public class Manager extends User {
         String mentorInfo = "id: " + this.id + ", name: " + this.name;
         return mentorInfo;
     }
+
 }

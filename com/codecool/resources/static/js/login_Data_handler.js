@@ -12,17 +12,18 @@ export default class LoginDataHandler {
                 xmlHttpRequest.onreadystatechange = function () {
                     if (xmlHttpRequest.readyState == xmlHttpRequest.DONE) {
                         if (xmlHttpRequest.status === 200) {
-                            if (xmlHttpRequest.response == "student"){
+                            if (xmlHttpRequest.response == "Student"){
                                 window.location.replace("student_store.html")
+                            }else if (xmlHttpRequest.response == "Mentor"){
+                                window.location.replace("mentor_students_list.html")
+                            }else if (xmlHttpRequest.response == "Manager"){
+                                window.location.replace("manager_mentors_list.html")
                             }
-                            console.log("200");
-                            console.log(document.cookie);
                         } else {
                             alert(xmlHttpRequest.status);
                         }
                     } else {
                         console.log("No response yet");
-                        //console.log('onreadystatechange error');
                     }
                 }
             }
