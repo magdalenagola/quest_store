@@ -6,21 +6,26 @@ import codecool.java.model.User;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import java.io.*;
+import java.net.HttpCookie;
 import java.net.URI;
 import java.sql.SQLException;
+import java.util.Optional;
+import java.util.UUID;
 
 
 public class LoginHandler implements HttpHandler {
-    
+
+    private static final String SESSION_COOKIE_NAME = "sessionId";
+
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String method  = httpExchange.getRequestMethod();
         URI uri = httpExchange.getRequestURI();
-        if(method.equals("POST") && (uri.equals("/login"))){
+        if(method.equals("POST") && (uri.toString().equals("/login"))){
             try {
                 User user = getUserData(httpExchange.getRequestBody());
-                httpExchange.getResponseHeaders().set("Location","/cards");
-                sendResponse303(httpExchange);
+                createNewCookie(httpExchange, user);
+                sendResponse200(httpExchange, "student");
             } catch (SQLException | ClassNotFoundException e) {
                 sendResponse500(httpExchange);
             } catch (NotInDatabaseException e) {
@@ -66,4 +71,13 @@ public class LoginHandler implements HttpHandler {
         OutputStream os = httpExchange.getResponseBody();
         os.close();
     }
+
+    private void createNewCookie(HttpExchange httpExchange, User user){
+        UUID uuid = UUID.randomUUID();
+        String sessionId = uuid.toString();
+        Optional<HttpCookie> cookie = Optional.of(new HttpCookie("UserID", String.valueOf(user.getId())));
+        httpExchange.getResponseHeaders().add("Set-Cookie", cookie.get().toString()+";Max-Age=3600;");
+    }
+
+
 }

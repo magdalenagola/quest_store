@@ -11,7 +11,7 @@ import java.net.InetSocketAddress;
 
 public class HttpController {
         public void init() throws IOException {
-            int port = 8000;
+            int port = 8001;
             HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
             server.createContext("/login", new LoginHandler());
             server.createContext("/cards", new CardHandler());
