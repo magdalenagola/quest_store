@@ -3,6 +3,7 @@ export default class LoginDataHandler {
     handleUserData() {
         const xmlHttpRequest = new XMLHttpRequest();
         const submitBtn = document.querySelector('.login__btn');
+        const logOutBtn = document.querySelector('.logout__icon');
         if (submitBtn) {
             submitBtn.onclick = (e) => {
                 e.preventDefault();
@@ -26,8 +27,18 @@ export default class LoginDataHandler {
                         console.log("No response yet");
                     }
                 }
+
+                }
+            }
+        window.onload = () => {
+            if (logOutBtn) {
+                logOutBtn.onclick = () => {
+                    document.cookie = "UserID=; Expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                }
             }
         }
+
+
 
 
         function getFromServer(xmlHttpRequest) {
@@ -38,10 +49,7 @@ export default class LoginDataHandler {
         function postToServer(xmlHttpRequest, loginData) {
             xmlHttpRequest.open('POST', '/login');
             xmlHttpRequest.send(loginData);
-            console.log("POST");
-            // if (xmlHttpRequest.response == "") {
-            //     alert('wrong data provided')
-            // }
+
         }
 
         function getLoginData() {
