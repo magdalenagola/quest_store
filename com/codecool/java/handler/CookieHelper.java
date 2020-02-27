@@ -1,5 +1,7 @@
 package codecool.java.handler;
 
+import com.sun.net.httpserver.HttpExchange;
+
 import java.net.HttpCookie;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,5 +29,19 @@ public class CookieHelper {
                 return Optional.ofNullable(cookie);
         }
         return Optional.empty();
+    }
+
+
+    public boolean isCookiePresent(HttpExchange httpExchange) {
+        Optional<HttpCookie> cookie = getSessionIdCookie(httpExchange);
+        if (cookie.isPresent()) {
+            return !cookie.get().hasExpired();
+        }
+        return false;
+    }
+    private  Optional<HttpCookie> getSessionIdCookie(HttpExchange httpExchange){
+        String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
+        List<HttpCookie> cookies = parseCookies(cookieStr);
+        return findCookieByName("UserID", cookies);
     }
 }
