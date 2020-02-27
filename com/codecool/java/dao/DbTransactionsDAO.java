@@ -27,6 +27,7 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
             Transaction questTransaction = new QuestTransaction(questId, userId, dateAdded, coinsReceived);
             unapprovedQuestsList.add(questTransaction);
         }
+        dbconnection.closeConnection(c);
         return unapprovedQuestsList;
     }
 
@@ -57,6 +58,7 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
             Transaction questTransaction = new QuestTransaction(questId, userId, dateAdded, coinsReceived);
             transactionsList.add(questTransaction);
         }
+        dbconnection.closeConnection(c);
         return transactionsList;
     }
 
@@ -68,6 +70,7 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
         ps.setDate(3, cardTransaction.getDate());
         ps.setInt(4, cardTransaction.getUserId());
         ps.executeUpdate();
+        dbconnection.closeConnection(c);
     }
 
     private void addQuestTransaction(QuestTransaction questTransaction) throws SQLException {
@@ -79,6 +82,7 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
         ps.setInt(4, questTransaction.getUserId());
         ps.setInt(5, questTransaction.getItemId());
         ps.executeUpdate();
+        dbconnection.closeConnection(c);
     }
 
 
@@ -92,6 +96,7 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
         ps.setInt(4, questTransaction.getUserId());
         ps.setInt(5, questTransaction.getItemId());
         ps.executeUpdate();
+        dbconnection.closeConnection(c);
     }
 
     private void updateStudentCard(CardTransaction cardTransaction) throws SQLException {
@@ -103,6 +108,7 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
         ps.setInt(3, cardTransaction.getUserId());
         ps.setInt(4, cardTransaction.getItemId());
         ps.executeUpdate();
+        dbconnection.closeConnection(c);
     }
 
     @Override
@@ -141,7 +147,7 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
             Transaction questTransaction = new QuestTransaction(questId, userId, dateAdded, coinsReceived);
             transactionsList.add(questTransaction);
         }
-
+        dbconnection.closeConnection(c);
         return transactionsList;
     }
 
@@ -169,7 +175,7 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
             PreparedStatement ps = c.prepareStatement(String.format("UPDATE student_quests SET is_active = false WHERE id = %d;", questTransaction.getItemId()));
             ps.executeUpdate();
         }
-
+        dbconnection.closeConnection(c);
     }
 
     @Override
@@ -185,5 +191,6 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
             PreparedStatement ps = c.prepareStatement(String.format("UPDATE student_quests SET is_active = true WHERE id = %d;", questTransaction.getItemId()));
             ps.executeUpdate();
         }
+        dbconnection.closeConnection(c);
     }
 }

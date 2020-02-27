@@ -20,8 +20,8 @@ export default class LoginDataHandler {
                             }else if (xmlHttpRequest.response == "Manager"){
                                 window.location.replace("manager_mentors_list.html")
                             }
-                        } else {
-                            alert(xmlHttpRequest.status);
+                        } else if(xmlHttpRequest.status === 303){
+                            window.location.replace("index.html")
                         }
                     } else {
                         console.log("No response yet");

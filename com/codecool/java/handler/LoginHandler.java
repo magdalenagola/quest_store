@@ -2,6 +2,7 @@ package codecool.java.handler;
 
 import codecool.java.controller.LoginController;
 import codecool.java.dao.NotInDatabaseException;
+import codecool.java.helper.HttpResponse;
 import codecool.java.model.User;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -14,7 +15,8 @@ import java.util.UUID;
 
 
 public class LoginHandler implements HttpHandler {
-
+    CookieHelper cookieHelper = new CookieHelper();
+    HttpResponse httpResponse = new HttpResponse();
     private static final String SESSION_COOKIE_NAME = "sessionId";
 
     @Override
@@ -24,12 +26,12 @@ public class LoginHandler implements HttpHandler {
         if(method.equals("POST") && (uri.toString().equals("/login"))){
             try {
                 User user = getUserData(httpExchange.getRequestBody());
-                createNewCookie(httpExchange, user);
-                sendResponse200(httpExchange, user.getClass().getSimpleName());
+                cookieHelper.createNewCookie(httpExchange, user);
+                httpResponse.sendResponse200(httpExchange, user.getClass().getSimpleName());
             } catch (SQLException | ClassNotFoundException e) {
-                sendResponse500(httpExchange);
+                httpResponse.sendResponse500(httpExchange);
             } catch (NotInDatabaseException e) {
-                sendResponse404(httpExchange);
+                httpResponse.sendResponse404(httpExchange);
             }
         }
     }
@@ -48,36 +50,4 @@ public class LoginHandler implements HttpHandler {
         return user;
 
     }
-
-    private void sendResponse200(HttpExchange httpExchange, String response) throws IOException {
-        httpExchange.getResponseHeaders().set("Content-Type", "application/json");
-        httpExchange.sendResponseHeaders(200, response.length());
-        OutputStream os = httpExchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
-    }
-    private void sendResponse303(HttpExchange httpExchange) throws IOException {
-        httpExchange.sendResponseHeaders(303,0);
-        OutputStream os = httpExchange.getResponseBody();
-        os.close();
-    }
-    private void sendResponse404(HttpExchange httpExchange) throws IOException {
-        httpExchange.sendResponseHeaders(404, 0);
-        OutputStream os = httpExchange.getResponseBody();
-        os.close();
-    }
-    private void sendResponse500(HttpExchange httpExchange) throws IOException {
-        httpExchange.sendResponseHeaders(500,0);
-        OutputStream os = httpExchange.getResponseBody();
-        os.close();
-    }
-
-    private void createNewCookie(HttpExchange httpExchange, User user){
-        UUID uuid = UUID.randomUUID();
-        String sessionId = uuid.toString();
-        Optional<HttpCookie> cookie = Optional.of(new HttpCookie("UserID", String.valueOf(user.getId())));
-        httpExchange.getResponseHeaders().add("Set-Cookie", cookie.get().toString()+";Max-Age=3600;");
-    }
-
-
 }

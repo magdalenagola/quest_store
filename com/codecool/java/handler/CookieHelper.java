@@ -1,11 +1,13 @@
 package codecool.java.handler;
 
+import codecool.java.model.User;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.net.HttpCookie;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class CookieHelper {
 
@@ -18,7 +20,7 @@ public class CookieHelper {
             int indexOfEq = cookie.indexOf('=');
             String cookieName = cookie.substring(0, indexOfEq);
             String cookieValue = cookie.substring(indexOfEq + 1, cookie.length());
-            cookies.add(new HttpCookie(cookieName, cookieValue));
+            cookies.add(new HttpCookie(cookieName, cookieValue.replace("\"","")));
         }
         return cookies;
     }
@@ -39,9 +41,16 @@ public class CookieHelper {
         }
         return false;
     }
-    private  Optional<HttpCookie> getSessionIdCookie(HttpExchange httpExchange){
+    public  Optional<HttpCookie> getSessionIdCookie(HttpExchange httpExchange){
         String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
         List<HttpCookie> cookies = parseCookies(cookieStr);
         return findCookieByName("UserID", cookies);
+    }
+
+    public void createNewCookie(HttpExchange httpExchange, User user){
+        UUID uuid = UUID.randomUUID();
+        String sessionId = uuid.toString();
+        Optional<HttpCookie> cookie = Optional.of(new HttpCookie("UserID", String.valueOf(user.getId())));
+        httpExchange.getResponseHeaders().add("Set-Cookie", cookie.get().toString()+";Max-Age=3600;");
     }
 }

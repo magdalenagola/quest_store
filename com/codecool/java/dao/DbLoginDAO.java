@@ -18,7 +18,9 @@ public class DbLoginDAO extends DbConnectionDao implements LoginDao {
         PreparedStatement ps = c.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?;");
         ps.setString(1, providedLogin);
         ps.setString(2, providedPassword);
-        return ps.executeQuery();
+        ResultSet rs = ps.executeQuery();
+        dbconnection.closeConnection(c);
+        return rs;
     }
 
     @Override
