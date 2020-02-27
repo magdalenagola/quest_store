@@ -78,7 +78,7 @@ public class Student extends User {
     public void start(){
         try {
             StudentController studentController = new StudentController();
-            studentController.run(this.id);
+            studentController.run(this);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -88,6 +88,7 @@ public class Student extends User {
     public int getId() {
         return id;
     }
+
 
     @Override
     public String toString() {

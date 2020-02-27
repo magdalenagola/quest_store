@@ -31,8 +31,14 @@ public class Manager extends User {
         }
     }
 
+    @Override
+    public int getId() {
+        return this.id;
+    }
+
     public String toString() {
         String mentorInfo = "id: " + this.id + ", name: " + this.name;
         return mentorInfo;
     }
+
 }

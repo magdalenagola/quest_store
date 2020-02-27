@@ -2,7 +2,7 @@
   "name": "quest_store",
   "version": "1.0.0",
   "description": "Project for CodeCool",
-  "main": "src/index.html",
+  "main": "codecool/resources/static/index.html",
   "scripts": {
     "dev": "gulp server & gulp css"
   },
