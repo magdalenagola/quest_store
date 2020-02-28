@@ -96,18 +96,23 @@ public class StudentController {
     }
 
     public void buyCard(int studentId, int cardId) throws SQLException, ParseException {
-        List<Card> cards = getCards();
         Card cardToBuy = null;
-        for(Card card :cards){
-            if (card.getId() == cardId){
-                cardToBuy = card;
-            }
-        }
+        List<Card> cards = getCards();
+        cardToBuy = findCardById(cardId, cardToBuy, cards);
         int cardToBuyDbIndex = cardToBuy.getId();
         Date todayDate = getTodayDate();
         java.sql.Date sDate = new java.sql.Date(todayDate.getTime());
         CardTransaction cardTransaction = new CardTransaction(cardToBuyDbIndex, studentId, sDate, cardToBuy.getCost());
         transactionsDAO.save(cardTransaction);
+    }
+
+    public Card findCardById(int cardId, Card cardToBuy, List<Card> cards) {
+        for(Card card :cards){
+            if (card.getId() == cardId){
+                cardToBuy = card;
+            }
+        }
+        return cardToBuy;
     }
 
     private Date getTodayDate() throws ParseException {
