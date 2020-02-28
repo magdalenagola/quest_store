@@ -1,6 +1,7 @@
 package codecool.java.handler;
 
 import codecool.java.controller.LoginController;
+import codecool.java.dao.DbAuthorizationDAO;
 import codecool.java.dao.NotInDatabaseException;
 import codecool.java.helper.HttpResponse;
 import codecool.java.model.User;
@@ -36,6 +37,17 @@ public class LoginHandler implements HttpHandler {
                 httpResponse.sendResponse404(httpExchange);
             }
         }
+        if (method.equals("POST") && (uri.toString().equals("/login/expired_cookie"))){
+            String sessionId = getSessionIdFromCookie(httpExchange.getRequestBody());
+            try {
+                DbAuthorizationDAO authorizationDAO = new DbAuthorizationDAO();
+                authorizationDAO.disableCookie(sessionId);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private User getUserData(InputStream requestBody) throws IOException, SQLException, ClassNotFoundException, NotInDatabaseException {
@@ -51,5 +63,13 @@ public class LoginHandler implements HttpHandler {
         System.out.println(user.toString());
         return user;
 
+    }
+
+    private String getSessionIdFromCookie(InputStream requestBody) throws IOException {
+        InputStreamReader isr = new InputStreamReader(requestBody, "utf-8");
+        BufferedReader br = new BufferedReader(isr);
+        String cookie = br.readLine();
+        cookie = cookie.split("=")[1].replaceAll("\"", "");
+        return cookie;
     }
 }
