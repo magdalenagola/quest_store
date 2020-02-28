@@ -1,6 +1,7 @@
 package codecool.java.handler;
 
 import codecool.java.controller.LoginController;
+import codecool.java.dao.DbAuthorizationDAO;
 import codecool.java.dao.NotInDatabaseException;
 import codecool.java.helper.HttpResponse;
 import codecool.java.model.User;
@@ -10,6 +11,7 @@ import java.io.*;
 import java.net.HttpCookie;
 import java.net.URI;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -17,7 +19,7 @@ import java.util.UUID;
 public class LoginHandler implements HttpHandler {
     CookieHelper cookieHelper = new CookieHelper();
     HttpResponse httpResponse = new HttpResponse();
-    private static final String SESSION_COOKIE_NAME = "sessionId";
+
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -28,10 +30,22 @@ public class LoginHandler implements HttpHandler {
                 User user = getUserData(httpExchange.getRequestBody());
                 cookieHelper.createNewCookie(httpExchange, user);
                 httpResponse.sendResponse200(httpExchange, user.getClass().getSimpleName());
-            } catch (SQLException | ClassNotFoundException e) {
+            } catch (SQLException | ClassNotFoundException | ParseException e) {
                 httpResponse.sendResponse500(httpExchange);
+                e.printStackTrace();
             } catch (NotInDatabaseException e) {
                 httpResponse.sendResponse404(httpExchange);
+            }
+        }
+        if (method.equals("POST") && (uri.toString().equals("/login/expired_cookie"))){
+            String sessionId = getSessionIdFromCookie(httpExchange.getRequestBody());
+            try {
+                DbAuthorizationDAO authorizationDAO = new DbAuthorizationDAO();
+                authorizationDAO.disableCookie(sessionId);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -49,5 +63,13 @@ public class LoginHandler implements HttpHandler {
         System.out.println(user.toString());
         return user;
 
+    }
+
+    private String getSessionIdFromCookie(InputStream requestBody) throws IOException {
+        InputStreamReader isr = new InputStreamReader(requestBody, "utf-8");
+        BufferedReader br = new BufferedReader(isr);
+        String cookie = br.readLine();
+        cookie = cookie.split("=")[1].replaceAll("\"", "");
+        return cookie;
     }
 }
