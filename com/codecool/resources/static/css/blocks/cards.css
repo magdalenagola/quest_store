@@ -64,7 +64,8 @@
     background-color: #e2d8c6;
 }
 
-.card__coin, .student__wallet {
+.card__coin,
+.student__wallet {
     position: absolute;
     background-image: url("../img/coin.png");
     width: 65px;
@@ -88,10 +89,11 @@
     bottom: 15px;
     right: 20px;
     position: fixed;
-    width: 85px;
-    height: 85px;
-    padding-top: 25px;
+    width: 95px;
+    height: 95px;
+    padding-top: 33px;
     padding-left: 0px;
+    background-image: url("../img/student_coin.png");
 }
 
 .card__img-wrapper {
