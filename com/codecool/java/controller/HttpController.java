@@ -12,12 +12,12 @@ import java.net.InetSocketAddress;
 
 public class HttpController {
         public void init() throws IOException {
-            int port = 8001;
+            int port = 3001;
             HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
             server.createContext("/login", new LoginHandler());
             server.createContext("/cards", new CardHandler());
-            server.createContext("/static", new StaticHandler());
             server.createContext("/coins", new WalletHandler());
+            server.createContext("/static", new StaticHandler());
             server.setExecutor(null);
             server.start();
         }

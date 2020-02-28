@@ -10,13 +10,13 @@ export default class CardsHttpHandler{
         xmlHttpRequest.onreadystatechange = function () {
             function buy() {
                 const cardId = this.parentNode.parentElement.getAttribute("id").split("_")[1];
-                console.log(cardId);
-                console.log(typeof cardId);
                 postToServer(xmlHttpRequest,cardId);
             }
 
             if (xmlHttpRequest.readyState == xmlHttpRequest.DONE) {
-                if (xmlHttpRequest.status === 200 && xmlHttpRequest.responseURL === "http://localhost:8001/cards") {
+                const responseUrl = xmlHttpRequest.responseURL.split('/');
+                const responseContext = responseUrl[responseUrl.length - 1];
+                if (xmlHttpRequest.status === 200 && responseContext === 'cards') {
                     let response = xmlHttpRequest.responseText;
                     response = JSON.parse(response);
 
@@ -30,7 +30,8 @@ export default class CardsHttpHandler{
                         basket.addEventListener("click",buy);
                     }
                     getStudentCoins();
-                }if(xmlHttpRequest.status === 200 && xmlHttpRequest.responseURL !== "http://localhost:8001/cards"){
+                }
+                if(xmlHttpRequest.status === 200 && responseContext !== 'cards'){
                     alert("SUCCESSFUL TRANSACTION! :)");
                     getStudentCoins();
                 }
