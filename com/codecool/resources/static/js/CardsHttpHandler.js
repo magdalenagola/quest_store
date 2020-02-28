@@ -1,7 +1,10 @@
+import WalletHttpHandler from "./WalletHttpHandler.js";
+
 export default class CardsHttpHandler{
     constructor() {}
     handleCards() {
         const xmlHttpRequest = new XMLHttpRequest();
+        const walletHttpHandler = new WalletHttpHandler();
         getFromServer(xmlHttpRequest);
         const cardList = document.querySelector('.cards__wrapper');
         xmlHttpRequest.onreadystatechange = function () {
@@ -13,7 +16,7 @@ export default class CardsHttpHandler{
             }
 
             if (xmlHttpRequest.readyState == xmlHttpRequest.DONE) {
-                if (xmlHttpRequest.status === 200) {
+                if (xmlHttpRequest.status === 200 && xmlHttpRequest.responseURL === "http://localhost:8001/cards") {
                     let response = xmlHttpRequest.responseText;
                     response = JSON.parse(response);
 
@@ -26,8 +29,16 @@ export default class CardsHttpHandler{
                     for(basket of baskets){
                         basket.addEventListener("click",buy);
                     }
-                }if(xmlHttpRequest.status === 303){
+                    getStudentCoins();
+                }if(xmlHttpRequest.status === 200 && xmlHttpRequest.responseURL !== "http://localhost:8001/cards"){
+                    alert("SUCCESSFUL TRANSACTION! :)");
+                    getStudentCoins();
+                }
+                if(xmlHttpRequest.status === 303){
                     window.location.replace("index.html")
+                }
+                if(xmlHttpRequest.status === 403){
+                    alert("You can't afford it ! :C")
                 }
             } else {
                 console.log("No response yet");
@@ -63,6 +74,12 @@ export default class CardsHttpHandler{
         function getFromServer(xmlHttpRequest) {
             xmlHttpRequest.open('GET', '/cards');
             xmlHttpRequest.send();
+        }
+        function getStudentCoins(){
+            const xmlHttpRequest = new XMLHttpRequest();
+            xmlHttpRequest.open('GET', '/coins');
+            xmlHttpRequest.send();
+            walletHttpHandler.handleCoins(xmlHttpRequest);
         }
         function postToServer(xmlHttpRequest,cardId) {
             xmlHttpRequest.open('POST', `/cards/buy/${cardId}`);

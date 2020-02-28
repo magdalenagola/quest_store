@@ -2,17 +2,16 @@ package codecool.java.handler;
 
 import codecool.java.controller.StudentController;
 import codecool.java.dao.CardDAO;
+import codecool.java.dao.DbAuthorizationDAO;
 import codecool.java.dao.DbCardDAO;
+import codecool.java.dao.DbstudentDAO;
 import codecool.java.helper.HttpResponse;
 import codecool.java.model.Card;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import org.json.Cookie;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.CookieManager;
 import java.net.HttpCookie;
 import java.net.URI;
 import java.sql.SQLException;
@@ -30,6 +29,14 @@ public class CardHandler implements HttpHandler {
         String response="";
         if(method.equals("GET")){
             if(!cookieHelper.isCookiePresent(httpExchange)){
+                String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
+                String sessionId = getSessionIdFromCookieString(cookieStr);
+                try {
+                    DbAuthorizationDAO authorizationDAO = new DbAuthorizationDAO();
+                    authorizationDAO.disableCookie(sessionId);
+                } catch (ClassNotFoundException | SQLException e) {
+                    e.printStackTrace();
+                }
                 httpResponse.redirectToLoginPage(httpExchange);
             }else{
                 response = getCards();
@@ -38,17 +45,32 @@ public class CardHandler implements HttpHandler {
         }
         if(method.equals("POST")){
             if(!cookieHelper.isCookiePresent(httpExchange)){
+                String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
+                String sessionId = getSessionIdFromCookieString(cookieStr);
+                try {
+                    DbAuthorizationDAO authorizationDAO = new DbAuthorizationDAO();
+                    authorizationDAO.disableCookie(sessionId);
+                } catch (ClassNotFoundException | SQLException e) {
+                    e.printStackTrace();
+                }
                 httpResponse.redirectToLoginPage(httpExchange);
             }else{
                 URI uri = httpExchange.getRequestURI();
                 final int URI_CARD_ID = 3;
+                final String sessionId = getSessionIdFromCookieString(httpExchange.getRequestHeaders().getFirst("Cookie"));
                 int cardID = Integer.parseInt(uri.toString().split("/")[URI_CARD_ID]);
-                Optional<HttpCookie> cookie = cookieHelper.getSessionIdCookie(httpExchange);
                 try {
-                    int studentID = Integer.parseInt(cookie.get().getValue());
+                    DbstudentDAO dbstudentDAO = new DbstudentDAO();
+                    int studentCoins = getStudentCoins(sessionId);
+                    int studentID = dbstudentDAO.findStudentBySessionId(sessionId).getId();
                     StudentController studentController = new StudentController();
-                    studentController.buyCard(studentID,cardID);
-                    httpResponse.sendResponse200(httpExchange,response);
+                    if(checkCardAffordability(studentCoins,cardID)){
+                        studentController.buyCard(studentID,cardID);
+                        decreaseStudentCoins(sessionId, cardID, dbstudentDAO);
+                        httpResponse.sendResponse200(httpExchange,response);
+                    }else{
+                        httpResponse.sendResponse403(httpExchange);
+                    }
                 } catch (SQLException | ClassNotFoundException | ParseException e) {
                     httpResponse.sendResponse500(httpExchange);
                 }
@@ -57,7 +79,25 @@ public class CardHandler implements HttpHandler {
 
     }
 
+    private void decreaseStudentCoins(String sessionId, int cardID, DbstudentDAO dbstudentDAO) throws SQLException, ClassNotFoundException {
+        CardDAO cardDAO = new DbCardDAO();
+        Card card = (Card) cardDAO.selectCardById(cardID);
+        dbstudentDAO.updateCoins(dbstudentDAO.findStudentBySessionId(sessionId),-card.getCost());
+    }
 
+    private boolean checkCardAffordability(int studenCoins, int cardID) throws SQLException, ClassNotFoundException {
+        CardDAO cardDAO = new DbCardDAO();
+        Card card = (Card) cardDAO.selectCardById(cardID);
+        return studenCoins >= card.getCost();
+    }
+    private int getStudentCoins(String sessionId) throws SQLException, ClassNotFoundException {
+        DbstudentDAO dbstudentDAO = new DbstudentDAO();
+        return dbstudentDAO.getCoins(dbstudentDAO.findStudentBySessionId(sessionId));
+    }
+
+    private String getSessionIdFromCookieString(String cookieStr) {
+        return cookieStr.split("=")[1].replace("\"","");
+    }
 
     private String getCards() {
         List<Card> cards = new ArrayList<>();

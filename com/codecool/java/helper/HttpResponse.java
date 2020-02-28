@@ -33,4 +33,10 @@ public class HttpResponse {
 //        httpExchange.getResponseHeaders().set("Location","/static/index.html");
         sendResponse303(httpExchange);
     }
+
+    public void sendResponse403(HttpExchange httpExchange) throws IOException {
+        httpExchange.sendResponseHeaders(403,0);
+        OutputStream os = httpExchange.getResponseBody();
+        os.close();
+    }
 }
