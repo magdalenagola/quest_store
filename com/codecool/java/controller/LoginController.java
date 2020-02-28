@@ -1,6 +1,6 @@
 package codecool.java.controller;
 
-import codecool.java.dao.DbLoginDAO;
+import codecool.java.dao.DbAuthorizationDAO;
 import codecool.java.dao.LoginDao;
 import codecool.java.dao.NotInDatabaseException;
 import codecool.java.model.User;
@@ -21,7 +21,7 @@ public class LoginController {
         display.displayMessage("Program start.");
         User user = null;
         try {
-            dao = new DbLoginDAO();
+            dao = new DbAuthorizationDAO();
             user = dao.logIn(login, password);
         } catch (SQLException | ClassNotFoundException e) {
             display.displayMessage(e.getMessage());

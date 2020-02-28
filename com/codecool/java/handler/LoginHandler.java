@@ -10,6 +10,7 @@ import java.io.*;
 import java.net.HttpCookie;
 import java.net.URI;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -17,7 +18,7 @@ import java.util.UUID;
 public class LoginHandler implements HttpHandler {
     CookieHelper cookieHelper = new CookieHelper();
     HttpResponse httpResponse = new HttpResponse();
-    private static final String SESSION_COOKIE_NAME = "sessionId";
+
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -28,8 +29,9 @@ public class LoginHandler implements HttpHandler {
                 User user = getUserData(httpExchange.getRequestBody());
                 cookieHelper.createNewCookie(httpExchange, user);
                 httpResponse.sendResponse200(httpExchange, user.getClass().getSimpleName());
-            } catch (SQLException | ClassNotFoundException e) {
+            } catch (SQLException | ClassNotFoundException | ParseException e) {
                 httpResponse.sendResponse500(httpExchange);
+                e.printStackTrace();
             } catch (NotInDatabaseException e) {
                 httpResponse.sendResponse404(httpExchange);
             }

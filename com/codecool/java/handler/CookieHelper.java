@@ -1,15 +1,23 @@
 package codecool.java.handler;
 
+import codecool.java.dao.DbAuthorizationDAO;
 import codecool.java.model.User;
 import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
 
 import java.net.HttpCookie;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 public class CookieHelper {
+
+    private static final String SESSION_COOKIE_NAME = "sessionId";
+    private static final int EXPIRATION_COOKIE_TIME = 900;
+
 
     public List<HttpCookie> parseCookies(String cookieString){
         List<HttpCookie> cookies = new ArrayList<>();
@@ -20,7 +28,9 @@ public class CookieHelper {
             int indexOfEq = cookie.indexOf('=');
             String cookieName = cookie.substring(0, indexOfEq);
             String cookieValue = cookie.substring(indexOfEq + 1, cookie.length());
-            cookies.add(new HttpCookie(cookieName, cookieValue.replace("\"","")));
+            HttpCookie httpCookie = new HttpCookie(cookieName, cookieValue.replace("\"",""));
+            httpCookie.setMaxAge(EXPIRATION_COOKIE_TIME);
+            cookies.add(httpCookie);
         }
         return cookies;
     }
@@ -44,13 +54,16 @@ public class CookieHelper {
     public  Optional<HttpCookie> getSessionIdCookie(HttpExchange httpExchange){
         String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
         List<HttpCookie> cookies = parseCookies(cookieStr);
-        return findCookieByName("UserID", cookies);
+        return findCookieByName(SESSION_COOKIE_NAME , cookies);
     }
 
-    public void createNewCookie(HttpExchange httpExchange, User user){
+    public void createNewCookie(HttpExchange httpExchange, User user) throws SQLException, ClassNotFoundException, ParseException {
+        DbAuthorizationDAO authorizationDAO = new DbAuthorizationDAO();
         UUID uuid = UUID.randomUUID();
         String sessionId = uuid.toString();
-        Optional<HttpCookie> cookie = Optional.of(new HttpCookie("UserID", String.valueOf(user.getId())));
-        httpExchange.getResponseHeaders().add("Set-Cookie", cookie.get().toString()+";Max-Age=3600;");
+        Optional<HttpCookie> cookie = Optional.of(new HttpCookie(SESSION_COOKIE_NAME, sessionId));
+        cookie.get().setMaxAge(EXPIRATION_COOKIE_TIME);
+        httpExchange.getResponseHeaders().add("Set-Cookie", cookie.get().toString()+";Max-Age=" + EXPIRATION_COOKIE_TIME + ";");
+        authorizationDAO.saveCookie(user.getId(), cookie);
     }
 }

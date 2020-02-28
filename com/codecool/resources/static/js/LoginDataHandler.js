@@ -33,7 +33,7 @@ export default class LoginDataHandler {
         window.onload = () => {
             if (logOutBtn) {
                 logOutBtn.onclick = () => {
-                    document.cookie = "UserID=; Expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    document.cookie = "sessionId=; Expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                 }
             }
         }
