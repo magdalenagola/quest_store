@@ -38,6 +38,7 @@ public class DbCardDAO extends DbConnectionDao implements CardDAO {
                     title
             );
         }
+        dbconnection.closeConnection(c);
         return card;
     }
 
@@ -102,6 +103,7 @@ public class DbCardDAO extends DbConnectionDao implements CardDAO {
             );
             cards.add(card);
         }
+
         return cards;
     }
 

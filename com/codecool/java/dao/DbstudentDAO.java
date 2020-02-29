@@ -129,5 +129,26 @@ public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
         PreparedStatement ps = c.prepareStatement(String.format("UPDATE users SET is_active = true WHERE id = %d;", student.getId()));
         ps.executeUpdate();
     };
+    public Student findStudentBySessionId(String sessionId) throws SQLException {
+        Connection c = dbconnection.getConnection();
+        Student student = null;
+        PreparedStatement ps = c.prepareStatement("SELECT * FROM users JOIN cookies ON (users.id = cookies.user_id) " +
+                "WHERE session_id = ?;");
+        ps.setString(1,sessionId);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()) {
+            int id = rs.getInt("id");
+            String email = rs.getString("email");
+            String password = rs.getString("password");
+            String name = rs.getString("name");
+            String surname = rs.getString("surname");
+            boolean is_active = rs.getBoolean("is_active");
+            student = new Student(id, email, password, name, surname, is_active);
+        }
+        rs.close();
+        ps.close();
+        c.close();
+        return student;
+    }
 }
 

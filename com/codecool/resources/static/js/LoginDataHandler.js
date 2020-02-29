@@ -20,8 +20,8 @@ export default class LoginDataHandler {
                             }else if (xmlHttpRequest.response == "Manager"){
                                 window.location.replace("manager_mentors_list.html")
                             }
-                        } else {
-                            alert(xmlHttpRequest.status);
+                        } else if(xmlHttpRequest.status === 303){
+                            window.location.replace("index.html")
                         }
                     } else {
                         console.log("No response yet");
@@ -33,7 +33,10 @@ export default class LoginDataHandler {
         window.onload = () => {
             if (logOutBtn) {
                 logOutBtn.onclick = () => {
-                    document.cookie = "UserID=; Expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    const cookie = document.cookie;
+                    document.cookie = "sessionId=; Expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    xmlHttpRequest.open('POST', '/login/expired_cookie');
+                    xmlHttpRequest.send(cookie);
                 }
             }
         }

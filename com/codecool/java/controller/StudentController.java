@@ -50,11 +50,11 @@ public class StudentController {
                 }
                 break;
             case 4:
-                try {
-                    buyCard(student.getId());
-                } catch (SQLException | ParseException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    buyCard(student.getId());
+//                } catch (SQLException | ParseException e) {
+//                    e.printStackTrace();
+//                }
                  break;
             case 5:
                 try {
@@ -95,16 +95,24 @@ public class StudentController {
         terminalView.displayCardTransactions(transactions);
     }
 
-    private void buyCard(int studentId) throws SQLException, ParseException {
-        showAllCards();
+    public void buyCard(int studentId, int cardId) throws SQLException, ParseException {
+        Card cardToBuy = null;
         List<Card> cards = getCards();
-        int cardToBuyIndex = terminalView.getOptionInput(cards.size()) - 1;
-        Card cardToBuy = cards.get(cardToBuyIndex);
+        cardToBuy = findCardById(cardId, cardToBuy, cards);
         int cardToBuyDbIndex = cardToBuy.getId();
         Date todayDate = getTodayDate();
         java.sql.Date sDate = new java.sql.Date(todayDate.getTime());
         CardTransaction cardTransaction = new CardTransaction(cardToBuyDbIndex, studentId, sDate, cardToBuy.getCost());
         transactionsDAO.save(cardTransaction);
+    }
+
+    public Card findCardById(int cardId, Card cardToBuy, List<Card> cards) {
+        for(Card card :cards){
+            if (card.getId() == cardId){
+                cardToBuy = card;
+            }
+        }
+        return cardToBuy;
     }
 
     private Date getTodayDate() throws ParseException {
