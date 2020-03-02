@@ -31,6 +31,7 @@ public class TransactionsHandler implements HttpHandler {
                     httpResponse.sendResponse200(httpExchange, response);
                 } catch (SQLException | ClassNotFoundException e) {
                     httpResponse.sendResponse500(httpExchange);
+                    e.printStackTrace();
                 }
            }
         }

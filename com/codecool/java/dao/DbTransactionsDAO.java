@@ -85,12 +85,12 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
             e.printStackTrace();
         }
         while (rs.next()) {
-            Integer coinsReceived = rs.getInt("student_quests.cost");
-            Integer questId = rs.getInt("quests.id");
+            Integer coinsReceived = rs.getInt("cost");
+            Integer questId = rs.getInt("quest_id");
             Date dateAdded = rs.getDate("date_added");
             Date dateApproved = rs.getDate("date_approved");
             Integer userId = rs.getInt("user_id");
-            Quest quest = new Quest(questId, rs.getString("title"), rs.getString("description"), rs.getString("image"), rs.getBoolean("is_active"), rs.getInt("student_quests.cost"), rs.getString("category"));
+            Quest quest = new Quest(questId, rs.getString("title"), rs.getString("description"), rs.getString("image"), rs.getBoolean("is_active"), rs.getInt("cost"), rs.getString("category"));
             Transaction questTransaction = new QuestTransaction(quest, userId, dateAdded, coinsReceived);
             transactionsList.add(questTransaction);
             return transactionsList;
