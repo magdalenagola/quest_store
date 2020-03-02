@@ -1,9 +1,10 @@
 export default function expandTableContent() {
-    const transactionItems = document.querySelectorAll('li.transactions__item');
+    const transactionItems = document.querySelectorAll('.transactions__item');
     const transtactionItemsContent = document.querySelectorAll('.transactions__content-wrapper');
-    const userItems = document.querySelectorAll('li.user__item');
+    const userItems = document.querySelectorAll('.user__item');
     const userItemsContent = document.querySelectorAll('.user__content-wrapper');
     let userSalary = document.querySelectorAll('p.user__salary');
+
     for (let i = 0; i < transactionItems.length; i++) {
         transactionItems[i].addEventListener('click', () => {
             transtactionItemsContent[i].classList.toggle('transactions__content-wrapper--opened');
@@ -13,9 +14,12 @@ export default function expandTableContent() {
     for (let i = 1; i < userItems.length; i++) {
         if (userSalary[i] !== undefined) {
             userSalary[i - 1].textContent += ' $';
+        }
+
+        if (window.outerWidth <= 768) {
             userItems[i].addEventListener('click', (e) => {
                 if (e.toElement.tagName == 'H3') {
-                    userItemsContent[i].classList.toggle('user__content-wrapper--opened');
+                    userItemsContent[i - 1].classList.toggle('user__content-wrapper--opened');
                 }
             })
         }

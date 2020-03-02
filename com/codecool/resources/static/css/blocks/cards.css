@@ -22,7 +22,7 @@
 }
 
 .card--add .card__content-wrapper {
-    height: 493px;
+    padding: 0;
     cursor: pointer;
 }
 

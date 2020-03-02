@@ -5,36 +5,28 @@ export default class AddUserPopUpController {
 
     closeAddUserPopUp() {
         const userTable = document.querySelector('.user__list');
-        const userTableMobile = document.querySelector('.user__list--mobile');
         const addUserCloseBtn = document.querySelector('.add_user_close-btn');
         const addUserWindow = document.querySelector('.add-user');
-        addUserCloseBtn.onclick = (e) => {
-            e.preventDefault();
-            addUserWindow.style.display = 'none';
-            if (window.outerWidth > 768) {
-                userTable.style.display = 'table';
-            } else {
-                userTableMobile.style.display = 'table';
+        if (addUserCloseBtn) {
+            addUserCloseBtn.onclick = (e) => {
+                e.preventDefault();
+                addUserWindow.style.display = 'none';
+                userTable.style.display = 'block';
+
             }
-            
         }
     }
 
     openAddUserPopUp() {
-        const userTables = document.querySelectorAll('.user__list');
-        const userTableMobile = document.querySelector('.user__list--mobile');
-        const addUserBtns = document.querySelectorAll('.user__btn--add');
+        const userTable = document.querySelector('.user__list');
+        const addUserBtn = document.querySelector('.user__btn--add');
         const addUserWindow = document.querySelector('.add-user');
-        addUserBtns[0].onclick = () => {
-            addUserWindow.style.display = 'block';
-            userTables[0].style.display = 'none';
-            this.validate();
-        }
-
-        addUserBtns[1].onclick = () => {
-            addUserWindow.style.display = 'block';
-            userTableMobile.style.display = 'none';
-            this.validate();
+        if (addUserBtn) {
+            addUserBtn.onclick = () => {
+                addUserWindow.style.display = 'block';
+                userTable.style.display = 'none';
+                this.validate();
+            }
         }
     }
 

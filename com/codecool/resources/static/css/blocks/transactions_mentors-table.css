@@ -1,6 +1,10 @@
-.transactions__list--mobile,
-.user__list--mobile {
-    display: none;
+.user__list,
+.transactions__list {
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    list-style-type: none;
+    box-sizing: border-box;
 }
 
 .transactions,
@@ -16,6 +20,8 @@
 .transactions__title,
 .user__name {
     margin: 0;
+    text-align: center;
+    width: 33.333%;
 }
 
 .transactions__list,
@@ -27,32 +33,27 @@
     background-color: #e2d8c6;
 }
 
-.table-header__row th {
-    padding: 20px 10px 20px 10px;
-    color: #424141;
-}
-
-.table-header__row {
-    box-shadow: 0 1px 6px #acacac;
-}
-
-.transactions__item th,
-.user__list tbody th {
-    padding: 10px;
-    font-weight: 400;
-    font-style: italic;
+.user__item,
+.transactions__item {
+    display: flex;
+    align-items: center;
+    color: #626060;
 }
 
 .transactions__item {
     color: #2b920b;
 }
 
-.transactions__item th {
-    padding-top: 15px;
+.user__content-wrapper,
+.transactions__content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 66.667%;
 }
 
-.user__item {
-    color: #626060;
+.user__email {
+    width: 50%;
+    text-align: center;
 }
 
 .transactions__item--bought {
@@ -63,6 +64,7 @@
 .user__btn--edit,
 .user__btn--remove {
     margin: 5px auto;
+    margin-right: 10px;
     width: 28px;
     height: 28px;
     cursor: pointer;
@@ -82,9 +84,8 @@
 
 .user__btn-wrapper {
     width: 82px;
+    box-sizing: border-box;
     display: flex;
-    margin-left: auto;
-    margin-right: 3vw;
     align-items: center;
     justify-content: space-between;
 }
@@ -95,43 +96,47 @@
     opacity: 0.5;
 }
 
-@media (max-width: 768px) {
+.user__btn--add {
+    margin: 0 auto;
+    margin-bottom: 25px;
+}
 
-    .transactions__list,
-    .user__list {
-        display: none;
+.transactions__date,
+.transactions__amount {
+    width: 50%;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .transactions__content-wrapper--opened,
+    .user__content-wrapper--opened {
+        display: flex;
     }
 
-    .transactions__list--mobile,
-    .user__list--mobile {
-        display: flex;
-        flex-direction: column;
-        list-style: none;
+    .user__list,
+    .transactions__list {
+        margin: 0;
         padding: 0;
     }
 
-    .transactions__list--mobile p,
-    .user__list--mobile p {
-        margin: 0;
+    .user__item,
+    .transactions__item {
+        flex-direction: column;
+        align-items: center;
+        padding: 25px;
+        cursor: pointer;
+        justify-content: center;
+        border-bottom: 1px solid #b1a58f;
+    }
+
+    .user__item--btn {
+        cursor: default;
     }
 
     .user__btn,
     .user__btn--edit,
     .user__btn--remove {
         margin: 5px auto !important;
-    }
-
-    .transactions__list--mobile .transactions__item,
-    .user__list--mobile .user__item {
-        box-shadow: 0 0px 2px #b1a58f;
-        cursor: pointer;
-    }
-
-    .transactions__list--mobile .transactions__title,
-    .user__list--mobile .user__name,
-    .user__item--btn {
-        padding: 20px 30px;
-        text-align: center;
     }
 
     .transactions__content-wrapper,
@@ -142,10 +147,16 @@
     .transactions__content-wrapper--opened,
     .user__content-wrapper--opened {
         display: flex;
+        width: 100%;
         align-items: center;
         flex-wrap: wrap;
         padding: 20px 30px;
         padding-top: 0;
+    }
+
+    .transactions__content-wrapper--opened {
+        padding: 30px 30px;
+        padding-bottom: 0;
     }
 
     .transactions__content-wrapper--opened p,
@@ -156,24 +167,27 @@
         overflow-x: scroll;
     }
 
+    .user__btn--edit {
+        border-right: 1px solid #b1a58f;
+    }
+
+    .user__skill,
+    .user__salary {
+        padding-top: 20px;
+        margin-bottom: 0;
+    }
+
     .user__email {
         padding-top: 25px;
         width: 100% !important;
     }
 
-    .transactions__content-wrapper--opened .transactions__amount {
-        border-left: 1px solid #b1a58f;
-    }
-
     .user__btn-wrapper {
+        width: 60%;
         margin: auto;
         margin-top: 20px;
         display: flex;
         align-items: center;
         justify-content: center;
-    }
-
-    .user__btn--edit {
-        margin-right: 20px !important;
     }
 }
