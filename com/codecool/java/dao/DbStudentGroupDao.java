@@ -22,8 +22,7 @@ public class DbStudentGroupDao extends DbConnectionDao implements StudentGroupDa
         Student student;
         List<Student> students = new ArrayList<>();
         String query = "SELECT * FROM users JOIN usertypes ON users.usertype_id = usertypes.id JOIN student_details sd on users.id = sd.user_id WHERE sd.group_id = ?;";
-        Connection c = dbconnection.getConnection();
-        PreparedStatement ps = c.prepareStatement(query);
+        PreparedStatement ps = conn.prepareStatement(query);
         ps.setInt(1, id);
         rs = ps.executeQuery(query);
         while(rs.next()){
@@ -54,8 +53,7 @@ public class DbStudentGroupDao extends DbConnectionDao implements StudentGroupDa
 
     private ResultSet selectEntryById(int id) throws SQLException {
         String orderToSql = "SELECT * FROM student_groups WHERE id = ?;";
-        Connection c = dbconnection.getConnection();
-        PreparedStatement ps = c.prepareStatement(orderToSql);
+        PreparedStatement ps = conn.prepareStatement(orderToSql);
         ps.setInt(1, id);
         return ps.executeQuery();
     }
@@ -63,15 +61,13 @@ public class DbStudentGroupDao extends DbConnectionDao implements StudentGroupDa
     @Override
     public void enableAllGroups() throws SQLException {
         String orderToSql = "UPDATE student_groups SET is_active = true;";
-        Connection c = dbconnection.getConnection();
-        c.createStatement().execute(orderToSql);
+        conn.createStatement().execute(orderToSql);
     }
 
     @Override
     public void disableAllGroups() throws SQLException {
         String orderToSql = "UPDATE student_groups SET is_active = false;";
-        Connection c = dbconnection.getConnection();
-        c.createStatement().execute(orderToSql);
+        conn.createStatement().execute(orderToSql);
     }
 
     @Override
@@ -91,8 +87,7 @@ public class DbStudentGroupDao extends DbConnectionDao implements StudentGroupDa
         int id;
         List<Integer> groupIds = new ArrayList<>();
         String orderToSql = ("SELECT * FROM student_groups");
-        Connection c = dbconnection.getConnection();
-        ResultSet rs = c.createStatement().executeQuery(orderToSql);
+        ResultSet rs = conn.createStatement().executeQuery(orderToSql);
         while(rs.next()){
             id = rs.getInt("id");
             groupIds.add(id);
@@ -104,8 +99,7 @@ public class DbStudentGroupDao extends DbConnectionDao implements StudentGroupDa
     public void update(Object o) throws SQLException {
         Group group = (Group) o;
         String orderToSql = "UPDATE student_groups SET name = ? WHERE id = ?;";
-        Connection c = dbconnection.getConnection();
-        PreparedStatement ps = c.prepareStatement(orderToSql);
+        PreparedStatement ps = conn.prepareStatement(orderToSql);
         ps.setString(1, group.getName());
         ps.setInt(2, group.getId());
         ps.execute();
@@ -115,8 +109,7 @@ public class DbStudentGroupDao extends DbConnectionDao implements StudentGroupDa
     public void disable(Object o) throws SQLException {
         Group group = (Group) o;
         String orderToSql = "UPDATE student_groups SET is_active = false WHERE id = ?;";
-        Connection c = dbconnection.getConnection();
-        PreparedStatement ps = c.prepareStatement(orderToSql);
+        PreparedStatement ps = conn.prepareStatement(orderToSql);
         ps.setInt(1, group.getId());
         ps.execute();
     }
@@ -125,8 +118,7 @@ public class DbStudentGroupDao extends DbConnectionDao implements StudentGroupDa
     public void activate(Object o) throws SQLException {
         Group group = (Group) o;
         String orderToSql = "UPDATE student_groups SET is_active = true WHERE id = ?;";
-        Connection c = dbconnection.getConnection();
-        PreparedStatement ps = c.prepareStatement(orderToSql);
+        PreparedStatement ps = conn.prepareStatement(orderToSql);
         ps.setInt(1, group.getId());
         ps.execute();
     }
@@ -135,8 +127,7 @@ public class DbStudentGroupDao extends DbConnectionDao implements StudentGroupDa
     public void save(Object o) throws SQLException {
         Group group = (Group) o;
         String orderToSql = "INSERT INTO student_groups (name) VALUES (?);";
-        Connection c = dbconnection.getConnection();
-        PreparedStatement ps = c.prepareStatement(orderToSql);
+        PreparedStatement ps = conn.prepareStatement(orderToSql);
         ps.setString(1, group.getName());
         ps.execute();
     }

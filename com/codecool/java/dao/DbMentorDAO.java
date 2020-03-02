@@ -2,7 +2,6 @@ package codecool.java.dao;
 
 import codecool.java.model.Mentor;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +11,6 @@ import java.util.List;
 public class DbMentorDAO extends DbConnectionDao implements MentorDAO {
 
     public DbMentorDAO() throws SQLException, ClassNotFoundException {
-        super();
     }
 
     @Override
