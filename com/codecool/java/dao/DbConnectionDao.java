@@ -1,14 +1,9 @@
 package codecool.java.dao;
 
-import codecool.java.model.BasicConnectionPool;
 import codecool.java.model.DatabaseConnection;
 
-import java.sql.SQLException;
+import java.sql.Connection;
 
-public class DbConnectionDao {
-    DatabaseConnection dbconnection;
-
-    public DbConnectionDao() throws ClassNotFoundException, SQLException {
-        dbconnection = new DatabaseConnection();
-    }
+public abstract class DbConnectionDao {
+    static final Connection conn = DatabaseConnection.getConnection();
 }
