@@ -42,6 +42,7 @@ public class LoginHandler implements HttpHandler {
             try {
                 DbAuthorizationDAO authorizationDAO = new DbAuthorizationDAO();
                 authorizationDAO.disableCookie(sessionId);
+                httpResponse.sendResponse200(httpExchange, "");
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             } catch (SQLException e) {

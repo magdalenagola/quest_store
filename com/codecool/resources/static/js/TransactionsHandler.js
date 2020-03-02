@@ -35,7 +35,7 @@ export default class TransactionsHandler {
             wrapper.classList.add('transactions__content-wrapper');
             const date = document.createElement('p');
             date.innerText = transactionJson[type][index]["date"];
-            date.classList.add('transaction__date');
+            date.classList.add('transactions__date');
             const amount = document.createElement('p');
             amount.innerText = transactionJson[type][index]["cost"];
             amount.classList.add('transactions__amount');
