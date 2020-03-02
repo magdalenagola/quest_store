@@ -19,6 +19,7 @@ if (window.location.pathname === "/static/student_transactions.html") {
     const transactionsHandler = new TransactionsHandler();
     transactionsHandler.handleStudentTransactions();
 }
+
 if (!document.querySelector('.index')) {
     toggleMenu();
     expandTableContent();

@@ -4,6 +4,9 @@ export default function expandTableContent() {
     const userItems = document.querySelectorAll('.user__item');
     const userItemsContent = document.querySelectorAll('.user__content-wrapper');
     let userSalary = document.querySelectorAll('p.user__salary');
+    if (userItems.length === 1 || transactionItems.length === 1) {
+        setTimeout(expandTableContent, 2000)
+    }
 
     for (let i = 0; i < transactionItems.length; i++) {
         transactionItems[i].addEventListener('click', () => {

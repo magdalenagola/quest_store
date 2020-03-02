@@ -17,7 +17,7 @@ export default class WalletHttpHandler {
             coinWrapper.classList.add('student__wallet--animated');
             setTimeout(() => {
                 coinWrapper.classList.remove('student__wallet--animated');
-            }, 2200)
+            }, 1500)
         }
     }
 

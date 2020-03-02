@@ -97,9 +97,9 @@
 }
 
 .student__wallet--animated {
-    font-size: 27px;
-    color: #443c2c;
-    transition: 2s;
+    font-size: 30px;
+    color: #7c6938;
+    transition: 2500ms;
 }
 
 .card__img-wrapper {
