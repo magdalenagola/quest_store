@@ -96,6 +96,12 @@
     background-image: url("../img/student_coin.png");
 }
 
+.student__wallet--animated {
+    font-size: 27px;
+    color: #443c2c;
+    transition: 2s;
+}
+
 .card__img-wrapper {
     width: 100%;
     height: auto;
@@ -156,6 +162,7 @@
     background-position: center;
     bottom: 45px;
     right: 10px;
+    cursor: pointer;
 }
 
 .card__basket:hover {

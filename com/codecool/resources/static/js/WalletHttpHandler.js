@@ -14,6 +14,10 @@ export default class WalletHttpHandler {
         function  updateStudentCoins(response) {
             const coinWrapper = document.querySelector(".student__wallet");
             coinWrapper.innerText = JSON.parse(response);
+            coinWrapper.classList.add('student__wallet--animated');
+            setTimeout(() => {
+                coinWrapper.classList.remove('student__wallet--animated');
+            }, 2200)
         }
     }
 

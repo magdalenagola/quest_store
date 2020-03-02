@@ -112,6 +112,10 @@
 }
 
 @media (max-width: 768px) {
+    .transactions__header {
+        display: none;
+    }
+
     .transactions__content-wrapper--opened,
     .user__content-wrapper--opened {
         display: flex;

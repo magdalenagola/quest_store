@@ -27,6 +27,7 @@ export default class UserEditor {
         const userTableMobile = document.querySelector('.user__list--mobile');
         const editUserBtns = document.querySelectorAll('.user__btn--edit');
         const editUserWindow = document.querySelector('.edit-user');
+
         if (editUserBtns.length > 0) {
             for (let i = 0; i < editUserBtns.length; i++) {
                 editUserBtns[i].onclick = () => {
