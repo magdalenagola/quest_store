@@ -5,8 +5,9 @@ import codecool.java.model.Transaction;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 public interface TransactionsDAO extends DAO{
     List<Transaction> loadAllNotApproved() throws SQLException;
-    List<Transaction> displayAllTransactionsByStudent(Student student) throws SQLException;
+    Map<String,List<Transaction>> displayAllTransactionsByStudent(Student student) throws SQLException;
 }

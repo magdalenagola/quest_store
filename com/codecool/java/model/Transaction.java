@@ -4,13 +4,13 @@ import java.sql.Date;
 import java.sql.SQLException;
 
 public abstract class Transaction {
-    private int itemId;
+    private Item item;
     private int userId;
     private Date date;
     private int cost;
 
-    public Transaction(int itemId, int userId, Date date, int cost) {
-        this.itemId = itemId;
+    public Transaction(Item item, int userId, Date date, int cost) {
+        this.item = item;
         this.userId = userId;
         this.date = date;
         this.cost = cost;
@@ -18,15 +18,11 @@ public abstract class Transaction {
 
     @Override
     public String toString() {
-        return "itemID: " + itemId + ", userID: " + userId + ", date: " + date + ", cost: " + cost;
+        return "itemID: " + item.getId() + ", userID: " + userId + ", date: " + date + ", cost: " + cost;
     }
 
     public int getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
+        return item.getId();
     }
 
     public int getUserId() {

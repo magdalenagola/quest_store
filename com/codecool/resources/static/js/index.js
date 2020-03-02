@@ -7,7 +7,7 @@ import EditUserPopUpController from './UserEditor.js';
 import LoginDataHandler from "./LoginDataHandler.js";
 import CardsHttpHandler from "./CardsHttpHandler.js";
 import InteractiveStyles from './InteractiveStyles.js';
-
+import TransactionsHandler from "./TransactionsHandler.js";
 const loginDataHandler = new LoginDataHandler();
 loginDataHandler.handleUserData();
 
@@ -15,7 +15,10 @@ if (window.location.pathname === "/static/student_store.html") {
     const cardsHttpHandler = new CardsHttpHandler();
     cardsHttpHandler.handleCards();
 }
-
+if (window.location.pathname === "/static/student_transactions.html") {
+    const transactionsHandler = new TransactionsHandler();
+    transactionsHandler.handleStudentTransactions();
+}
 if (!document.querySelector('.index')) {
     toggleMenu();
     expandTableContent();
