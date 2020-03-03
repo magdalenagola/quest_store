@@ -103,7 +103,7 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
     }
 
     private ResultSet selectAllFromTable() throws SQLException {
-        String orderToSql = ("SELECT * FROM quests");
+        String orderToSql = ("SELECT * FROM quests WHERE is_active = true;");
         Connection c = dbconnection.getConnection();
         ResultSet rs = c.createStatement().executeQuery(orderToSql);
         return rs;
