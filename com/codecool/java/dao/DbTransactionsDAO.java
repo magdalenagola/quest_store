@@ -93,7 +93,6 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
             Quest quest = new Quest(questId, rs.getString("title"), rs.getString("description"), rs.getString("image"), rs.getBoolean("is_active"), rs.getInt("cost"), rs.getString("category"));
             Transaction questTransaction = new QuestTransaction(quest, userId, dateAdded, coinsReceived);
             transactionsList.add(questTransaction);
-            return transactionsList;
         }
         dbconnection.closeConnection(c);
         return transactionsList;

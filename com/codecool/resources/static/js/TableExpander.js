@@ -13,7 +13,7 @@ export default function expandTableContent() {
 
     for (let i = 1; i < userItems.length; i++) {
         if (userSalary[i] !== undefined) {
-            userSalary[i - 1].textContent += ' $';
+            userSalary[i].textContent += ' $';
         }
 
         if (window.outerWidth <= 768) {
