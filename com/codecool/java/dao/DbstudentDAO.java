@@ -142,7 +142,6 @@ public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
         }
         rs.close();
         ps.close();
-        c.close();
         return student;
     }
 }
