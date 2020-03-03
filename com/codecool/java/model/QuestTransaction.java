@@ -8,8 +8,8 @@ import java.sql.Date;
 public class QuestTransaction extends Transaction {
     private Date approvalDate;
 
-    public QuestTransaction(int questId, int userId, Date transactionDate, int cost) {
-        super(questId, userId, transactionDate, cost);
+    public QuestTransaction(Item quest, int userId, Date transactionDate, int cost) {
+        super(quest, userId, transactionDate, cost);
     };
 
     public Date getApprovalDate() {

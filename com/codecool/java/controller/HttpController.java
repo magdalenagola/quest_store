@@ -1,9 +1,6 @@
 package codecool.java.controller;
 
-import codecool.java.handler.CardHandler;
-import codecool.java.handler.LoginHandler;
-import codecool.java.handler.StaticHandler;
-import codecool.java.handler.WalletHandler;
+import codecool.java.handler.*;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
@@ -18,6 +15,7 @@ public class HttpController {
             server.createContext("/cards", new CardHandler());
             server.createContext("/coins", new WalletHandler());
             server.createContext("/static", new StaticHandler());
+            server.createContext("/student/transactions", new TransactionsHandler());
             server.setExecutor(null);
             server.start();
         }

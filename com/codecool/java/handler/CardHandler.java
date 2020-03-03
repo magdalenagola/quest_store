@@ -29,30 +29,14 @@ public class CardHandler implements HttpHandler {
         String response="";
         if(method.equals("GET")){
             if(!cookieHelper.isCookiePresent(httpExchange)){
-                String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
-                String sessionId = getSessionIdFromCookieString(cookieStr);
-                try {
-                    DbAuthorizationDAO authorizationDAO = new DbAuthorizationDAO();
-                    authorizationDAO.disableCookie(sessionId);
-                } catch (ClassNotFoundException | SQLException e) {
-                    e.printStackTrace();
-                }
                 httpResponse.redirectToLoginPage(httpExchange);
-            }else{
+            }else {
                 response = getCards();
-                httpResponse.sendResponse200(httpExchange,response);
+                httpResponse.sendResponse200(httpExchange, response);
             }
         }
         if(method.equals("POST")){
             if(!cookieHelper.isCookiePresent(httpExchange)){
-                String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
-                String sessionId = getSessionIdFromCookieString(cookieStr);
-                try {
-                    DbAuthorizationDAO authorizationDAO = new DbAuthorizationDAO();
-                    authorizationDAO.disableCookie(sessionId);
-                } catch (ClassNotFoundException | SQLException e) {
-                    e.printStackTrace();
-                }
                 httpResponse.redirectToLoginPage(httpExchange);
             }else{
                 URI uri = httpExchange.getRequestURI();

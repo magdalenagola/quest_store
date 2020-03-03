@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class StudentController {
     private CardDAO cardDAO;
@@ -43,11 +44,11 @@ public class StudentController {
                 }
                 break;
             case 3:
-                try {
-                    showTransactions(student);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+//                try {
+////                    showTransactions(student);
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                }
                 break;
             case 4:
 //                try {
@@ -83,26 +84,25 @@ public class StudentController {
         return cardDAO.loadAll();
     }
 
-    private List<Transaction> getAllTransactions() throws SQLException {
-        return transactionsDAO.loadAll();
-    }
-
-    private List<Transaction> getUserTransactions(Student student) throws SQLException {
-        return transactionsDAO.displayAllTransactionsByStudent(student);
-    }
-    private void showTransactions(Student student) throws SQLException {
-        List<Transaction> transactions = getUserTransactions(student);
-        terminalView.displayCardTransactions(transactions);
-    }
+//    private List<Transaction> getAllTransactions() throws SQLException {
+//        return transactionsDAO.loadAll();
+//    }
+//
+//    private Map<String,List<Transaction>> getUserTransactions(Student student) throws SQLException {
+//        return transactionsDAO.displayAllTransactionsByStudent(student);
+//    }
+//    private void showTransactions(Student student) throws SQLException {
+//        Map<String,List<Transaction>> transactions = getUserTransactions(student);
+//        terminalView.displayCardTransactions(transactions);
+//    }
 
     public void buyCard(int studentId, int cardId) throws SQLException, ParseException {
         Card cardToBuy = null;
         List<Card> cards = getCards();
         cardToBuy = findCardById(cardId, cardToBuy, cards);
-        int cardToBuyDbIndex = cardToBuy.getId();
         Date todayDate = getTodayDate();
         java.sql.Date sDate = new java.sql.Date(todayDate.getTime());
-        CardTransaction cardTransaction = new CardTransaction(cardToBuyDbIndex, studentId, sDate, cardToBuy.getCost());
+        CardTransaction cardTransaction = new CardTransaction(cardToBuy, studentId, sDate, cardToBuy.getCost());
         transactionsDAO.save(cardTransaction);
     }
 
@@ -128,10 +128,9 @@ public class StudentController {
         List<Quest> quests = getQuests();
         int questToSubmitIndex = terminalView.getOptionInput(quests.size()) - 1;
         Quest questToSubmit = quests.get(questToSubmitIndex);
-        int questToSubmitDbIndex = questToSubmit.getId();
         Date todayDate = getTodayDate();
         java.sql.Date sDate = new java.sql.Date(todayDate.getTime());
-        QuestTransaction questTransaction = new QuestTransaction(questToSubmitDbIndex, studentId, sDate, questToSubmit.getCost());
+        QuestTransaction questTransaction = new QuestTransaction(questToSubmit, studentId, sDate, questToSubmit.getCost());
         transactionsDAO.save(questTransaction);
     }
 }

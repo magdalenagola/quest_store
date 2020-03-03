@@ -1,5 +1,6 @@
 package codecool.java.dao;
 
+import codecool.java.model.DatabaseConnection;
 import codecool.java.model.User;
 import codecool.java.model.UserFactory;
 
@@ -14,17 +15,14 @@ import java.util.Optional;
 public class DbAuthorizationDAO extends DbConnectionDao implements LoginDao {
 
     public DbAuthorizationDAO() throws ClassNotFoundException, SQLException {
-        super();
     }
 
     @Override
     public ResultSet findLoginInfo(String providedLogin, String providedPassword) throws SQLException {
-        Connection c = dbconnection.getConnection();
-        PreparedStatement ps = c.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?;");
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?;");
         ps.setString(1, providedLogin);
         ps.setString(2, providedPassword);
         ResultSet rs = ps.executeQuery();
-        dbconnection.closeConnection(c);
         return rs;
     }
 
@@ -54,8 +52,7 @@ public class DbAuthorizationDAO extends DbConnectionDao implements LoginDao {
     }
 
     public void saveCookie(int userId, Optional<HttpCookie> cookie) throws SQLException, ParseException {
-        Connection c = dbconnection.getConnection();
-        PreparedStatement ps = c.prepareStatement("INSERT INTO cookies (session_id, user_id, creation_date, expiration_date, is_active) VALUES (?, ?, ?, ?, ?);");
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO cookies (session_id, user_id, creation_date, expiration_date, is_active) VALUES (?, ?, ?, ?, ?);");
         ps.setString(1, cookie.get().getValue());
         ps.setInt(2, userId);
         Date creationDate = new Date();
@@ -65,15 +62,12 @@ public class DbAuthorizationDAO extends DbConnectionDao implements LoginDao {
         ps.setTimestamp(4, new java.sql.Timestamp(expDate.getTime()));
         ps.setBoolean(5, true);
         ps.executeUpdate();
-        dbconnection.closeConnection(c);
     }
 
     public void disableCookie(String sessionID) throws SQLException {
-        Connection c = dbconnection.getConnection();
-        PreparedStatement ps = c.prepareStatement("UPDATE cookies SET is_active = false WHERE session_id = ?;");
+        PreparedStatement ps = conn.prepareStatement("UPDATE cookies SET is_active = false WHERE session_id = ?;");
         ps.setString(1, sessionID);
         ResultSet rs = ps.executeQuery();
-        dbconnection.closeConnection(c);
     }
 
 

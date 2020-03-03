@@ -11,7 +11,6 @@ import java.util.List;
 public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
 
     public DbQuestDAO() throws SQLException, ClassNotFoundException {
-        super();
     }
 
     @Override
@@ -40,8 +39,7 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
 
     private ResultSet selectEntryById(int id) throws SQLException {
         String orderToSql = "SELECT * FROM quests WHERE id = ?;";
-        Connection c = dbconnection.getConnection();
-        PreparedStatement ps = c.prepareStatement(orderToSql);
+        PreparedStatement ps = conn.prepareStatement(orderToSql);
         ps.setInt(1, id);
         return ps.executeQuery();
     }
@@ -49,23 +47,20 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
     @Override
     public void enableAllQuests() throws SQLException {
         String orderToSql = "UPDATE quests SET is_active = true;";
-        Connection c = dbconnection.getConnection();
-        c.createStatement().execute(orderToSql);
+        conn.createStatement().execute(orderToSql);
     }
 
     @Override
     public void disableAllQuests() throws SQLException {
         String orderToSql = "UPDATE quests SET is_active = false;";
-        Connection c = dbconnection.getConnection();
-        c.createStatement().execute(orderToSql);
+        conn.createStatement().execute(orderToSql);
     }
 
     @Override
     public void save(Object o) throws SQLException {
         Quest quest = (Quest) o;
         String orderToSql = "INSERT INTO quests (title, description, image,is_active, cost, category) VALUES (?, ?, ?, ?, ?, ?);";
-        Connection c = dbconnection.getConnection();
-        PreparedStatement ps = c.prepareStatement(orderToSql);
+        PreparedStatement ps = conn.prepareStatement(orderToSql);
         ps.setString(1, quest.getTitle());
         ps.setString(2, quest.getDescription());
         ps.setString(3, quest.getImage());
@@ -104,8 +99,7 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
 
     private ResultSet selectAllFromTable() throws SQLException {
         String orderToSql = ("SELECT * FROM quests");
-        Connection c = dbconnection.getConnection();
-        ResultSet rs = c.createStatement().executeQuery(orderToSql);
+        ResultSet rs = conn.createStatement().executeQuery(orderToSql);
         return rs;
     }
 
@@ -113,8 +107,7 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
     public void update(Object o) throws SQLException {
         Quest quest = (Quest) o;
         String orderToSql = "INSERT INTO quests (title, description, image, category, is_active, cost, category) VALUES (?, ?, ?, ?, ?, ?);";
-        Connection c = dbconnection.getConnection();
-        PreparedStatement ps = c.prepareStatement(orderToSql);
+        PreparedStatement ps = conn.prepareStatement(orderToSql);
         ps.setString(1, quest.getTitle());
         ps.setString(2, quest.getDescription());
         ps.setString(3, quest.getImage());
@@ -128,8 +121,7 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
     public void disable(Object o) throws SQLException {
         Quest quest = (Quest) o;
         String orderToSql = "UPDATE quests SET is_active = false WHERE id = ?;";
-        Connection c = dbconnection.getConnection();
-        PreparedStatement ps = c.prepareStatement(orderToSql);
+        PreparedStatement ps = conn.prepareStatement(orderToSql);
         ps.setInt(1, quest.getId());
         ps.execute();
     }
@@ -138,8 +130,7 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
     public void activate(Object o) throws SQLException {
         Quest quest = (Quest) o;
         String orderToSql = "UPDATE quests SET is_active = true WHERE id = ?;";
-        Connection c = dbconnection.getConnection();
-        PreparedStatement ps = c.prepareStatement(orderToSql);
+        PreparedStatement ps = conn.prepareStatement(orderToSql);
         ps.setInt(1, quest.getId());
         ps.execute();
     }
