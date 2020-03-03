@@ -1,10 +1,11 @@
 package codecool.java.dao;
 
 import codecool.java.model.Card;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import codecool.java.model.CardTransaction;
+import codecool.java.model.Student;
+import codecool.java.model.Transaction;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,4 +149,22 @@ public class DbCardDAO extends DbConnectionDao implements CardDAO {
         ps.setInt(1, card.getId());
         ps.execute();
     }
+
+    public List<Card> getCardsByStudent(Student student) throws SQLException {
+        Connection c = dbconnection.getConnection();
+        List<Card> cardsList = new ArrayList<>();
+        PreparedStatement ps = c.prepareStatement("SELECT * FROM student_cards JOIN cards on (cards.id = student_cards.card_id) WHERE student_cards.user_id = ?;");
+        ps.setInt(1, student.getId());
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Integer id = rs.getInt("card_id");
+            Integer coinsPaid = rs.getInt("cost");
+            Date dateBought = rs.getDate("date_bought");
+            Integer userId = rs.getInt("user_id");
+            Card card = new Card(rs.getInt("cost"), rs.getString("description"), rs.getString("image"), true, rs.getInt("quantity"), rs.getString("title"));
+            cardsList.add(card);
+        }
+        return cardsList;
+    }
+
 }
