@@ -37,8 +37,8 @@ public class StudentQuestHandler implements HttpHandler {
         List<Quest> quests = new ArrayList<>();
         Gson gson = new Gson();
         try {
-            QuestDAO questDAO = new DbQuestDAO();
-            quests = questDAO.loadAll();
+            DbQuestDAO questDAO = new DbQuestDAO();
+            quests = questDAO.loadAllActive();
         } catch (SQLException | ClassNotFoundException e) {
             httpResponse.sendResponse500(httpExchange);
         }

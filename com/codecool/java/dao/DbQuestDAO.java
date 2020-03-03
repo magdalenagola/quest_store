@@ -75,6 +75,31 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
         ps.execute();
     }
 
+    public List loadAllActive() throws SQLException {
+        List<Quest> quests = new ArrayList<>();
+        Quest quest;
+        ResultSet rs = selectAllActiveFromTable();
+        while(rs.next()){
+            int id = rs.getInt("id");
+            String title = rs.getString("title");
+            String description = rs.getString("description");
+            String image = rs.getString("image");
+            boolean isActive = rs.getBoolean("is_active");
+            int cost = rs.getInt("cost");
+            String category = rs.getString("category");
+            quest = new Quest(
+                    id,
+                    title,
+                    description,
+                    image,
+                    isActive,
+                    cost,
+                    category
+            );
+            quests.add(quest);
+        }
+        return quests;
+    }
     @Override
     public List loadAll() throws SQLException {
         List<Quest> quests = new ArrayList<>();
@@ -102,8 +127,14 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
         return quests;
     }
 
-    private ResultSet selectAllFromTable() throws SQLException {
+    private ResultSet selectAllActiveFromTable() throws SQLException {
         String orderToSql = ("SELECT * FROM quests WHERE is_active = true;");
+        Connection c = dbconnection.getConnection();
+        ResultSet rs = c.createStatement().executeQuery(orderToSql);
+        return rs;
+    }
+    private ResultSet selectAllFromTable() throws SQLException {
+        String orderToSql = ("SELECT * FROM quests;");
         Connection c = dbconnection.getConnection();
         ResultSet rs = c.createStatement().executeQuery(orderToSql);
         return rs;
