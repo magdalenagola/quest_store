@@ -5,6 +5,10 @@ export default function expandTableContent() {
     const userItemsContent = document.querySelectorAll('.user__content-wrapper');
     let userSalary = document.querySelectorAll('p.user__salary');
 
+    if (userItems.length === 1 || transactionItems.length === 1) {
+        setTimeout(expandTableContent, 2000)
+    }
+
     for (let i = 0; i < transactionItems.length; i++) {
         transactionItems[i].addEventListener('click', () => {
             transtactionItemsContent[i].classList.toggle('transactions__content-wrapper--opened');
