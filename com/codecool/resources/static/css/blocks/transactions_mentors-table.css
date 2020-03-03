@@ -1,3 +1,7 @@
+.transactions__header {
+    color: #1b1b1b !important;
+}
+
 .user__list,
 .transactions__list {
     display: flex;
