@@ -6,11 +6,16 @@ import LoginDataHandler from "./LoginDataHandler.js";
 import CardsHttpHandler from "./CardsHttpHandler.js";
 import InteractiveStyles from './InteractiveStyles.js';
 import TransactionsHandler from "./TransactionsHandler.js";
+import InventoryHttpHandler from "./InventoryHttpHandler.js";
 import MentorQuestHandler from "./MentorQuestHandler.js";
 import StudentQuestsHandler from "./StudentQuestsHandler.js";
-
 const loginDataHandler = new LoginDataHandler();
 loginDataHandler.handleUserData();
+
+if (window.location.pathname === "/static/student_inventory.html") {
+    const inventoryHttpHandler = new InventoryHttpHandler();
+    inventoryHttpHandler.handleInventory();
+}
 
 if (window.location.pathname === "/static/student_store.html") {
     const cardsHttpHandler = new CardsHttpHandler();
