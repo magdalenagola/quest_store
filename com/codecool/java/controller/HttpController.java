@@ -16,6 +16,7 @@ public class HttpController {
             server.createContext("/coins", new WalletHandler());
             server.createContext("/static", new StaticHandler());
             server.createContext("/student/transactions", new TransactionsHandler());
+            server.createContext("/mentor/quests", new MentorQuestHandler());
             server.setExecutor(null);
             server.start();
         }

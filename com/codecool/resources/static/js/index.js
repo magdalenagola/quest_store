@@ -8,6 +8,7 @@ import LoginDataHandler from "./LoginDataHandler.js";
 import CardsHttpHandler from "./CardsHttpHandler.js";
 import InteractiveStyles from './InteractiveStyles.js';
 import TransactionsHandler from "./TransactionsHandler.js";
+import MentorQuestHandler from "./MentorQuestHandler.js";
 const loginDataHandler = new LoginDataHandler();
 loginDataHandler.handleUserData();
 
@@ -19,6 +20,10 @@ if (window.location.pathname === "/static/student_transactions.html") {
     const transactionsHandler = new TransactionsHandler();
     transactionsHandler.handleStudentTransactions();
 }
+if (window.location.pathname === "/static/mentor_quests.html") {
+    const mentorQuestHandler = new MentorQuestHandler();
+    mentorQuestHandler.handleMentorQuests();
+}
 if (!document.querySelector('.index')) {
     toggleMenu();
     expandTableContent();
@@ -27,8 +32,7 @@ if (!document.querySelector('.index')) {
 const addUserPopUpController = new AddUserPopUpController();
 const editUserPopUpController = new EditUserPopUpController();
 
-const interactiveStyles = new InteractiveStyles();
-interactiveStyles.styleAddCard();
+
 
 addUserPopUpController.openAddUserPopUp();
 addUserPopUpController.closeAddUserPopUp();
