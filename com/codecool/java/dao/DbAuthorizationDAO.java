@@ -24,7 +24,6 @@ public class DbAuthorizationDAO extends DbConnectionDao implements LoginDao {
         ps.setString(1, providedLogin);
         ps.setString(2, providedPassword);
         ResultSet rs = ps.executeQuery();
-        dbconnection.closeConnection(c);
         return rs;
     }
 
@@ -65,7 +64,6 @@ public class DbAuthorizationDAO extends DbConnectionDao implements LoginDao {
         ps.setTimestamp(4, new java.sql.Timestamp(expDate.getTime()));
         ps.setBoolean(5, true);
         ps.executeUpdate();
-        dbconnection.closeConnection(c);
     }
 
     public void disableCookie(String sessionID) throws SQLException {
@@ -73,7 +71,6 @@ public class DbAuthorizationDAO extends DbConnectionDao implements LoginDao {
         PreparedStatement ps = c.prepareStatement("UPDATE cookies SET is_active = false WHERE session_id = ?;");
         ps.setString(1, sessionID);
         ps.executeUpdate();
-        dbconnection.closeConnection(c);
     }
 
 

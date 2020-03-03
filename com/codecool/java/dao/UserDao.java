@@ -10,7 +10,7 @@ public class UserDao {
     private DatabaseConnection dbconnection;
 
     public UserDao() throws SQLException, ClassNotFoundException {
-        dbconnection = new DatabaseConnection();
+        dbconnection = DatabaseConnection.INSTANCE;
     }
 
     public ResultSet findLoginInfo(String login, String password) throws SQLException {
