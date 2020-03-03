@@ -72,7 +72,7 @@ public class DbAuthorizationDAO extends DbConnectionDao implements LoginDao {
         Connection c = dbconnection.getConnection();
         PreparedStatement ps = c.prepareStatement("UPDATE cookies SET is_active = false WHERE session_id = ?;");
         ps.setString(1, sessionID);
-        ResultSet rs = ps.executeQuery();
+        ps.executeUpdate();
         dbconnection.closeConnection(c);
     }
 
