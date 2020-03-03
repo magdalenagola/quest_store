@@ -2,14 +2,11 @@ package codecool.java.dao;
 
 import codecool.java.model.User;
 import codecool.java.model.UserFactory;
-
 import java.net.HttpCookie;
 import java.sql.*;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
-
 
 public class DbAuthorizationDAO extends DbConnectionDao implements LoginDao {
 
@@ -75,6 +72,4 @@ public class DbAuthorizationDAO extends DbConnectionDao implements LoginDao {
         ps.executeUpdate();
         dbconnection.closeConnection(c);
     }
-
-
 }
