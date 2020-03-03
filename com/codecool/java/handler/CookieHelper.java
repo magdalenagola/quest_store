@@ -16,7 +16,6 @@ public class CookieHelper {
     private static final String SESSION_COOKIE_NAME = "sessionId";
     private static final int EXPIRATION_COOKIE_TIME = 900;
 
-
     public List<HttpCookie> parseCookies(String cookieString){
         List<HttpCookie> cookies = new ArrayList<>();
         if(cookieString == null || cookieString.isEmpty()){ // what happens if cookieString = null?
