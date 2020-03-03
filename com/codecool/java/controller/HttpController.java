@@ -1,7 +1,6 @@
 package codecool.java.controller;
 
 import codecool.java.handler.*;
-import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
@@ -14,6 +13,7 @@ public class HttpController {
             server.createContext("/login", new LoginHandler());
             server.createContext("/cards", new CardHandler());
             server.createContext("/coins", new WalletHandler());
+            server.createContext("/mentor/students", new MentorStudentHandler());
             server.createContext("/static", new StaticHandler());
             server.createContext("/student/transactions", new TransactionsHandler());
             server.setExecutor(null);
