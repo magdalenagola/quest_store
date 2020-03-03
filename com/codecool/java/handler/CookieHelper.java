@@ -3,8 +3,6 @@ package codecool.java.handler;
 import codecool.java.dao.DbAuthorizationDAO;
 import codecool.java.model.User;
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
-
 import java.net.HttpCookie;
 import java.sql.SQLException;
 import java.text.ParseException;

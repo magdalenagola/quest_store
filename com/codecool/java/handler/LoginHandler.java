@@ -8,18 +8,13 @@ import codecool.java.model.User;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import java.io.*;
-import java.net.HttpCookie;
 import java.net.URI;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.Optional;
-import java.util.UUID;
-
 
 public class LoginHandler implements HttpHandler {
     CookieHelper cookieHelper = new CookieHelper();
     HttpResponse httpResponse = new HttpResponse();
-
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -63,7 +58,6 @@ public class LoginHandler implements HttpHandler {
         User user = loginController.authenticate(loginPassword[0], loginPassword[1]);
         System.out.println(user.toString());
         return user;
-
     }
 
     private String getSessionIdFromCookie(InputStream requestBody) throws IOException {
