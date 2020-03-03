@@ -34,15 +34,8 @@ public class LoginHandler implements HttpHandler {
         }
         if (method.equals("POST") && (uri.toString().equals("/login/expired_cookie"))){
             String sessionId = getSessionIdFromCookie(httpExchange.getRequestBody());
-            try {
-                DbAuthorizationDAO authorizationDAO = new DbAuthorizationDAO();
-                authorizationDAO.disableCookie(sessionId);
-                httpResponse.sendResponse200(httpExchange, "");
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            cookieHelper.refreshCookie(httpExchange);
+            httpResponse.sendResponse200(httpExchange, "");
         }
     }
 
@@ -58,6 +51,7 @@ public class LoginHandler implements HttpHandler {
         User user = loginController.authenticate(loginPassword[0], loginPassword[1]);
         System.out.println(user.toString());
         return user;
+
     }
 
     private String getSessionIdFromCookie(InputStream requestBody) throws IOException {

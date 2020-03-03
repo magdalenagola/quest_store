@@ -65,11 +65,27 @@ public class DbAuthorizationDAO extends DbConnectionDao implements LoginDao {
         dbconnection.closeConnection(c);
     }
 
+    public void refreshCookie( Optional<HttpCookie> cookie) throws SQLException, ParseException {
+        Connection c = dbconnection.getConnection();
+        PreparedStatement ps = c.prepareStatement("UPDATE cookies SET expiration_date = (CURRENT_TIMESTAMP + '00:15:00'::interval), is_active = true WHERE session_id = ?;");
+        ps.setString(1, cookie.get().getValue());
+        ps.executeUpdate();
+        ps.close();
+        dbconnection.closeConnection(c);
+    }
+
     public void disableCookie(String sessionID) throws SQLException {
         Connection c = dbconnection.getConnection();
         PreparedStatement ps = c.prepareStatement("UPDATE cookies SET is_active = false WHERE session_id = ?;");
         ps.setString(1, sessionID);
         ps.executeUpdate();
+        ps.close();
         dbconnection.closeConnection(c);
+    }
+
+    public void disableAllOutdatedCookies() throws SQLException {
+        Connection c = dbconnection.getConnection();
+        c.createStatement().execute("UPDATE cookies SET is_active = FALSE WHERE expiration_date < CURRENT_TIMESTAMP;");
+        c.close();
     }
 }

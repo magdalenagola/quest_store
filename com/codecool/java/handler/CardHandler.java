@@ -31,14 +31,16 @@ public class CardHandler implements HttpHandler {
             if(!cookieHelper.isCookiePresent(httpExchange)){
                 httpResponse.redirectToLoginPage(httpExchange);
             }else {
+                cookieHelper.refreshCookie(httpExchange);
                 response = getCards();
                 httpResponse.sendResponse200(httpExchange, response);
             }
         }
         if(method.equals("POST")){
-            if(!cookieHelper.isCookiePresent(httpExchange)){
+            if(!cookieHelper.isCookiePresent(httpExchange)) {
                 httpResponse.redirectToLoginPage(httpExchange);
-            }else{
+            } else {
+                cookieHelper.refreshCookie(httpExchange);
                 URI uri = httpExchange.getRequestURI();
                 final int URI_CARD_ID = 3;
                 final String sessionId = getSessionIdFromCookieString(httpExchange.getRequestHeaders().getFirst("Cookie"));

@@ -48,7 +48,8 @@ public class CookieHelper {
         }
         return false;
     }
-    public  Optional<HttpCookie> getSessionIdCookie(HttpExchange httpExchange){
+
+    public Optional<HttpCookie> getSessionIdCookie(HttpExchange httpExchange){
         String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
         List<HttpCookie> cookies = parseCookies(cookieStr);
         return findCookieByName(SESSION_COOKIE_NAME , cookies);
@@ -62,5 +63,20 @@ public class CookieHelper {
         cookie.get().setMaxAge(EXPIRATION_COOKIE_TIME);
         httpExchange.getResponseHeaders().add("Set-Cookie", cookie.get().toString()+";Max-Age=" + EXPIRATION_COOKIE_TIME + ";");
         authorizationDAO.saveCookie(user.getId(), cookie);
+    }
+
+    public void refreshCookie(HttpExchange httpExchange) {
+        try {
+            DbAuthorizationDAO authorizationDAO = new DbAuthorizationDAO();
+            Optional<HttpCookie> cookie = getSessionIdCookie(httpExchange);
+            authorizationDAO.refreshCookie(cookie);
+            authorizationDAO.disableAllOutdatedCookies();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }
