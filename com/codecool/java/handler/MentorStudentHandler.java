@@ -10,7 +10,8 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
-import java.io.IOException;
+import java.io.*;
+import java.net.URI;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -21,9 +22,11 @@ public class MentorStudentHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
+        URI uri = httpExchange.getRequestURI();
+        System.out.println(uri.toString());
         String method = httpExchange.getRequestMethod();
         String response = "";
-        if(method.equals("GET")){
+        if(method.equals("GET")) {
             if(!cookieHelper.isCookiePresent(httpExchange)){
                 httpResponse.redirectToLoginPage(httpExchange);
             }else {
@@ -37,6 +40,27 @@ public class MentorStudentHandler implements HttpHandler {
                 }
             }
         }
+
+        if(method.equals("POST") && (uri.toString().equals("/mentor/students/add/"))) {
+            Student jsonData = receiveStudentFromFront(httpExchange);
+            Student student = new Student(jsonData.getLogin(), jsonData.getPassword(), jsonData.getName(), jsonData.getSurname(),true);
+            try {
+                DbstudentDAO dbstudentDAO = new DbstudentDAO();
+                dbstudentDAO.save(student);
+                httpResponse.sendResponse200(httpExchange, "saved");
+            } catch (SQLException| ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private Student receiveStudentFromFront (HttpExchange httpExchange) throws IOException {
+        InputStream requestBody = httpExchange.getRequestBody();
+        InputStreamReader isr = new InputStreamReader(requestBody, "utf-8");
+        BufferedReader br = new BufferedReader(isr);
+        String stringData = br.readLine();
+        Gson gson = new Gson();
+        return gson.fromJson(stringData, Student.class);
     }
 
     private List<Student> getStudentList() throws SQLException, ClassNotFoundException {

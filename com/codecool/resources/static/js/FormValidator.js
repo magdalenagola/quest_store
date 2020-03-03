@@ -5,6 +5,7 @@ export default class FormValidator {
     }
 
     validate() {
+        const form = this.form;
         const errorMessage = document.querySelectorAll('.form__error-message');
         const inputsList = document.getElementsByTagName('input');
         if (errorMessage) {
@@ -26,7 +27,7 @@ export default class FormValidator {
         }
 
         function getIsValid() {
-            const inputsList = document.getElementsByTagName('input');
+            const inputsList = form.getElementsByTagName('input');
             const areValid = [];
             for (let i = 0; i < inputsList.length; i++) {
                 areValid.push(true);
@@ -94,11 +95,18 @@ export default class FormValidator {
             }
 
             removeErrorBorder();
-
             if (areValid.every(checkIsTrue)) {
                 removeErrorMessage();
                 return true;
+            } else {
+                return false;
             }
+        }
+
+        if (getIsValid()) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

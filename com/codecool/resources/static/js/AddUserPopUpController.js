@@ -25,15 +25,7 @@ export default class AddUserPopUpController {
             addUserBtn.onclick = () => {
                 addUserWindow.style.display = 'block';
                 userTable.style.display = 'none';
-                this.validate();
             }
         }
-    }
-
-    validate() {
-        const addUserForm = document.querySelector('.add-user__form');
-        const addUserPopUpBtn = document.querySelector('.add-user__btn');
-        const formValidator = new FormValidator(addUserForm, addUserPopUpBtn);
-        formValidator.validate();
     }
 }
