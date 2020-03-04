@@ -1,4 +1,5 @@
 import FormValidator from './FormValidator.js';
+import ManageStudentData from "./ManageStudentData.js";
 
 export default class AddUserPopUpController {
     constructor() {};
@@ -23,9 +24,22 @@ export default class AddUserPopUpController {
         const addUserWindow = document.querySelector('.add-user');
         if (addUserBtn) {
             addUserBtn.onclick = () => {
+                const btns = addUserWindow.getElementsByTagName('button');
+                let submitBtn;
+                for (let i = 0; i < btns.length; i++) {
+                    if (btns[i].type === 'submit') {
+                        submitBtn = btns[i];
+                    }
+                }
                 addUserWindow.style.display = 'block';
                 userTable.style.display = 'none';
-                this.validate();
+                submitBtn.onclick = (e) => {
+                    e.preventDefault();
+                    if (this.validate()) {
+                        const manageStudentData = new ManageStudentData();
+                        manageStudentData.manageStudentData();
+                    }
+                }
             }
         }
     }
@@ -34,6 +48,6 @@ export default class AddUserPopUpController {
         const addUserForm = document.querySelector('.add-user__form');
         const addUserPopUpBtn = document.querySelector('.add-user__btn');
         const formValidator = new FormValidator(addUserForm, addUserPopUpBtn);
-        console.log(formValidator.validate());
+        return formValidator.validate();
     }
 }

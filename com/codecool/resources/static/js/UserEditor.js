@@ -26,7 +26,19 @@ export default class UserEditor {
                 editUserBtns[i].onclick = () => {
                     editUserWindow.style.display = 'block';
                     userTables[i].style.display = 'none';
-                    this.validate();
+                    const btns = editUserWindow.getElementsByTagName('button');
+                    let submitBtn;
+                    for (let i = 0; i < btns.length; i++) {
+                        if (btns[i].type === 'submit') {
+                            submitBtn = btns[i];
+                        }
+                    }
+                    editUserWindow.style.display = 'block';
+                    userTables[i].style.display = 'none';
+                    submitBtn.onclick = (e) => {
+                        e.preventDefault();
+                        console.log(this.validate());
+                    }
                 }
             }
         }
@@ -36,6 +48,6 @@ export default class UserEditor {
         const editUserForm = document.querySelector('.edit-user__form');
         const editUserPopUpBtn = document.querySelector('.edit-user__btn');
         const formValidator = new FormValidator(editUserForm, editUserPopUpBtn);
-        console.log(formValidator.validate());
+        return formValidator.validate();
     }
 }
