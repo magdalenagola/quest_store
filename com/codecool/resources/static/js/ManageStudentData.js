@@ -29,6 +29,7 @@ export default class ManageStudentData {
             const password = document.getElementById('edit_user_password').value;
 
             let newStudent = {
+                "id": studentId,
                 "login": email,
                 "password": password,
                 "name": name,

@@ -62,6 +62,7 @@ public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
     public void update(Object o){
         Connection c = dbconnection.getConnection();
         Student student = (Student) o;
+        System.out.println(o.toString());
         try {
             PreparedStatement ps = c.prepareStatement("UPDATE users SET email =?," +
                     "password = ?,name = ?,surname = ?,usertype_id = 1,is_active = ? WHERE id = ?; ");
@@ -70,7 +71,7 @@ public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
             ps.setString(3, student.getName());
             ps.setString(4, student.getSurname());
             ps.setBoolean(5, student.isActive());
-            ps.setInt(5, student.getId());
+            ps.setInt(6, student.getId());
             ps.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();

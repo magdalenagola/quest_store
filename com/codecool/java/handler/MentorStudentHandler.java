@@ -55,7 +55,7 @@ public class MentorStudentHandler implements HttpHandler {
 
         if(method.equals("POST") && !(uri.toString().split("/")[4].equals(""))) {
             Student jsonData = receiveStudentFromFront(httpExchange);
-            Student student = new Student(jsonData.getLogin(), jsonData.getPassword(), jsonData.getName(), jsonData.getSurname(),true);
+            Student student = new Student(jsonData.getId(), jsonData.getLogin(), jsonData.getPassword(), jsonData.getName(), jsonData.getSurname(),true);
             try {
                 DbstudentDAO dbstudentDAO = new DbstudentDAO();
                 dbstudentDAO.update(student);
