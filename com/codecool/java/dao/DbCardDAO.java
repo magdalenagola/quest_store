@@ -1,10 +1,7 @@
 package codecool.java.dao;
 
 import codecool.java.model.Card;
-import codecool.java.model.CardTransaction;
 import codecool.java.model.Student;
-import codecool.java.model.Transaction;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +36,6 @@ public class DbCardDAO extends DbConnectionDao implements CardDAO {
                     title
             );
         }
-        dbconnection.closeConnection(c);
         return card;
     }
 
