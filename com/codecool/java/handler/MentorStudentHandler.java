@@ -52,6 +52,18 @@ public class MentorStudentHandler implements HttpHandler {
                 e.printStackTrace();
             }
         }
+
+        if(method.equals("POST") && !(uri.toString().split("/")[4].equals(""))) {
+            Student jsonData = receiveStudentFromFront(httpExchange);
+            Student student = new Student(jsonData.getLogin(), jsonData.getPassword(), jsonData.getName(), jsonData.getSurname(),true);
+            try {
+                DbstudentDAO dbstudentDAO = new DbstudentDAO();
+                dbstudentDAO.update(student);
+                httpResponse.sendResponse200(httpExchange, "updated");
+            } catch (SQLException| ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private Student receiveStudentFromFront (HttpExchange httpExchange) throws IOException {

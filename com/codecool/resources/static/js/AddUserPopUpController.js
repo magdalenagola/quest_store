@@ -36,7 +36,7 @@ export default class AddUserPopUpController {
                     e.preventDefault();
                     if (this.validate()) {
                         const manageStudentData = new ManageStudentData();
-                        manageStudentData.handleStudent();
+                        manageStudentData.handleStudent("");
                     }
                 }
             }

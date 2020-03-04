@@ -1,4 +1,5 @@
 import FormValidator from './FormValidator.js';
+import ManageStudentData from "./ManageStudentData.js";
 
 
 export default class UserEditor {
@@ -20,6 +21,7 @@ export default class UserEditor {
     openEditUserPopUp() {
         const userTables = document.querySelector('.user__list');
         console.log(userTables);
+        const students = document.querySelectorAll('.user__item');
         const editUserBtns = document.querySelectorAll('.user__btn--edit');
         console.log(editUserBtns);
         const editUserWindow = document.querySelector('.edit-user');
@@ -39,7 +41,11 @@ export default class UserEditor {
                     userTables.style.display = 'none';
                     submitBtn.onclick = (e) => {
                         e.preventDefault();
-                        console.log(this.validate());
+                        if (this.validate()) {
+                            const manageStudentData = new ManageStudentData();
+                            const userId = students[i+1].getAttribute('id').split('_')[1];
+                            manageStudentData.handleStudent(userId);
+                        }
                     }
                 }
             }

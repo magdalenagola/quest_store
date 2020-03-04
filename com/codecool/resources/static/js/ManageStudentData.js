@@ -1,12 +1,17 @@
 export default class ManageStudentData {
-    handleStudent() {
+    handleStudent(studentId) {
         const xmlHttpRequest = new XMLHttpRequest();
         createNewStudent();
+        editNewStudent(studentId);
         xmlHttpRequest.onreadystatechange = function () {
             if (xmlHttpRequest.readyState == xmlHttpRequest.DONE) {
                 if (xmlHttpRequest.status === 200) {
                     if(xmlHttpRequest.responseText == "saved"){
                         alert("SUCCESSFULLY ADDED")
+                        location.reload();
+                    }
+                    if(xmlHttpRequest.responseText == "updated"){
+                        alert("SUCCESSFULLY UPDATED")
                         location.reload();
                     }
                 }
@@ -16,6 +21,23 @@ export default class ManageStudentData {
             xmlHttpRequest.open('POST', `/mentor/students/add/${userId}`);
             xmlHttpRequest.send(JSON.stringify(newStudent));
         }
+
+        function editNewStudent(studentId) {
+            const name = document.getElementById('edit_user_name').value;
+            const lastName = document.getElementById('edit_user_surname').value;
+            const email = document.getElementById('edit_user_email').value;
+            const password = document.getElementById('edit_user_password').value;
+
+            let newStudent = {
+                "login": email,
+                "password": password,
+                "name": name,
+                "surname": lastName
+            };
+            console.log(newStudent);
+            postToServer(xmlHttpRequest, newStudent, studentId);
+        }
+
         function createNewStudent() {
             const name = document.getElementById('add_user_name').value;
             const lastName = document.getElementById('add_user_surname').value;
