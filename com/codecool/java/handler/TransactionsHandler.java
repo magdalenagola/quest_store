@@ -8,7 +8,6 @@ import codecool.java.model.Transaction;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -25,6 +24,7 @@ public class TransactionsHandler implements HttpHandler {
             if(!cookieHelper.isCookiePresent(httpExchange)){
                 httpResponse.redirectToLoginPage(httpExchange);
             }else {
+                cookieHelper.refreshCookie(httpExchange);
                 try {
                     Gson gson = new Gson();
                     response = gson.toJson(getStudentTransactions(httpExchange));

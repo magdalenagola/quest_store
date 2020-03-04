@@ -1,11 +1,7 @@
 package codecool.java.handler;
 
-import codecool.java.dao.CardDAO;
-import codecool.java.dao.DbCardDAO;
 import codecool.java.dao.DbQuestDAO;
-import codecool.java.dao.QuestDAO;
 import codecool.java.helper.HttpResponse;
-import codecool.java.model.Card;
 import codecool.java.model.Quest;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
@@ -27,6 +23,7 @@ public class StudentQuestHandler implements HttpHandler {
             if(!cookieHelper.isCookiePresent(httpExchange)){
                 httpResponse.redirectToLoginPage(httpExchange);
             }else {
+                cookieHelper.refreshCookie(httpExchange);
                 response = getQuests(httpExchange);
                 httpResponse.sendResponse200(httpExchange, response);
             }

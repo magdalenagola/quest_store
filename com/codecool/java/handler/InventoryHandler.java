@@ -7,7 +7,6 @@ import codecool.java.model.Student;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -22,7 +21,9 @@ public class InventoryHandler implements HttpHandler {
         if(method.equals("GET")){
             if(!cookieHelper.isCookiePresent(httpExchange)){
                 httpResponse.redirectToLoginPage(httpExchange);
+
             }else {
+                cookieHelper.refreshCookie(httpExchange);
                 try {
                     response = getStudentCards(httpExchange);
                     httpResponse.sendResponse200(httpExchange, response);
