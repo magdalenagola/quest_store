@@ -23,6 +23,7 @@ public class MentorQuestHandler implements HttpHandler {
             if(!cookieHelper.isCookiePresent(httpExchange)){
                 httpResponse.redirectToLoginPage(httpExchange);
             }else {
+                cookieHelper.refreshCookie(httpExchange);
                 response = getQuests(httpExchange);
                 httpResponse.sendResponse200(httpExchange, response);
             }

@@ -40,7 +40,6 @@ public class CookieHelper {
         return Optional.empty();
     }
 
-
     public boolean isCookiePresent(HttpExchange httpExchange) {
         Optional<HttpCookie> cookie = getSessionIdCookie(httpExchange);
         if (cookie.isPresent()) {
