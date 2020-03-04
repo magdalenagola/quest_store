@@ -3,7 +3,6 @@
 import toggleMenu from './menu.js';
 import expandTableContent from './TableExpander.js';
 import AddUserPopUpController from './AddUserPopUpController.js';
-import EditUserPopUpController from './UserEditor.js';
 import LoginDataHandler from "./LoginDataHandler.js";
 import CardsHttpHandler from "./CardsHttpHandler.js";
 import InteractiveStyles from './InteractiveStyles.js';
@@ -34,12 +33,9 @@ if (!document.querySelector('.index')) {
 }
 
 const addUserPopUpController = new AddUserPopUpController();
-const editUserPopUpController = new EditUserPopUpController();
 
 const interactiveStyles = new InteractiveStyles();
 interactiveStyles.styleAddCard();
 
 addUserPopUpController.openAddUserPopUp();
 addUserPopUpController.closeAddUserPopUp();
-editUserPopUpController.openEditUserPopUp();
-editUserPopUpController.closeEditUserPopUp();

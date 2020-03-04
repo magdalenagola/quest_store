@@ -1,10 +1,11 @@
 import FormValidator from "./FormValidator.js";
+import UserEditor from "./UserEditor.js";
 
 export default class MentorStudentHandler {
 
     handleStudentList() {
         const xmlHttpRequest = new XMLHttpRequest();
-        getFromServer(listenAddBtn);
+        getStudentsFromServer(invokeListeners);
         xmlHttpRequest.onreadystatechange = function () {
             if (xmlHttpRequest.readyState == xmlHttpRequest.DONE) {
                 if (xmlHttpRequest.status === 200) {
@@ -17,10 +18,16 @@ export default class MentorStudentHandler {
                     const studentList = document.querySelector(".user__list");
                     for(let i = 0; i < response.length; i++) {
                         studentList.appendChild(createStudentFromDb(response[i]));
+                        toggleForm();
                     }
                 }
             }
         };
+
+        function invokeListeners() {
+            listenAddBtn();
+            listenEditBtn();
+        }
 
         function listenAddBtn() {
             const addBtn = document.querySelector('.user__btn--add').getElementsByTagName('svg')[0];
@@ -47,7 +54,26 @@ export default class MentorStudentHandler {
             }
         }
 
-        function getFromServer(_callback) {
+        function toggleForm() {
+            const editUserPopUpController = new UserEditor();
+            editUserPopUpController.openEditUserPopUp();
+            editUserPopUpController.closeEditUserPopUp();
+        }
+
+        function listenEditBtn() {
+            const editBtn = document.querySelector('.user__btn--edit').getElementsByTagName('svg')[0];
+            editBtn.onclick = () => {
+                const studentId = editBtn.parentNode.parentNode.parentNode.parentNode;
+                console.log(studentId);
+            }
+        }
+
+        function getStudentByIdFromServer() {
+            xmlHttpRequest.open("GET",`/mentor/students/get/${id}`);
+            xmlHttpRequest.send();
+        }
+
+        function getStudentsFromServer(_callback) {
             xmlHttpRequest.open("GET","/mentor/students");
             xmlHttpRequest.send();
             _callback();
@@ -91,5 +117,4 @@ export default class MentorStudentHandler {
             postToServer(xmlHttpRequest, newStudent, "");
         }
     }
-
 }
