@@ -69,7 +69,6 @@ public class DbAuthorizationDAO extends DbConnectionDao implements LoginDao {
         ps.setString(1, cookie.get().getValue());
         ps.executeUpdate();
         ps.close();
-        dbconnection.closeConnection(c);
     }
 
     public void disableCookie(String sessionID) throws SQLException {
