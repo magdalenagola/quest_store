@@ -16,9 +16,9 @@ export default function expandTableContent() {
     }
 
     for (let i = 1; i < userItems.length; i++) {
-        if (userSalary[i] !== undefined) {
-            userSalary[i].textContent += ' $';
-        }
+        // if (userSalary[i] !== undefined) {
+        //     userSalary[i].textContent += ' $';
+        // }
 
         if (window.outerWidth <= 768) {
             userItems[i].addEventListener('click', (e) => {

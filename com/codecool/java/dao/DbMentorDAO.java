@@ -45,7 +45,8 @@ public class DbMentorDAO extends DbConnectionDao implements MentorDAO {
     public List<Mentor> loadAll() throws SQLException {
         Connection c = dbconnection.getConnection();
         List<Mentor> mentorList = new ArrayList<>();
-        PreparedStatement ps = c.prepareStatement("SELECT * FROM users JOIN usertypes ON (users.usertype_id = usertypes.id) WHERE usertypes.id = 2;");
+        PreparedStatement ps = c.prepareStatement("SELECT * FROM users JOIN usertypes ON (users.usertype_id = usertypes.id) " +
+                "JOIN mentor_details ON (users.id = mentor_details.user_id) WHERE usertypes.id = 2;");
         ResultSet rs = ps.executeQuery();
         while(rs.next()) {
             Integer id = rs.getInt("id");
@@ -53,8 +54,10 @@ public class DbMentorDAO extends DbConnectionDao implements MentorDAO {
             String password = rs.getString("password");
             String name = rs.getString("name");
             String surname = rs.getString("surname");
+            String primarySkill = rs.getString("primary_skill");
+            int earnings = rs.getInt("earnings");
             boolean isActive = rs.getBoolean("is_active");
-            Mentor mentor = new Mentor(id, email, password, name, surname, getPrimarySkillById(id), isActive);
+            Mentor mentor = new Mentor(id, email, password, name, surname, primarySkill, earnings, isActive);
             mentorList.add(mentor);
         }
         return  mentorList;

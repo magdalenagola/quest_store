@@ -9,8 +9,14 @@ import TransactionsHandler from "./TransactionsHandler.js";
 import InventoryHttpHandler from "./InventoryHttpHandler.js";
 import MentorQuestHandler from "./MentorQuestHandler.js";
 import StudentQuestsHandler from "./StudentQuestsHandler.js";
+import ManagerMentorsHandler from "./ManagerMentorsHandler.js";
 const loginDataHandler = new LoginDataHandler();
 loginDataHandler.handleUserData();
+
+if (window.location.pathname === "/static/manager_mentors_list.html") {
+    const managerMentorsHandler = new ManagerMentorsHandler();
+    managerMentorsHandler.handleMentorsList();
+}
 
 if (window.location.pathname === "/static/student_inventory.html") {
     const inventoryHttpHandler = new InventoryHttpHandler();
