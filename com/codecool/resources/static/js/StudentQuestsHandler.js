@@ -20,6 +20,9 @@ export default class StudentQuestsHandler {
                     }
                     getStudentCoins();
                 }
+                if(xmlHttpRequest.status === 303){
+                    window.location.replace("index.html")
+                }
             }
         };
         function  createQuest(cardJson, index) {

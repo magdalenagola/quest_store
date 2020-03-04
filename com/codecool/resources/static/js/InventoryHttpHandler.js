@@ -19,6 +19,9 @@ export default class InventoryHttpHandler {
                     }
                     getStudentCoins();
                 }
+                if(xmlHttpRequest.status === 303){
+                    window.location.replace("index.html")
+                }
             }
         };
 

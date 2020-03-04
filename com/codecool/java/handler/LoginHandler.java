@@ -8,18 +8,13 @@ import codecool.java.model.User;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import java.io.*;
-import java.net.HttpCookie;
 import java.net.URI;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.Optional;
-import java.util.UUID;
-
 
 public class LoginHandler implements HttpHandler {
     CookieHelper cookieHelper = new CookieHelper();
     HttpResponse httpResponse = new HttpResponse();
-
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -39,15 +34,8 @@ public class LoginHandler implements HttpHandler {
         }
         if (method.equals("POST") && (uri.toString().equals("/login/expired_cookie"))){
             String sessionId = getSessionIdFromCookie(httpExchange.getRequestBody());
-            try {
-                DbAuthorizationDAO authorizationDAO = new DbAuthorizationDAO();
-                authorizationDAO.disableCookie(sessionId);
-                httpResponse.sendResponse200(httpExchange, "");
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            cookieHelper.refreshCookie(httpExchange);
+            httpResponse.sendResponse200(httpExchange, "");
         }
     }
 
