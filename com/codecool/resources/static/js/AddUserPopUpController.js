@@ -1,6 +1,5 @@
 import FormValidator from './FormValidator.js';
-import ManageStudentData from "./ManageStudentData.js";
-
+import ManageStudentData from './ManageStudentData.js';
 export default class AddUserPopUpController {
     constructor() {};
 
@@ -37,7 +36,7 @@ export default class AddUserPopUpController {
                     e.preventDefault();
                     if (this.validate()) {
                         const manageStudentData = new ManageStudentData();
-                        manageStudentData.manageStudentData();
+                        manageStudentData.handleStudent();
                     }
                 }
             }

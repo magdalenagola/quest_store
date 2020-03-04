@@ -1,10 +1,13 @@
-import FormValidator from "./FormValidator.js";
 import UserEditor from "./UserEditor.js";
 import AddUserPopUpController from "./AddUserPopUpController.js";
 
 export default class MentorStudentHandler {
 
+
     handleStudentList() {
+        const addUserPopUpController = new AddUserPopUpController();
+        addUserPopUpController.openAddUserPopUp();
+        addUserPopUpController.closeAddUserPopUp();
         const xmlHttpRequest = new XMLHttpRequest();
         getStudentsFromServer();
         xmlHttpRequest.onreadystatechange = function () {
@@ -16,6 +19,9 @@ export default class MentorStudentHandler {
                     for(let i = 0; i < response.length; i++) {
                         studentList.appendChild(createStudentFromDb(response[i]));
                     }
+                    const userEditor = new UserEditor();
+                    userEditor.openEditUserPopUp();
+                    userEditor.closeEditUserPopUp();
                 }
             }
         };
@@ -44,10 +50,6 @@ export default class MentorStudentHandler {
             xmlHttpRequest.send();
         }
 
-        function postToServer(xmlHttpRequest, newStudent, userId) {
-            xmlHttpRequest.open('POST', `/mentor/students/add/${userId}`);
-            xmlHttpRequest.send(JSON.stringify(newStudent));
-        }
 
         function createStudentFromDb(json) {
             const student = document.createElement('li');
@@ -65,21 +67,6 @@ export default class MentorStudentHandler {
             contentWrapper.append(email, btnWrapper.cloneNode(true));
             student.append(name, contentWrapper);
             return student;
-        }
-
-        function createNewStudent() {
-            const name = document.getElementById('add_user_name').value;
-            const lastName = document.getElementById('add_user_surname').value;
-            const email = document.getElementById('add_user_email').value;
-            const password = document.getElementById('add_user_password').value;
-
-            let newStudent = {
-                "login": email,
-                "password": password,
-                "name": name,
-                "surname": lastName
-            };
-            postToServer(xmlHttpRequest, newStudent, "");
         }
     }
 }

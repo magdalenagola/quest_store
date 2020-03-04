@@ -18,14 +18,16 @@ export default class UserEditor {
     }
 
     openEditUserPopUp() {
-        const userTables = document.querySelectorAll('.user__list');
+        const userTables = document.querySelector('.user__list');
+        console.log(userTables);
         const editUserBtns = document.querySelectorAll('.user__btn--edit');
+        console.log(editUserBtns);
         const editUserWindow = document.querySelector('.edit-user');
         if (editUserBtns.length > 0) {
             for (let i = 0; i < editUserBtns.length; i++) {
                 editUserBtns[i].onclick = () => {
                     editUserWindow.style.display = 'block';
-                    userTables[i].style.display = 'none';
+                    userTables.style.display = 'none';
                     const btns = editUserWindow.getElementsByTagName('button');
                     let submitBtn;
                     for (let i = 0; i < btns.length; i++) {
@@ -34,7 +36,7 @@ export default class UserEditor {
                         }
                     }
                     editUserWindow.style.display = 'block';
-                    userTables[i].style.display = 'none';
+                    userTables.style.display = 'none';
                     submitBtn.onclick = (e) => {
                         e.preventDefault();
                         console.log(this.validate());
