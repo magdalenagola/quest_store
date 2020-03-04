@@ -32,10 +32,10 @@ if (!document.querySelector('.index')) {
     expandTableContent();
 }
 
-const addUserPopUpController = new AddUserPopUpController();
+// const addUserPopUpController = new AddUserPopUpController();
 
 const interactiveStyles = new InteractiveStyles();
 interactiveStyles.styleAddCard();
 
-addUserPopUpController.openAddUserPopUp();
-addUserPopUpController.closeAddUserPopUp();
+// addUserPopUpController.openAddUserPopUp();
+// addUserPopUpController.closeAddUserPopUp();

@@ -1,11 +1,19 @@
 import FormValidator from "./FormValidator.js";
 import UserEditor from "./UserEditor.js";
+import AddUserPopUpController from "./AddUserPopUpController.js";
 
 export default class MentorStudentHandler {
 
     handleStudentList() {
+        const addUserPopUpController = new AddUserPopUpController();
+        addUserPopUpController.openAddUserPopUp();
+        addUserPopUpController.closeAddUserPopUp();
+        const userEditor = new UserEditor();
+        userEditor.openEditUserPopUp();
+        userEditor.closeEditUserPopUp();
+
         const xmlHttpRequest = new XMLHttpRequest();
-        getStudentsFromServer(invokeListeners);
+        getStudentsFromServer();
         xmlHttpRequest.onreadystatechange = function () {
             if (xmlHttpRequest.readyState == xmlHttpRequest.DONE) {
                 if (xmlHttpRequest.status === 200) {
@@ -24,59 +32,61 @@ export default class MentorStudentHandler {
             }
         };
 
-        function invokeListeners() {
-            listenAddBtn();
-            listenEditBtn();
-        }
+        // function invokeListeners() {
+        //     listenAddBtn();
+        //     listenEditBtn();
+        // }
+        //
+        // function listenAddBtn() {
+        //     const addBtn = document.querySelector('.user__btn--add').getElementsByTagName('svg')[0];
+        //
+        //
+        //     addBtn.onclick = () => {
+        //         const submit = document.querySelector('.add-user__btn');
+        //         checkAndSendForm();
+        //         function checkAndSendForm() {
+        //             submit.onclick = (e) => {
+        //                 e.preventDefault();
+        //                 if (validate()) {
+        //                     createNewStudent();
+        //                 } else {
+        //                     checkAndSendForm();
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
 
-        function listenAddBtn() {
-            const addBtn = document.querySelector('.user__btn--add').getElementsByTagName('svg')[0];
-
-            addBtn.onclick = () => {
-                function validate() {
-                    const addUserForm = document.querySelector('.add-user__form');
-                    const addUserPopUpBtn = document.querySelector('.add-user__btn');
-                    const formValidator = new FormValidator(addUserForm, addUserPopUpBtn);
-                    return formValidator.validate();
-                }
-                const submit = document.querySelector('.add-user__btn');
-                checkAndSendForm();
-                function checkAndSendForm() {
-                    submit.onclick = (e) => {
-                        e.preventDefault();
-                        if (validate()) {
-                            createNewStudent();
-                        } else {
-                            checkAndSendForm();
-                        }
-                    }
-                }
-            }
-        }
+//         function validate() {
+//             const addUserForm = document.querySelector('.add-user__form');
+//             const addUserPopUpBtn = document.querySelector('.add-user__btn');
+//             const formValidator = new FormValidator(addUserForm, addUserPopUpBtn);
+//             console.log(formValidator.validate())
+//             return formValidator.validate();
+//         }
 
         function toggleForm() {
             const editUserPopUpController = new UserEditor();
             editUserPopUpController.openEditUserPopUp();
             editUserPopUpController.closeEditUserPopUp();
         }
-
-        function listenEditBtn() {
-            const editBtn = document.querySelector('.user__btn--edit').getElementsByTagName('svg')[0];
-            editBtn.onclick = () => {
-                const studentId = editBtn.parentNode.parentNode.parentNode.parentNode;
-                console.log(studentId);
-            }
-        }
+        //
+        // function listenEditBtn() {
+        //     const editBtn = document.querySelector('.user__btn--edit').getElementsByTagName('svg')[0];
+        //     editBtn.onclick = () => {
+        //         const studentId = editBtn.parentNode.parentNode.parentNode.parentNode;
+        //         console.log(studentId);
+        //     }
+        // }
 
         function getStudentByIdFromServer() {
             xmlHttpRequest.open("GET",`/mentor/students/get/${id}`);
             xmlHttpRequest.send();
         }
 
-        function getStudentsFromServer(_callback) {
+        function getStudentsFromServer() {
             xmlHttpRequest.open("GET","/mentor/students");
             xmlHttpRequest.send();
-            _callback();
         }
 
         function postToServer(xmlHttpRequest, newStudent, userId) {

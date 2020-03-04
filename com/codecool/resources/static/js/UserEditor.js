@@ -36,6 +36,6 @@ export default class UserEditor {
         const editUserForm = document.querySelector('.edit-user__form');
         const editUserPopUpBtn = document.querySelector('.edit-user__btn');
         const formValidator = new FormValidator(editUserForm, editUserPopUpBtn);
-        console.log(formValidator.validate());;
+        console.log(formValidator.validate());
     }
 }
