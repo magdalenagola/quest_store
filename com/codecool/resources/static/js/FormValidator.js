@@ -4,9 +4,11 @@ export default class FormValidator {
         this.btn = btn;
     }
 
-    validate() {
-        const errorMessage = document.querySelectorAll('.form__error-message');
-        const inputsList = document.getElementsByTagName('input');
+     validate() {
+        let result;
+        const errorMessage = this.form.querySelectorAll('.form__error-message');
+        const inputsList = this.form.getElementsByTagName('input');
+
         if (errorMessage) {
             for (let i = 0; i < inputsList.length; i++) {
                 inputsList[i].classList.remove('input--error');
@@ -15,18 +17,13 @@ export default class FormValidator {
                 errorMessage[i].textContent = '';
             }
         }
+        result = getIsValid();
 
-        this.btn.onclick = (e) => {
-            e.preventDefault();
-            if (getIsValid()) {
-                this.form.setAttribute('isValid', 'true');
-            } else {
-                this.form.setAttribute('isValid', 'false');
-            }
+        if (result) {
+            this.form.setAttribute('isValid', 'true');
         }
 
         function getIsValid() {
-            const inputsList = document.getElementsByTagName('input');
             const areValid = [];
             for (let i = 0; i < inputsList.length; i++) {
                 areValid.push(true);
@@ -35,6 +32,7 @@ export default class FormValidator {
                 checkName(i);
                 checkSalary(i);
             }
+
 
             function throwError(i, message) {
                 inputsList[i].classList.add('input--error');
@@ -88,17 +86,19 @@ export default class FormValidator {
             }
 
             function checkIsTrue(input) {
-                if (input) {
-                    return input;
-                }
+                return input;
             }
 
             removeErrorBorder();
-
+            console.log(areValid);
             if (areValid.every(checkIsTrue)) {
                 removeErrorMessage();
                 return true;
             }
+            return false;
+
         }
+        return result;
+
     }
 }

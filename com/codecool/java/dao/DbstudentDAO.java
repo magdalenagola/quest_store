@@ -11,6 +11,22 @@ public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
         super();
     }
 
+    public Student selectStudentById(int id) throws SQLException {
+        Connection c = dbconnection.getConnection();
+        PreparedStatement ps = c.prepareStatement("SELECT * FROM users WHERE id = ?;");
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+        Student student = null;
+        try {
+            while (rs.next()) {
+                student = createStudent(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return student;
+    }
+
     @Override
     public List<Student> loadAll(){
         List<Student> result = new ArrayList<>();
@@ -19,21 +35,44 @@ public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
         PreparedStatement ps = c.prepareStatement("SELECT * FROM users JOIN usertypes ON (users.usertype_id = usertypes.id) " +
                 "WHERE usertype = 'Student';");
         ResultSet rs = ps.executeQuery();
-        while(rs.next()){
+        while (rs.next()) {
+            Student student = createStudent(rs);
+            result.add(student);
+        }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return result;
+    }
+
+    public List<Student> loadAllActive(){
+        List<Student> result = new ArrayList<>();
+        Connection c = dbconnection.getConnection();
+        try{
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM users JOIN usertypes ON (users.usertype_id = usertypes.id) " +
+                    "WHERE usertype = 'Student' AND is_active = true;");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Student student = createStudent(rs);
+                result.add(student);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return result;
+    }
+
+    private Student createStudent(ResultSet rs) throws SQLException {
+        Student student = null;
             int id = rs.getInt("id");
             String email = rs.getString("email");
             String password = rs.getString("password");
             String name = rs.getString("name");
             String surname = rs.getString("surname");
             boolean is_active = rs.getBoolean("is_active");
-            Student student = new Student(id,email,password,name,surname,is_active);
-            result.add(student);
-        }
-        }catch(SQLException e){
-            e.printStackTrace();
-        }finally{
-        }
-        return result;
+            student = new Student(id,email,password,name,surname,is_active);
+            return student;
+
     }
 
     @Override
@@ -52,7 +91,6 @@ public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
         ps.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();
-        }finally {
         }
     }
 
@@ -60,6 +98,7 @@ public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
     public void update(Object o){
         Connection c = dbconnection.getConnection();
         Student student = (Student) o;
+        System.out.println(o.toString());
         try {
             PreparedStatement ps = c.prepareStatement("UPDATE users SET email =?," +
                     "password = ?,name = ?,surname = ?,usertype_id = 1,is_active = ? WHERE id = ?; ");
@@ -68,11 +107,10 @@ public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
             ps.setString(3, student.getName());
             ps.setString(4, student.getSurname());
             ps.setBoolean(5, student.isActive());
-            ps.setInt(5, student.getId());
+            ps.setInt(6, student.getId());
             ps.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();
-        }finally {
         }
     }
 
@@ -89,7 +127,6 @@ public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
             }
         }catch(SQLException e){
             e.printStackTrace();
-        }finally {
         }
         return studentCoins;
     }
@@ -103,7 +140,6 @@ public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
             ps.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();
-        }finally {
         }
     }
 
