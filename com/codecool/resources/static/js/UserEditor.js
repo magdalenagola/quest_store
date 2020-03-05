@@ -1,5 +1,6 @@
 import FormValidator from './FormValidator.js';
-import ManageStudentData from "./ManageStudentData.js";
+import EditStudent from "./EditStudent.js";
+import DeleteStudent from "./DeleteStudent.js";
 
 
 export default class UserEditor {
@@ -25,7 +26,8 @@ export default class UserEditor {
         const editUserBtns = document.querySelectorAll('.user__btn--edit');
         const editUserWindow = document.querySelector('.edit-user');
         const deleteBtns = document.querySelectorAll('.user__btn--remove');
-        const manageStudentData = new ManageStudentData();
+        const editStudent = new EditStudent();
+        const deleteStudent = new DeleteStudent();
         if (editUserBtns.length > 0) {
             for (let i = 0; i < editUserBtns.length - 1; i++) {
                 let userId;
@@ -33,7 +35,9 @@ export default class UserEditor {
                     userId = students[i+1].getAttribute('id').split('_')[1];
                 }
                 deleteBtns[i].onclick = () => {
-                    manageStudentData.deleteStudent(userId);
+                    console.log(i);
+                    deleteStudent.deleteStudent(userId);
+                    console.log(userId);
                 }
                 editUserBtns[i].onclick = () => {
                     editUserWindow.style.display = 'block';
@@ -50,7 +54,7 @@ export default class UserEditor {
                     submitBtn.onclick = (e) => {
                         e.preventDefault();
                         if (this.validate()) {
-                            manageStudentData.handleStudent(userId);
+                            editStudent.editStudent(userId);
                         }
                     }
                 }

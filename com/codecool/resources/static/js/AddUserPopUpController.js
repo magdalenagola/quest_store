@@ -1,5 +1,5 @@
 import FormValidator from './FormValidator.js';
-import ManageStudentData from './ManageStudentData.js';
+import CreateStudent from './CreateStudent.js';
 export default class AddUserPopUpController {
     constructor() {};
 
@@ -35,8 +35,8 @@ export default class AddUserPopUpController {
                 submitBtn.onclick = (e) => {
                     e.preventDefault();
                     if (this.validate()) {
-                        const manageStudentData = new ManageStudentData();
-                        manageStudentData.handleStudent("");
+                        const createStudent = new CreateStudent();
+                        createStudent.createStudent("");
                     }
                 }
             }

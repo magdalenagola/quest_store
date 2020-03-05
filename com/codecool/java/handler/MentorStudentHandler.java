@@ -92,7 +92,7 @@ public class MentorStudentHandler implements HttpHandler {
 
     private List<Student> getStudentList() throws SQLException, ClassNotFoundException {
         DbstudentDAO studentDAO = new DbstudentDAO();
-        List<Student> studentList = studentDAO.loadAll();
+        List<Student> studentList = studentDAO.loadAllActive();
         return studentList;
     }
 }

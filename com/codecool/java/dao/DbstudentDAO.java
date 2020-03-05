@@ -49,6 +49,25 @@ public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
         return result;
     }
 
+    public List<Student> loadAllActive(){
+        List<Student> result = new ArrayList<>();
+        Connection c = dbconnection.getConnection();
+        try{
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM users JOIN usertypes ON (users.usertype_id = usertypes.id) " +
+                    "WHERE usertype = 'Student' AND is_active = true;");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Student student = createStudent(rs);
+                result.add(student);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally{
+            dbconnection.closeConnection(c);
+        }
+        return result;
+    }
+
     private Student createStudent(ResultSet rs) throws SQLException {
         Student student = null;
             int id = rs.getInt("id");
