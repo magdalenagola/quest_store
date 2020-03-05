@@ -13,6 +13,7 @@ public class HttpController {
             server.createContext("/login", new LoginHandler());
             server.createContext("/cards", new CardHandler());
             server.createContext("/coins", new WalletHandler());
+            server.createContext("/mentor/students", new MentorStudentHandler());
             server.createContext("/static", new StaticHandler());
             server.createContext("/student/transactions", new TransactionsHandler());
             server.createContext("/student/inventory", new InventoryHandler());
