@@ -1,4 +1,5 @@
 import InteractiveStyles from "./InteractiveStyles.js";
+import MentorStudentHandler from "./MentorStudentHandler.js";
 
 export default class EditStudent {
 
@@ -20,21 +21,33 @@ export default class EditStudent {
         };
 
 
-        function editNewStudent(studentId) {
+        function editNewStudent(userId) {
             const name = document.getElementById('edit_user_name').value;
             const lastName = document.getElementById('edit_user_surname').value;
             const email = document.getElementById('edit_user_email').value;
             const password = document.getElementById('edit_user_password').value;
 
-            let newStudent = {
-                "id": studentId,
+            let newUser = {
+                "id": userId,
                 "login": email,
                 "password": password,
                 "name": name,
                 "surname": lastName
             };
-            console.log(newStudent);
-            postToServer(xmlHttpRequest, newStudent, studentId);
+            console.log(userId);
+            if (window.location.pathname === "/static/mentor_students_list.html") {
+                postToServer(xmlHttpRequest, newUser, userId);
+            }
+
+            if (window.location.pathname === "/static/manager_mentors_list.html") {
+                postMentorToServer(xmlHttpRequest, newUser, userId);
+            }
+        }
+
+        function postMentorToServer(xmlHttpRequest, newUser, userId)
+        {
+            xmlHttpRequest.open('POST', `/manager/mentor/add/${userId}`);
+            xmlHttpRequest.send(JSON.stringify(newUser));
         }
 
         function postToServer(xmlHttpRequest, newStudent, userId)

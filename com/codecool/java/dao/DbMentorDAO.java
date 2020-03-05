@@ -1,6 +1,7 @@
 package codecool.java.dao;
 
 import codecool.java.model.Mentor;
+import codecool.java.model.Student;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -62,6 +63,57 @@ public class DbMentorDAO extends DbConnectionDao implements MentorDAO {
         }
         return  mentorList;
     };
+
+    public List<Mentor> loadAllActive() throws SQLException {
+        Connection c = dbconnection.getConnection();
+        List<Mentor> mentorList = new ArrayList<>();
+        PreparedStatement ps = c.prepareStatement("SELECT * FROM users JOIN usertypes ON (users.usertype_id = usertypes.id) " +
+                "JOIN mentor_details ON (users.id = mentor_details.user_id) WHERE usertypes.id = 2 AND is_active = true;");
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()) {
+            Integer id = rs.getInt("id");
+            String email = rs.getString("email");
+            String password = rs.getString("password");
+            String name = rs.getString("name");
+            String surname = rs.getString("surname");
+            String primarySkill = rs.getString("primary_skill");
+            int earnings = rs.getInt("earnings");
+            boolean isActive = rs.getBoolean("is_active");
+            Mentor mentor = new Mentor(id, email, password, name, surname, primarySkill, earnings, isActive);
+            mentorList.add(mentor);
+        }
+        return  mentorList;
+    }
+
+    public Mentor selectMentorById(int id) throws SQLException {
+        Connection c = dbconnection.getConnection();
+        PreparedStatement ps = c.prepareStatement("SELECT * FROM users WHERE id = ?;");
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+        Mentor mentor = null;
+        try {
+            while (rs.next()) {
+                mentor = createMentor(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return mentor;
+    }
+
+    private Mentor createMentor(ResultSet rs) throws SQLException {
+        Mentor mentor = null;
+        int id = rs.getInt("id");
+        String email = rs.getString("email");
+        String password = rs.getString("password");
+        String name = rs.getString("name");
+        String surname = rs.getString("surname");
+        boolean is_active = rs.getBoolean("is_active");
+        String primarySkill = rs.getString("primary_skill");
+        mentor = new Mentor(email,password,name,surname,primarySkill,is_active);
+        return mentor;
+
+    }
 
     @Override
     public void update(Object t) throws SQLException {

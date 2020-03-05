@@ -1,9 +1,16 @@
 import FormValidator from "./FormValidator.js";
+import AddUserPopUpController from "./AddUserPopUpController.js";
+import UserEditor from "./UserEditor.js";
+import InteractiveStyles from "./InteractiveStyles.js";
 
 export default class ManagerMentorsHandler {
 
     handleMentorsList() {
-
+        const interactiveStyles = new InteractiveStyles();
+        const popup = document.querySelector('.popup');
+        const addUserPopUpController = new AddUserPopUpController();
+        addUserPopUpController.openAddUserPopUp();
+        addUserPopUpController.closeAddUserPopUp();
         const xmlHttpRequest = new XMLHttpRequest();
         getMentorsFromServer();
         xmlHttpRequest.onreadystatechange = function () {
@@ -11,7 +18,8 @@ export default class ManagerMentorsHandler {
                 if (xmlHttpRequest.status === 200) {
                     let response = xmlHttpRequest.responseText;
                     if (response === 'saved') {
-                        alert('successfully saved');
+                        const message = 'Successfully updated!';
+                        interactiveStyles.showPopup(popup, message);
                     } else {
                         response = JSON.parse(response);
                        // console.log(response);
@@ -21,12 +29,38 @@ export default class ManagerMentorsHandler {
                        mentorsList.appendChild(createMentorFromDb(response[i]));
                        //toggleForm();
                     }
+                    const userEditor = new UserEditor();
+                    userEditor.openEditUserPopUp();
+                    userEditor.closeEditUserPopUp();
                 }
             }
         }
         function getMentorsFromServer() {
             xmlHttpRequest.open("GET","/manager/mentors");
             xmlHttpRequest.send();
+        }
+
+        function postMentorToServer(xmlHttpRequest, newMentor, userId)
+        {
+            xmlHttpRequest.open('POST', `/manager/mentors/add/${userId}`);
+            xmlHttpRequest.send(JSON.stringify(newMentor));
+        }
+
+        function editNewMentor(mentorId) {
+            const name = document.getElementById('edit_user_name').value;
+            const lastName = document.getElementById('edit_user_surname').value;
+            const email = document.getElementById('edit_user_email').value;
+            const password = document.getElementById('edit_user_password').value;
+
+            let newMentor = {
+                "id": mentorId,
+                "login": email,
+                "password": password,
+                "name": name,
+                "surname": lastName
+            };
+            console.log(newMentor);
+            postMentorToServer(xmlHttpRequest, newStudent, studentId);
         }
 
         function createMentorFromDb(json) {

@@ -44,6 +44,7 @@ export default class UserEditor {
                     userTables.style.display = 'none';
                     const btns = editUserWindow.getElementsByTagName('button');
                     let submitBtn;
+                    console.log(userId);
                     for (let i = 0; i < btns.length; i++) {
                         if (btns[i].type === 'submit') {
                             submitBtn = btns[i];
