@@ -23,8 +23,6 @@ public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            dbconnection.closeConnection(c);
         }
         return student;
     }
@@ -43,8 +41,6 @@ public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
         }
         } catch (SQLException ex) {
             ex.printStackTrace();
-        } finally{
-            dbconnection.closeConnection(c);
         }
         return result;
     }
@@ -62,8 +58,6 @@ public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-        } finally{
-            dbconnection.closeConnection(c);
         }
         return result;
     }
@@ -77,7 +71,8 @@ public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
             String surname = rs.getString("surname");
             boolean is_active = rs.getBoolean("is_active");
             student = new Student(id,email,password,name,surname,is_active);
-        return student;
+            return student;
+
     }
 
     @Override
@@ -96,8 +91,6 @@ public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
         ps.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();
-        }finally {
-            dbconnection.closeConnection(c);
         }
     }
 
@@ -118,8 +111,6 @@ public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
             ps.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();
-        }finally {
-            dbconnection.closeConnection(c);
         }
     }
 
@@ -136,8 +127,6 @@ public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
             }
         }catch(SQLException e){
             e.printStackTrace();
-        }finally {
-            dbconnection.closeConnection(c);
         }
         return studentCoins;
     }
@@ -151,8 +140,6 @@ public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
             ps.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();
-        }finally {
-            dbconnection.closeConnection(c);
         }
     }
 
@@ -191,7 +178,6 @@ public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
         }
         rs.close();
         ps.close();
-        c.close();
         return student;
     }
 }

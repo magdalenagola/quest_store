@@ -2,14 +2,11 @@ package codecool.java.dao;
 
 import codecool.java.model.User;
 import codecool.java.model.UserFactory;
-
 import java.net.HttpCookie;
 import java.sql.*;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
-
 
 public class DbAuthorizationDAO extends DbConnectionDao implements LoginDao {
 
@@ -24,7 +21,6 @@ public class DbAuthorizationDAO extends DbConnectionDao implements LoginDao {
         ps.setString(1, providedLogin);
         ps.setString(2, providedPassword);
         ResultSet rs = ps.executeQuery();
-        dbconnection.closeConnection(c);
         return rs;
     }
 
@@ -65,7 +61,15 @@ public class DbAuthorizationDAO extends DbConnectionDao implements LoginDao {
         ps.setTimestamp(4, new java.sql.Timestamp(expDate.getTime()));
         ps.setBoolean(5, true);
         ps.executeUpdate();
-        dbconnection.closeConnection(c);
+        ps.close();
+    }
+
+    public void refreshCookie( Optional<HttpCookie> cookie) throws SQLException, ParseException {
+        Connection c = dbconnection.getConnection();
+        PreparedStatement ps = c.prepareStatement("UPDATE cookies SET expiration_date = (CURRENT_TIMESTAMP + '00:15:00'::interval), is_active = true WHERE session_id = ?;");
+        ps.setString(1, cookie.get().getValue());
+        ps.executeUpdate();
+        ps.close();
     }
 
     public void disableCookie(String sessionID) throws SQLException {
@@ -73,8 +77,11 @@ public class DbAuthorizationDAO extends DbConnectionDao implements LoginDao {
         PreparedStatement ps = c.prepareStatement("UPDATE cookies SET is_active = false WHERE session_id = ?;");
         ps.setString(1, sessionID);
         ps.executeUpdate();
-        dbconnection.closeConnection(c);
+        ps.close();
     }
 
-
+    public void disableAllOutdatedCookies() throws SQLException {
+        Connection c = dbconnection.getConnection();
+        c.createStatement().execute("UPDATE cookies SET is_active = FALSE WHERE expiration_date < CURRENT_TIMESTAMP;");
+    }
 }

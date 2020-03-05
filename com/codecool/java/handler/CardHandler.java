@@ -2,7 +2,6 @@ package codecool.java.handler;
 
 import codecool.java.controller.StudentController;
 import codecool.java.dao.CardDAO;
-import codecool.java.dao.DbAuthorizationDAO;
 import codecool.java.dao.DbCardDAO;
 import codecool.java.dao.DbstudentDAO;
 import codecool.java.helper.HttpResponse;
@@ -10,15 +9,12 @@ import codecool.java.model.Card;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-
 import java.io.IOException;
-import java.net.HttpCookie;
 import java.net.URI;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class CardHandler implements HttpHandler {
     CookieHelper cookieHelper = new CookieHelper();
@@ -31,14 +27,16 @@ public class CardHandler implements HttpHandler {
             if(!cookieHelper.isCookiePresent(httpExchange)){
                 httpResponse.redirectToLoginPage(httpExchange);
             }else {
+                cookieHelper.refreshCookie(httpExchange);
                 response = getCards();
                 httpResponse.sendResponse200(httpExchange, response);
             }
         }
         if(method.equals("POST")){
-            if(!cookieHelper.isCookiePresent(httpExchange)){
+            if(!cookieHelper.isCookiePresent(httpExchange)) {
                 httpResponse.redirectToLoginPage(httpExchange);
-            }else{
+            } else {
+                cookieHelper.refreshCookie(httpExchange);
                 URI uri = httpExchange.getRequestURI();
                 final int URI_CARD_ID = 3;
                 final String sessionId = getSessionIdFromCookieString(httpExchange.getRequestHeaders().getFirst("Cookie"));
