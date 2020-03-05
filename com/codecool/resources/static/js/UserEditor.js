@@ -23,10 +23,18 @@ export default class UserEditor {
         console.log(userTables);
         const students = document.querySelectorAll('.user__item');
         const editUserBtns = document.querySelectorAll('.user__btn--edit');
-        console.log(editUserBtns);
         const editUserWindow = document.querySelector('.edit-user');
+        const deleteBtns = document.querySelectorAll('.user__btn--remove');
+        const manageStudentData = new ManageStudentData();
         if (editUserBtns.length > 0) {
-            for (let i = 0; i < editUserBtns.length; i++) {
+            for (let i = 0; i < editUserBtns.length - 1; i++) {
+                let userId;
+                if (i > 0) {
+                    userId = students[i+1].getAttribute('id').split('_')[1];
+                }
+                deleteBtns[i].onclick = () => {
+                    manageStudentData.deleteStudent(userId);
+                }
                 editUserBtns[i].onclick = () => {
                     editUserWindow.style.display = 'block';
                     userTables.style.display = 'none';
@@ -42,8 +50,6 @@ export default class UserEditor {
                     submitBtn.onclick = (e) => {
                         e.preventDefault();
                         if (this.validate()) {
-                            const manageStudentData = new ManageStudentData();
-                            const userId = students[i+1].getAttribute('id').split('_')[1];
                             manageStudentData.handleStudent(userId);
                         }
                     }

@@ -53,13 +53,28 @@ public class MentorStudentHandler implements HttpHandler {
             }
         }
 
-        if(method.equals("POST") && !(uri.toString().split("/")[4].equals(""))) {
+        if(method.equals("POST") && (uri.toString().split("/")[3].equals("add")) && !(uri.toString().split("/")[4].equals(""))) {
             Student jsonData = receiveStudentFromFront(httpExchange);
             Student student = new Student(jsonData.getId(), jsonData.getLogin(), jsonData.getPassword(), jsonData.getName(), jsonData.getSurname(),true);
             try {
                 DbstudentDAO dbstudentDAO = new DbstudentDAO();
                 dbstudentDAO.update(student);
                 httpResponse.sendResponse200(httpExchange, "updated");
+            } catch (SQLException| ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(method.equals("POST") && (uri.toString().split("/")[3].equals("delete")) && !(uri.toString().split("/")[4].equals(""))) {
+            InputStream requestBody = httpExchange.getRequestBody();
+            InputStreamReader isr = new InputStreamReader(requestBody, "utf-8");
+            BufferedReader br = new BufferedReader(isr);
+            String userId = br.readLine().replace("\"", "");
+            try {
+                DbstudentDAO dbstudentDAO = new DbstudentDAO();
+                Student student = dbstudentDAO.selectStudentById(Integer.parseInt(userId));
+                dbstudentDAO.disable(student);
+                httpResponse.sendResponse200(httpExchange, "deleted");
             } catch (SQLException| ClassNotFoundException e) {
                 e.printStackTrace();
             }

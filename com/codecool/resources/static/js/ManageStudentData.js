@@ -1,8 +1,16 @@
 export default class ManageStudentData {
+    xmlHttpRequest = new XMLHttpRequest();
+
+    deleteStudent(studentId) {
+        this.xmlHttpRequest.open('POST', `/mentor/students/delete/${studentId}`);
+        this.xmlHttpRequest.send(JSON.stringify(studentId));
+    }
+
     handleStudent(studentId) {
-        const xmlHttpRequest = new XMLHttpRequest();
+        const xmlHttpRequest = this.xmlHttpRequest;
         createNewStudent();
         editNewStudent(studentId);
+        this.deleteStudent(studentId);
         xmlHttpRequest.onreadystatechange = function () {
             if (xmlHttpRequest.readyState == xmlHttpRequest.DONE) {
                 if (xmlHttpRequest.status === 200) {
@@ -12,6 +20,10 @@ export default class ManageStudentData {
                     }
                     if(xmlHttpRequest.responseText == "updated"){
                         alert("SUCCESSFULLY UPDATED")
+                        location.reload();
+                    }
+                    if(xmlHttpRequest.responseText == "deleted"){
+                        alert("SUCCESSFULLY DELETED")
                         location.reload();
                     }
                 }
@@ -41,6 +53,7 @@ export default class ManageStudentData {
 
         function createNewStudent() {
             const name = document.getElementById('add_user_name').value;
+            console.log(name);
             const lastName = document.getElementById('add_user_surname').value;
             const email = document.getElementById('add_user_email').value;
             const password = document.getElementById('add_user_password').value;

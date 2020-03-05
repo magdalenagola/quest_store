@@ -11,6 +11,24 @@ public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
         super();
     }
 
+    public Student selectStudentById(int id) throws SQLException {
+        Connection c = dbconnection.getConnection();
+        PreparedStatement ps = c.prepareStatement("SELECT * FROM users WHERE id = ?;");
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+        Student student = null;
+        try {
+            while (rs.next()) {
+                student = createStudent(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            dbconnection.closeConnection(c);
+        }
+        return student;
+    }
+
     @Override
     public List<Student> loadAll(){
         List<Student> result = new ArrayList<>();
@@ -19,22 +37,28 @@ public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
         PreparedStatement ps = c.prepareStatement("SELECT * FROM users JOIN usertypes ON (users.usertype_id = usertypes.id) " +
                 "WHERE usertype = 'Student';");
         ResultSet rs = ps.executeQuery();
-        while(rs.next()){
+        while (rs.next()) {
+            Student student = createStudent(rs);
+            result.add(student);
+        }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally{
+            dbconnection.closeConnection(c);
+        }
+        return result;
+    }
+
+    private Student createStudent(ResultSet rs) throws SQLException {
+        Student student = null;
             int id = rs.getInt("id");
             String email = rs.getString("email");
             String password = rs.getString("password");
             String name = rs.getString("name");
             String surname = rs.getString("surname");
             boolean is_active = rs.getBoolean("is_active");
-            Student student = new Student(id,email,password,name,surname,is_active);
-            result.add(student);
-        }
-        }catch(SQLException e){
-            e.printStackTrace();
-        }finally{
-            dbconnection.closeConnection(c);
-        }
-        return result;
+            student = new Student(id,email,password,name,surname,is_active);
+        return student;
     }
 
     @Override
