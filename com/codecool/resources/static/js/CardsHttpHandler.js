@@ -1,4 +1,5 @@
 import WalletHttpHandler from "./WalletHttpHandler.js";
+import InteractiveStyles from "./InteractiveStyles.js";
 
 export default class CardsHttpHandler{
     constructor() {}
@@ -14,6 +15,8 @@ export default class CardsHttpHandler{
             }
 
             if (xmlHttpRequest.readyState == xmlHttpRequest.DONE) {
+                const interactiveStyles = new InteractiveStyles();
+                const popup = document.querySelector('.popup');
                 const responseUrl = xmlHttpRequest.responseURL.split('/');
                 const responseContext = responseUrl[responseUrl.length - 1];
                 if (xmlHttpRequest.status === 200 && responseContext === 'cards') {
@@ -32,14 +35,16 @@ export default class CardsHttpHandler{
                     getStudentCoins();
                 }
                 if(xmlHttpRequest.status === 200 && responseContext !== 'cards'){
-                    alert("SUCCESSFUL TRANSACTION! :)");
+                    const message = 'Congratulations!<br/>You successfully bought a card!';
+                    interactiveStyles.showPopup(popup, message);
                     getStudentCoins();
                 }
                 if(xmlHttpRequest.status === 303){
                     window.location.replace("index.html")
                 }
                 if(xmlHttpRequest.status === 403){
-                    alert("You can't afford it ! :C")
+                    const message = 'You cannot afford it, codecooler!';
+                    interactiveStyles.showPopup(popup, message);
                 }
             } else {
                 console.log("No response yet");

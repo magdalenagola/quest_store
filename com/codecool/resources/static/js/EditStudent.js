@@ -1,15 +1,19 @@
+import InteractiveStyles from "./InteractiveStyles.js";
+
 export default class EditStudent {
 
     editStudent(studentId) {
         const xmlHttpRequest =  new XMLHttpRequest();
         editNewStudent(studentId);
         xmlHttpRequest.onreadystatechange = function () {
-            console.log(xmlHttpRequest.responseText)
+            console.log(xmlHttpRequest.responseText);
+            const interactiveStyles = new InteractiveStyles();
+            const popup = document.querySelector('.popup');
             if (xmlHttpRequest.readyState == xmlHttpRequest.DONE) {
                 if (xmlHttpRequest.status === 200) {
                     if (xmlHttpRequest.responseText == "updated") {
-                        alert("SUCCESSFULLY UPDATED")
-                        location.reload();
+                        const message = 'Successfully updated!';
+                        interactiveStyles.showPopup(popup, message);
                     }
                 }
             }

@@ -1,6 +1,10 @@
+import InteractiveStyles from "./InteractiveStyles.js";
+
 export default class CreateStudent {
 
     createStudent(studentId) {
+        const interactiveStyles = new InteractiveStyles();
+        const popup = document.querySelector('.popup');
         const xmlHttpRequest = new XMLHttpRequest();
         createNewStudent();
         xmlHttpRequest.onreadystatechange = function () {
@@ -8,8 +12,8 @@ export default class CreateStudent {
             if (xmlHttpRequest.readyState == xmlHttpRequest.DONE) {
                 if (xmlHttpRequest.status === 200) {
                     if(xmlHttpRequest.responseText == "saved"){
-                        alert("SUCCESSFULLY ADDED")
-                        location.reload();
+                        const message = 'Successfully added!';
+                        interactiveStyles.showPopup(popup, message);
                     }
                 }
             }

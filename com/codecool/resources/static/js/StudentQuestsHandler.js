@@ -13,7 +13,6 @@ export default class StudentQuestsHandler {
                 if (xmlHttpRequest.status === 200) {
                     let response = xmlHttpRequest.responseText;
                     response = JSON.parse(response);
-                    console.log(response);
                     const quests = document.querySelector(".cards__wrapper");
                     for(let i =0; i <response.length; i++) {
                         quests.appendChild(createQuest(response, i));
