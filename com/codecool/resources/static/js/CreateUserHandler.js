@@ -1,6 +1,6 @@
 import InteractiveStyles from "./InteractiveStyles.js";
 
-export default class CreateStudent {
+export default class CreateUserHandler {
 
     createStudent(studentId) {
         const interactiveStyles = new InteractiveStyles();
@@ -24,6 +24,11 @@ export default class CreateStudent {
             xmlHttpRequest.send(JSON.stringify(newStudent));
         }
 
+        function postMentorToServer(xmlHttpRequest, newUser, userId) {
+            xmlHttpRequest.open('POST', `/manager/mentor/add/${userId}`);
+            xmlHttpRequest.send(JSON.stringify(newUser));
+        }
+
         function createNewStudent() {
             const name = document.getElementById('add_user_name').value;
             console.log(name);
@@ -31,13 +36,23 @@ export default class CreateStudent {
             const email = document.getElementById('add_user_email').value;
             const password = document.getElementById('add_user_password').value;
 
-            let newStudent = {
+            let newUser = {
                 "login": email,
                 "password": password,
                 "name": name,
                 "surname": lastName
             };
-            postToServer(xmlHttpRequest, newStudent, "");
+
+            if (window.location.pathname === "/static/manager_mentors_list.html") {
+                const primarySkill = document.getElementById('add_user_primary-skill').value;
+                const earnings  = document.getElementById('add_user_salary').value;
+                console.log(primarySkill);
+                newUser["earnings"] = earnings;
+                newUser["primarySkill"] = primarySkill;
+                postMentorToServer(xmlHttpRequest, newUser, "");
+            } else {
+                postToServer(xmlHttpRequest, newUser, "");
+            }
         }
     }
 }

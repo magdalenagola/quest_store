@@ -119,12 +119,13 @@ public class DbMentorDAO extends DbConnectionDao implements MentorDAO {
     public void update(Object t) throws SQLException {
         Connection c = dbconnection.getConnection();
         Mentor mentor = (Mentor) t;
-        PreparedStatement ps = c.prepareStatement(String.format("UPDATE users SET email =?," +
-                "password = ?,name = ?,surname = ?,usertype_id = 1) WHERE id = %d;", mentor.getId()));
+        PreparedStatement ps = c.prepareStatement("UPDATE users SET email =?," +
+                "password = ?,name = ?,surname = ?,usertype_id = 2,is_active = true WHERE id = ?; ");
         ps.setString(1, mentor.getLogin());
         ps.setString(2, mentor.getPassword());
         ps.setString(3, mentor.getName());
         ps.setString(4, mentor.getSurname());
+        ps.setInt(5, mentor.getId());
         ps.executeUpdate();
     };
 

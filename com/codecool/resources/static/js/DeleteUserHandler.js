@@ -1,6 +1,6 @@
 import InteractiveStyles from "./InteractiveStyles.js";
 
-export default class DeleteStudent {
+export default class DeleteUserHandler {
 
     deleteStudent(studentId) {
         const xmlHttpRequest =  new XMLHttpRequest();

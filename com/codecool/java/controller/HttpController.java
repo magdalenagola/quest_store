@@ -19,7 +19,7 @@ public class HttpController {
             server.createContext("/student/inventory", new InventoryHandler());
             server.createContext("/mentor/quests", new MentorQuestHandler());
             server.createContext("/student/quests", new StudentQuestHandler());
-            server.createContext("/manager/mentors", new ManagerMentorsHandler());
+            server.createContext("/manager/mentor", new ManagerMentorsHandler());
             server.setExecutor(null);
             server.start();
         }

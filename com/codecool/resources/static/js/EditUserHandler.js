@@ -1,7 +1,6 @@
 import InteractiveStyles from "./InteractiveStyles.js";
-import MentorStudentHandler from "./MentorStudentHandler.js";
 
-export default class EditStudent {
+export default class EditUserHandler {
 
     editStudent(studentId) {
         const xmlHttpRequest =  new XMLHttpRequest();
@@ -34,12 +33,17 @@ export default class EditStudent {
                 "name": name,
                 "surname": lastName
             };
-            console.log(userId);
+
             if (window.location.pathname === "/static/mentor_students_list.html") {
                 postToServer(xmlHttpRequest, newUser, userId);
             }
 
             if (window.location.pathname === "/static/manager_mentors_list.html") {
+                const primarySkill = document.getElementById('edit_user_primary-skill').value;
+                const earnings  = document.getElementById('edit_user_salary').value;
+                console.log(primarySkill);
+                newUser["earnings"] = earnings;
+                newUser["primarySkill"] = primarySkill;
                 postMentorToServer(xmlHttpRequest, newUser, userId);
             }
         }

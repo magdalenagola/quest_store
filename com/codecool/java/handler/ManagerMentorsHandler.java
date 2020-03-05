@@ -41,7 +41,7 @@ public class ManagerMentorsHandler implements HttpHandler {
             }
         }
 
-        if(method.equals("POST") && (uri.toString().equals("/manager/mentors/add/"))) {
+        if(method.equals("POST") && (uri.toString().equals("/manager/mentor/add/"))) {
             Mentor jsonData = receiveMentorFromFront(httpExchange);
             Mentor mentor = new Mentor(jsonData.getLogin(),jsonData.getPassword(),jsonData.getName(),jsonData.getSurname(),jsonData.getPrimarySkill(),true);
             try {
@@ -55,7 +55,7 @@ public class ManagerMentorsHandler implements HttpHandler {
 
         if(method.equals("POST") && (uri.toString().split("/")[3].equals("add")) && !(uri.toString().split("/")[4].equals(""))) {
             Mentor jsonData = receiveMentorFromFront(httpExchange);
-            Mentor mentor = new Mentor(jsonData.getLogin(),jsonData.getPassword(),jsonData.getName(),jsonData.getSurname(),jsonData.getPrimarySkill(),true);
+            Mentor mentor = new Mentor(jsonData.getId(), jsonData.getLogin(),jsonData.getPassword(),jsonData.getName(),jsonData.getSurname(),jsonData.getPrimarySkill(),true);
             try {
                 DbMentorDAO dbmentorDAO = new DbMentorDAO();
                 dbmentorDAO.update(mentor);
