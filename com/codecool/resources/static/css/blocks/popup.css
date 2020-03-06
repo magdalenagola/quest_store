@@ -1,8 +1,8 @@
 .popup {
     display: none;
     padding: 25px;
-    background-color: #fff;
-    color: #1b1b1b;
+    background-color: #fdfdfd;
+    color: #292929;
     width: 40vw;
     height: 120px;
     text-align: center;
@@ -22,7 +22,7 @@
     font-weight: 700;
     line-height: 2em;
     letter-spacing: .15em;
-    box-shadow: inset 0 0 1em #e2d8c6, 0 0 1em #e2d8c6;
+    box-shadow: inset 0 0 12px #b6ac9a, 0 0 8px #b6ac9a;
 }
 
 .popup--opened {

@@ -1,6 +1,6 @@
 import FormValidator from './FormValidator.js';
-import EditStudent from "./EditStudent.js";
-import DeleteStudent from "./DeleteStudent.js";
+import EditUserHandler from "./EditUserHandler.js";
+import DeleteUserHandler from "./DeleteUserHandler.js";
 
 
 export default class UserEditor {
@@ -26,8 +26,8 @@ export default class UserEditor {
         const editUserBtns = document.querySelectorAll('.user__btn--edit');
         const editUserWindow = document.querySelector('.edit-user');
         const deleteBtns = document.querySelectorAll('.user__btn--remove');
-        const editStudent = new EditStudent();
-        const deleteStudent = new DeleteStudent();
+        const editStudent = new EditUserHandler();
+        const deleteStudent = new DeleteUserHandler();
         if (editUserBtns.length > 0) {
             for (let i = 0; i < editUserBtns.length - 1; i++) {
                 let userId;
@@ -44,6 +44,7 @@ export default class UserEditor {
                     userTables.style.display = 'none';
                     const btns = editUserWindow.getElementsByTagName('button');
                     let submitBtn;
+                    console.log(userId);
                     for (let i = 0; i < btns.length; i++) {
                         if (btns[i].type === 'submit') {
                             submitBtn = btns[i];

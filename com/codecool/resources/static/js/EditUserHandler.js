@@ -1,6 +1,6 @@
 import InteractiveStyles from "./InteractiveStyles.js";
 
-export default class EditStudent {
+export default class EditUserHandler {
 
     editStudent(studentId) {
         const xmlHttpRequest =  new XMLHttpRequest();
@@ -20,21 +20,38 @@ export default class EditStudent {
         };
 
 
-        function editNewStudent(studentId) {
+        function editNewStudent(userId) {
             const name = document.getElementById('edit_user_name').value;
             const lastName = document.getElementById('edit_user_surname').value;
             const email = document.getElementById('edit_user_email').value;
             const password = document.getElementById('edit_user_password').value;
 
-            let newStudent = {
-                "id": studentId,
+            let newUser = {
+                "id": userId,
                 "login": email,
                 "password": password,
                 "name": name,
                 "surname": lastName
             };
-            console.log(newStudent);
-            postToServer(xmlHttpRequest, newStudent, studentId);
+
+            if (window.location.pathname === "/static/mentor_students_list.html") {
+                postToServer(xmlHttpRequest, newUser, userId);
+            }
+
+            if (window.location.pathname === "/static/manager_mentors_list.html") {
+                const primarySkill = document.getElementById('edit_user_primary-skill').value;
+                const earnings  = document.getElementById('edit_user_salary').value;
+                console.log(primarySkill);
+                newUser["earnings"] = earnings;
+                newUser["primarySkill"] = primarySkill;
+                postMentorToServer(xmlHttpRequest, newUser, userId);
+            }
+        }
+
+        function postMentorToServer(xmlHttpRequest, newUser, userId)
+        {
+            xmlHttpRequest.open('POST', `/manager/mentor/add/${userId}`);
+            xmlHttpRequest.send(JSON.stringify(newUser));
         }
 
         function postToServer(xmlHttpRequest, newStudent, userId)
