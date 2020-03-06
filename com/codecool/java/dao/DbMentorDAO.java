@@ -41,6 +41,19 @@ public class DbMentorDAO extends DbConnectionDao implements MentorDAO {
         ps.executeUpdate();
     };
 
+    public void saveDetails(String primarySkill, int earnings) throws SQLException {
+        Connection c = dbconnection.getConnection();
+        ResultSet rs = c.createStatement().executeQuery("SELECT MAX(id) FROM users");
+        while(rs.next()){
+            int newId = rs.getInt("id");
+            PreparedStatement ps = c.prepareStatement("INSERT INTO mentor_details (user_id, primary_skill, date_hired, earnings) VALUES (?, ?, CURRENT_DATE, ?);");
+            ps.setInt(1, newId);
+            ps.setString(2, primarySkill);
+            ps.setInt(3, earnings);
+            ps.executeUpdate();
+        }
+    }
+
     @Override
     public List<Mentor> loadAll() throws SQLException {
         Connection c = dbconnection.getConnection();

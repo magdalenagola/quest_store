@@ -78,4 +78,9 @@ public class CookieHelper {
             e.printStackTrace();
         }
     }
+
+    public boolean isUsertypeValid(HttpExchange httpExchange, int userType) {
+        // TODO get usertype from db, compare to needed
+        return true;
+    }
 }

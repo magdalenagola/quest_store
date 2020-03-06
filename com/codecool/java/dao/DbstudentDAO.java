@@ -89,6 +89,13 @@ public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
         ps.setInt(5, 1);
         ps.setBoolean(6, true);
         ps.executeUpdate();
+        ResultSet rs = c.createStatement().executeQuery("SELECT MAX(id) FROM users");
+        while(rs.next()){
+            int newId = rs.getInt("id");
+            ps = c.prepareStatement("INSERT INTO student_details (user_id, group_id, coins) VALUES (?, 3, 0)");
+            ps.setInt(1, newId);
+            ps.executeUpdate();
+        }
         }catch(SQLException e){
             e.printStackTrace();
         }
