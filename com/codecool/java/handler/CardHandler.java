@@ -24,14 +24,19 @@ public class CardHandler implements HttpHandler {
         String method = httpExchange.getRequestMethod();
         String response="";
         if(method.equals("GET")){
-            if(!cookieHelper.isCookiePresent(httpExchange)){
+            if(!cookieHelper.isCookiePresent(httpExchange)) {
                 httpResponse.redirectToLoginPage(httpExchange);
+            }
+            // TODO seperate for different usertypes
+                if(!cookieHelper.isUsertypeValid(httpExchange, 1)){
+                    httpResponse.redirectToLoginPage(httpExchange);
+                }
             }else {
                 cookieHelper.refreshCookie(httpExchange);
                 response = getCards();
                 httpResponse.sendResponse200(httpExchange, response);
             }
-        }
+
         if(method.equals("POST")){
             if(!cookieHelper.isCookiePresent(httpExchange)) {
                 httpResponse.redirectToLoginPage(httpExchange);

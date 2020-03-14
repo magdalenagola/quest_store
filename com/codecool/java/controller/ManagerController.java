@@ -107,6 +107,7 @@ public class ManagerController {
         Mentor newMentor;
         newMentor = new Mentor(newData[0], newData[1], newData[2], newData[3], newData[4], true);
         mentorDAO.save(newMentor);
+
         terminalView.displayMessage("Successfully added new mentor!");
     }
 }
