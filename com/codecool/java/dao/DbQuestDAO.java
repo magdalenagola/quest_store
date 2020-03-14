@@ -79,28 +79,32 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
         }
     }
 
-    public List loadAllActive() throws SQLException {
+    public List loadAllActive(){
         List<Quest> quests = new ArrayList<>();
         Quest quest;
-        ResultSet rs = selectAllActiveFromTable();
-        while(rs.next()){
-            int id = rs.getInt("id");
-            String title = rs.getString("title");
-            String description = rs.getString("description");
-            String image = rs.getString("image");
-            boolean isActive = rs.getBoolean("is_active");
-            int cost = rs.getInt("cost");
-            String category = rs.getString("category");
-            quest = new Quest(
-                    id,
-                    title,
-                    description,
-                    image,
-                    isActive,
-                    cost,
-                    category
-            );
-            quests.add(quest);
+        try {
+            ResultSet rs = selectAllActiveFromTable();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String title = rs.getString("title");
+                String description = rs.getString("description");
+                String image = rs.getString("image");
+                boolean isActive = rs.getBoolean("is_active");
+                int cost = rs.getInt("cost");
+                String category = rs.getString("category");
+                quest = new Quest(
+                        id,
+                        title,
+                        description,
+                        image,
+                        isActive,
+                        cost,
+                        category
+                );
+                quests.add(quest);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
         return quests;
     }

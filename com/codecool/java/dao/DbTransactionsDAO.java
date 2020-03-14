@@ -39,10 +39,14 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
     }
 
     @Override
-    public Map<String,List<Transaction>> displayAllTransactionsByStudent(Student student) throws SQLException {
+    public Map<String,List<Transaction>> displayAllTransactionsByStudent(Student student){
         Map<String,List<Transaction>> studentTransactions = new HashMap<>();
-        studentTransactions.put("Cards",getCardTransactionsByStudent(student));
-        studentTransactions.put("Quests",getQuestTransactionsByStudent(student));
+        try {
+            studentTransactions.put("Cards", getCardTransactionsByStudent(student));
+            studentTransactions.put("Quests", getQuestTransactionsByStudent(student));
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
         return studentTransactions;
     }
 

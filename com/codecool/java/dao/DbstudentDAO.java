@@ -11,13 +11,13 @@ public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
         super();
     }
 
-    public Student selectStudentById(int id) throws SQLException {
+    public Student selectStudentById(int id){
         Connection c = dbconnection.getConnection();
-        PreparedStatement ps = c.prepareStatement("SELECT * FROM users WHERE id = ?;");
-        ps.setInt(1, id);
-        ResultSet rs = ps.executeQuery();
         Student student = null;
-        try {
+        try{
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM users WHERE id = ?;");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 student = createStudent(rs);
             }
@@ -156,21 +156,30 @@ public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
 
 
     @Override
-    public void disable(Object o) throws SQLException {
+    public void disable(Object o){
         Connection c = dbconnection.getConnection();
         Student student = (Student) o;
-        PreparedStatement ps = c.prepareStatement(String.format("UPDATE users SET is_active = false WHERE id = %d;", student.getId()));
-        ps.executeUpdate();
-    };
+        try {
+            PreparedStatement ps = c.prepareStatement(String.format("UPDATE users SET is_active = false WHERE id = %d;", student.getId()));
+            ps.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 
 
     @Override
-    public void activate(Object o) throws SQLException {
+    public void activate(Object o){
         Connection c = dbconnection.getConnection();
         Student student = (Student) o;
-        PreparedStatement ps = c.prepareStatement(String.format("UPDATE users SET is_active = true WHERE id = %d;", student.getId()));
-        ps.executeUpdate();
-    };
+        try {
+            PreparedStatement ps = c.prepareStatement(String.format("UPDATE users SET is_active = true WHERE id = %d;", student.getId()));
+            ps.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     public Student findStudentBySessionId(String sessionId) {
         Connection c = dbconnection.getConnection();
         Student student = null;

@@ -9,15 +9,16 @@ import java.sql.SQLException;
 public class UserFactory {
     private MentorDAO mentorDAO;
 
-    public UserFactory() throws SQLException, ClassNotFoundException {
+    public UserFactory(){
         mentorDAO = new DbMentorDAO();
     }
 
-    public User createUser(int id, String email, String userPassword, String name, String surname, int userTypeID, boolean isActive) throws SQLException, NotInDatabaseException {
+    public User createUser(int id, String email, String userPassword, String name, String surname, int userTypeID, boolean isActive)throws NotInDatabaseException {
         switch(userTypeID) {
             case 1:
                 return new Student(id, email, userPassword, name, surname, isActive);
             case 2:
+                //TODO GET MENTOR DETAILS ? Primary skill + earnings
                 String primarySkill = mentorDAO.getPrimarySkillById(id);
                 return new Mentor(id, email, userPassword, name, surname, primarySkill, isActive);
             case 3:

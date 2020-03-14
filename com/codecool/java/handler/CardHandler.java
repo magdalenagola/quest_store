@@ -62,7 +62,7 @@ public class CardHandler implements HttpHandler {
         String response = "";
         int studentCoins = getStudentCoins(sessionId);
         int studentID = studentDAO.findStudentBySessionId(sessionId).getId();
-        StudentController studentController = new StudentController();
+        StudentController studentController = new StudentController(new DbCardDAO(), new DbTransactionsDAO());
         if(checkCardAffordability(studentCoins,cardID)){
             studentController.buyCard(studentID,cardID);
             decreaseStudentCoins(sessionId, cardID);

@@ -1,9 +1,5 @@
 package codecool.java.model;
 
-import codecool.java.controller.ManagerController;
-
-import java.sql.SQLException;
-
 public class Manager extends User {
     private int id;
     private String login;
@@ -23,12 +19,12 @@ public class Manager extends User {
 
     @Override
     public void start(){
-        try {
-            ManagerController managerController = new ManagerController();
-            managerController.run();
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            ManagerController managerController = new ManagerController();
+//            managerController.run();
+//        } catch (SQLException | ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override

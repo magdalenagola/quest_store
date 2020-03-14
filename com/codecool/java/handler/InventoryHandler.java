@@ -8,7 +8,6 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
-import java.sql.SQLException;
 
 public class InventoryHandler implements HttpHandler {
     CookieHelper cookieHelper = new CookieHelper();
@@ -17,26 +16,25 @@ public class InventoryHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
-        String response="";
         if(method.equals("GET")){
-            if(!cookieHelper.isCookiePresent(httpExchange)){
-                httpResponse.redirectToLoginPage(httpExchange);
-
-            }else {
-                cookieHelper.refreshCookie(httpExchange);
-                try {
-                    response = getStudentCards(httpExchange);
-                    httpResponse.sendResponse200(httpExchange, response);
-                } catch (ClassNotFoundException | SQLException e) {
-                    httpResponse.sendResponse500(httpExchange);
-                    e.printStackTrace();
-                }
-            }
+            handleGET(httpExchange);
         }
 
     }
 
-    private String getStudentCards(HttpExchange httpExchange) throws SQLException, ClassNotFoundException {
+    private void handleGET(HttpExchange httpExchange) throws IOException {
+        String response = "";
+        if(!cookieHelper.isCookiePresent(httpExchange)){
+            httpResponse.redirectToLoginPage(httpExchange);
+        }else {
+            cookieHelper.refreshCookie(httpExchange);
+            response = getStudentCards(httpExchange);
+            httpResponse.sendResponse200(httpExchange, response);
+
+        }
+    }
+
+    private String getStudentCards(HttpExchange httpExchange){
         DbCardDAO cardDAO = new DbCardDAO();
         DbstudentDAO studentDAO = new DbstudentDAO();
         String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");

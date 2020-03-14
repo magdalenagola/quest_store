@@ -54,7 +54,7 @@ public class CookieHelper {
         return findCookieByName(SESSION_COOKIE_NAME , cookies);
     }
 
-    public void createNewCookie(HttpExchange httpExchange, User user) throws SQLException, ClassNotFoundException, ParseException {
+    public void createNewCookie(HttpExchange httpExchange, User user){
         DbAuthorizationDAO authorizationDAO = new DbAuthorizationDAO();
         UUID uuid = UUID.randomUUID();
         String sessionId = uuid.toString();
@@ -70,11 +70,7 @@ public class CookieHelper {
             Optional<HttpCookie> cookie = getSessionIdCookie(httpExchange);
             authorizationDAO.refreshCookie(cookie);
             authorizationDAO.disableAllOutdatedCookies();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
             e.printStackTrace();
         }
     }

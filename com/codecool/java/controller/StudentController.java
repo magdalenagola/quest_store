@@ -2,23 +2,19 @@ package codecool.java.controller;
 
 import codecool.java.dao.*;
 import codecool.java.model.*;
-import codecool.java.view.Display;
-import codecool.java.view.TerminalView;
-
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
+
 
 public class StudentController {
     private CardDAO cardDAO;
     private TransactionsDAO transactionsDAO;
 
-    public StudentController(){
-        cardDAO = new DbCardDAO();
-        transactionsDAO = new DbTransactionsDAO();
+    public StudentController(CardDAO cardDAO, TransactionsDAO transactionsDAO){
+        this.cardDAO = cardDAO;
+        this.transactionsDAO = transactionsDAO;
     }
 
     public void buyCard(int studentId, int cardId){

@@ -18,15 +18,18 @@ public class MentorQuestHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
-        String response = "";
         if(method.equals("GET")){
-            if(!cookieHelper.isCookiePresent(httpExchange)){
-                httpResponse.redirectToLoginPage(httpExchange);
-            }else {
-                cookieHelper.refreshCookie(httpExchange);
-                response = getQuests();
-                httpResponse.sendResponse200(httpExchange, response);
-            }
+            handleGET(httpExchange);
+        }
+    }
+
+    private void handleGET(HttpExchange httpExchange) throws IOException {
+        if(!cookieHelper.isCookiePresent(httpExchange)){
+            httpResponse.redirectToLoginPage(httpExchange);
+        }else {
+            cookieHelper.refreshCookie(httpExchange);
+            String response = getQuests();
+            httpResponse.sendResponse200(httpExchange, response);
         }
     }
 
