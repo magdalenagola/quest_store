@@ -28,6 +28,12 @@
     width: 33.333%;
 }
 
+.user__skill,
+.user__salary {
+    width: 25%;
+    box-sizing: border-box;
+}
+
 .transactions__list,
 .user__list {
     width: 100%;
@@ -40,7 +46,7 @@
 .user__item,
 .transactions__item {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     color: #626060;
 }
 
@@ -58,6 +64,7 @@
 .user__email {
     width: 50%;
     text-align: center;
+    box-sizing: border-box;
 }
 
 .transactions__item--bought {

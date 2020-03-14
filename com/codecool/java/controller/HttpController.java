@@ -8,7 +8,7 @@ import java.net.InetSocketAddress;
 
 public class HttpController {
         public void init() throws IOException {
-            int port = 3001;
+            int port = 8001;
             HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
             server.createContext("/login", new LoginHandler());
             server.createContext("/cards", new CardHandler());
@@ -19,6 +19,7 @@ public class HttpController {
             server.createContext("/student/inventory", new InventoryHandler());
             server.createContext("/mentor/quests", new MentorQuestHandler());
             server.createContext("/student/quests", new StudentQuestHandler());
+            server.createContext("/manager/mentor", new ManagerMentorsHandler());
             server.setExecutor(null);
             server.start();
         }
