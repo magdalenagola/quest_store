@@ -10,7 +10,7 @@ import java.util.List;
 
 public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
 
-    public DbQuestDAO() throws SQLException, ClassNotFoundException {
+    public DbQuestDAO(){
         super();
     }
 
@@ -61,18 +61,22 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
     }
 
     @Override
-    public void save(Object o) throws SQLException {
+    public void save(Object o){
         Quest quest = (Quest) o;
         String orderToSql = "INSERT INTO quests (title, description, image,is_active, cost, category) VALUES (?, ?, ?, ?, ?, ?);";
         Connection c = dbconnection.getConnection();
-        PreparedStatement ps = c.prepareStatement(orderToSql);
-        ps.setString(1, quest.getTitle());
-        ps.setString(2, quest.getDescription());
-        ps.setString(3, quest.getImage());
-        ps.setBoolean(4, quest.isActive());
-        ps.setInt(5, quest.getCost());
-        ps.setString(6, quest.getCategory());
-        ps.execute();
+        try {
+            PreparedStatement ps = c.prepareStatement(orderToSql);
+            ps.setString(1, quest.getTitle());
+            ps.setString(2, quest.getDescription());
+            ps.setString(3, quest.getImage());
+            ps.setBoolean(4, quest.isActive());
+            ps.setInt(5, quest.getCost());
+            ps.setString(6, quest.getCategory());
+            ps.execute();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
     public List loadAllActive() throws SQLException {
@@ -101,28 +105,32 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
         return quests;
     }
     @Override
-    public List loadAll() throws SQLException {
+    public List loadAll(){
         List<Quest> quests = new ArrayList<>();
         Quest quest;
-        ResultSet rs = selectAllFromTable();
-        while(rs.next()){
-            int id = rs.getInt("id");
-            String title = rs.getString("title");
-            String description = rs.getString("description");
-            String image = rs.getString("image");
-            boolean isActive = rs.getBoolean("is_active");
-            int cost = rs.getInt("cost");
-            String category = rs.getString("category");
-            quest = new Quest(
-                    id,
-                    title,
-                    description,
-                    image,
-                    isActive,
-                    cost,
-                    category
-            );
-            quests.add(quest);
+        try {
+            ResultSet rs = selectAllFromTable();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String title = rs.getString("title");
+                String description = rs.getString("description");
+                String image = rs.getString("image");
+                boolean isActive = rs.getBoolean("is_active");
+                int cost = rs.getInt("cost");
+                String category = rs.getString("category");
+                quest = new Quest(
+                        id,
+                        title,
+                        description,
+                        image,
+                        isActive,
+                        cost,
+                        category
+                );
+                quests.add(quest);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
         }
         return quests;
     }

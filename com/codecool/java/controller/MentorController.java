@@ -44,15 +44,11 @@ public class MentorController {
     }
 
     private void displayStatistics() {
-        try {
-            StudentDAO studentDAO = new DbstudentDAO();
-            List<Student> students = studentDAO.loadAll();
-            for (Student student : students) {
-                view.displayMessage(student.toString());
-                view.displayMessage("Coins:" + String.valueOf(studentDAO.getCoins(student)));
-            }
-        }catch(SQLException | ClassNotFoundException e){
-            view.displayErrorMessage(e);
+        StudentDAO studentDAO = new DbstudentDAO();
+        List<Student> students = studentDAO.loadAll();
+        for (Student student : students) {
+            view.displayMessage(student.toString());
+            view.displayMessage("Coins:" + String.valueOf(studentDAO.getCoins(student)));
         }
     }
 
@@ -109,45 +105,33 @@ public class MentorController {
                     break;
             }
             cardDAO.update(card);
-        }catch(SQLException | ClassNotFoundException e){
+        }catch(SQLException e){
             view.displayErrorMessage(e);
         }
     }
 
     private void addCard() {
-        try{
-            CardDAO cardDAO = new DbCardDAO();
-            String[] options = {"Cost","Description", "Image","Quantity","Title"};
-            String[] inputs = view.getInputs(options);
-            Card card = new Card(Integer.parseInt(inputs[0]),inputs[1],inputs[2],true,Integer.parseInt(inputs[3]),inputs[4]);
-            cardDAO.save(card);
-        }catch(SQLException | ClassNotFoundException e){
-            view.displayErrorMessage(e);
-        }
+        CardDAO cardDAO = new DbCardDAO();
+        String[] options = {"Cost","Description", "Image","Quantity","Title"};
+        String[] inputs = view.getInputs(options);
+        Card card = new Card(Integer.parseInt(inputs[0]),inputs[1],inputs[2],true,Integer.parseInt(inputs[3]),inputs[4]);
+        cardDAO.save(card);
     }
 
     private void addQuest() {
         String[] options = {"Title", "Description","Image","Cost","Category"};
         String[] inputs = view.getInputs(options);
-        try{
         QuestDAO questDAO = new DbQuestDAO();
         Quest quest = new Quest(0,inputs[0],inputs[1],inputs[2],true,Integer.parseInt(inputs[4]), inputs[5]);
         questDAO.save(quest);
-        }catch(SQLException | ClassNotFoundException e){
-            view.displayErrorMessage(e);
-        }
     }
 
     private void addStudent() {
-        try{
         StudentDAO studentDAO = new DbstudentDAO();
         String[] options = {"Login", "Password","Name","Surname"};
         String[] inputs = view.getInputs(options);
         Student student = new Student(inputs[0],inputs[1],inputs[2],inputs[3],true);
         studentDAO.save(student);
-        }catch(SQLException | ClassNotFoundException e){
-            view.displayErrorMessage(e);
-        }
 
     }
 }

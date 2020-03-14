@@ -44,25 +44,17 @@ public class MentorStudentHandler implements HttpHandler {
         if(method.equals("POST") && (uri.toString().equals("/mentor/students/add/"))) {
             Student jsonData = receiveStudentFromFront(httpExchange);
             Student student = new Student(jsonData.getLogin(), jsonData.getPassword(), jsonData.getName(), jsonData.getSurname(),true);
-            try {
-                DbstudentDAO dbstudentDAO = new DbstudentDAO();
-                dbstudentDAO.save(student);
-                httpResponse.sendResponse200(httpExchange, "saved");
-            } catch (SQLException| ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+            DbstudentDAO dbstudentDAO = new DbstudentDAO();
+            dbstudentDAO.save(student);
+            httpResponse.sendResponse200(httpExchange, "saved");
         }
 
         if(method.equals("POST") && (uri.toString().split("/")[3].equals("add")) && !(uri.toString().split("/")[4].equals(""))) {
             Student jsonData = receiveStudentFromFront(httpExchange);
             Student student = new Student(jsonData.getId(), jsonData.getLogin(), jsonData.getPassword(), jsonData.getName(), jsonData.getSurname(),true);
-            try {
-                DbstudentDAO dbstudentDAO = new DbstudentDAO();
-                dbstudentDAO.update(student);
-                httpResponse.sendResponse200(httpExchange, "updated");
-            } catch (SQLException| ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+            DbstudentDAO dbstudentDAO = new DbstudentDAO();
+            dbstudentDAO.update(student);
+            httpResponse.sendResponse200(httpExchange, "updated");
         }
 
         if(method.equals("POST") && (uri.toString().split("/")[3].equals("delete")) && !(uri.toString().split("/")[4].equals(""))) {
@@ -75,7 +67,7 @@ public class MentorStudentHandler implements HttpHandler {
                 Student student = dbstudentDAO.selectStudentById(Integer.parseInt(userId));
                 dbstudentDAO.disable(student);
                 httpResponse.sendResponse200(httpExchange, "deleted");
-            } catch (SQLException| ClassNotFoundException e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }

@@ -29,17 +29,21 @@ public class DbMentorDAO extends DbConnectionDao implements MentorDAO {
     }
 
     @Override
-    public void save(Object t) throws SQLException {
+    public void save(Object t){
         Connection c = dbconnection.getConnection();
         Mentor mentor = (Mentor) t;
-        PreparedStatement ps = c.prepareStatement("INSERT INTO users(email, password, name, surname, usertype_id, is_active) VALUES(?, ?, ?, ?, ?, ?);");
-        ps.setString(1, mentor.getLogin());
-        ps.setString(2, mentor.getPassword());
-        ps.setString(3, mentor.getName());
-        ps.setString(4, mentor.getSurname());
-        ps.setInt(5, 2);
-        ps.setBoolean(6, true);
-        ps.executeUpdate();
+        try {
+            PreparedStatement ps = c.prepareStatement("INSERT INTO users(email, password, name, surname, usertype_id, is_active) VALUES(?, ?, ?, ?, ?, ?);");
+            ps.setString(1, mentor.getLogin());
+            ps.setString(2, mentor.getPassword());
+            ps.setString(3, mentor.getName());
+            ps.setString(4, mentor.getSurname());
+            ps.setInt(5, 2);
+            ps.setBoolean(6, true);
+            ps.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     };
 
     public void saveDetails(Mentor mentor) throws SQLException {
@@ -73,23 +77,27 @@ public class DbMentorDAO extends DbConnectionDao implements MentorDAO {
     }
 
     @Override
-    public List<Mentor> loadAll() throws SQLException {
+    public List<Mentor> loadAll(){
         Connection c = dbconnection.getConnection();
         List<Mentor> mentorList = new ArrayList<>();
-        PreparedStatement ps = c.prepareStatement("SELECT * FROM users JOIN usertypes ON (users.usertype_id = usertypes.id) " +
-                "JOIN mentor_details ON (users.id = mentor_details.user_id) WHERE usertypes.id = 2;");
-        ResultSet rs = ps.executeQuery();
-        while(rs.next()) {
-            Integer id = rs.getInt("id");
-            String email = rs.getString("email");
-            String password = rs.getString("password");
-            String name = rs.getString("name");
-            String surname = rs.getString("surname");
-            String primarySkill = rs.getString("primary_skill");
-            int earnings = rs.getInt("earnings");
-            boolean isActive = rs.getBoolean("is_active");
-            Mentor mentor = new Mentor(id, email, password, name, surname, primarySkill, earnings, isActive);
-            mentorList.add(mentor);
+        try {
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM users JOIN usertypes ON (users.usertype_id = usertypes.id) " +
+                    "JOIN mentor_details ON (users.id = mentor_details.user_id) WHERE usertypes.id = 2;");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Integer id = rs.getInt("id");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                String name = rs.getString("name");
+                String surname = rs.getString("surname");
+                String primarySkill = rs.getString("primary_skill");
+                int earnings = rs.getInt("earnings");
+                boolean isActive = rs.getBoolean("is_active");
+                Mentor mentor = new Mentor(id, email, password, name, surname, primarySkill, earnings, isActive);
+                mentorList.add(mentor);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
         return  mentorList;
     };

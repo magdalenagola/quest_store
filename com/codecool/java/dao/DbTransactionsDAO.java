@@ -11,30 +11,29 @@ import java.util.Map;
 
 public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDAO{
 
-    public DbTransactionsDAO() throws SQLException, ClassNotFoundException {
+    public DbTransactionsDAO(){
         super();
     }
 
     @Override
-    public List<Transaction> loadAllNotApproved() throws SQLException {
+    public List<Transaction> loadAllNotApproved(){
         Connection c = dbconnection.getConnection();
         List<Transaction> unapprovedQuestsList = new ArrayList<>();
-        PreparedStatement ps = c.prepareStatement("SELECT * FROM student_quests WHERE date_approved IS NULL");
-        ResultSet rs = ps.executeQuery();
-        while(rs.next()) {
-            Integer coinsReceived = rs.getInt("cost");
-            Date dateAdded = rs.getDate("date_added");
-            Integer questId = rs.getInt("quest_id");
-            Integer userId = rs.getInt("user_id");
-            DbQuestDAO dbQuestDAO = null;
-            try {
-                dbQuestDAO = new DbQuestDAO();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+        try {
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM student_quests WHERE date_approved IS NULL");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Integer coinsReceived = rs.getInt("cost");
+                Date dateAdded = rs.getDate("date_added");
+                Integer questId = rs.getInt("quest_id");
+                Integer userId = rs.getInt("user_id");
+                DbQuestDAO dbQuestDAO = new DbQuestDAO();
+                Quest quest = dbQuestDAO.selectQuestById(questId);
+                Transaction questTransaction = new QuestTransaction(quest, userId, dateAdded, coinsReceived);
+                unapprovedQuestsList.add(questTransaction);
             }
-            Quest quest = dbQuestDAO.selectQuestById(questId);
-            Transaction questTransaction = new QuestTransaction(quest, userId, dateAdded, coinsReceived);
-            unapprovedQuestsList.add(questTransaction);
+        }catch(SQLException e){
+            e.printStackTrace();
         }
         return unapprovedQuestsList;
     }
@@ -54,12 +53,6 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
         PreparedStatement ps = c.prepareStatement("SELECT * FROM student_cards JOIN cards on (cards.id = student_cards.card_id) WHERE student_cards.user_id = ?;");
         ps.setInt(1, student.getId());
         ResultSet rs = ps.executeQuery();
-        DbCardDAO cardDAO = null;
-        try {
-            cardDAO = new DbCardDAO();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
         while (rs.next()) {
             Integer id = rs.getInt("card_id");
             Integer coinsPaid = rs.getInt("cost");
@@ -77,12 +70,6 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
         PreparedStatement ps = c.prepareStatement("SELECT * FROM student_quests JOIN quests on (quests.id = student_quests.quest_id) WHERE user_id = ?");
         ps.setInt(1, student.getId());
         ResultSet rs = ps.executeQuery();
-        DbQuestDAO dbQuestDAO = null;
-        try {
-            dbQuestDAO = new DbQuestDAO();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
         while (rs.next()) {
             Integer coinsReceived = rs.getInt("cost");
             Integer questId = rs.getInt("quest_id");
@@ -95,25 +82,33 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
         }
         return transactionsList;
     }
-        public void addCardTransaction(CardTransaction cardTransaction) throws SQLException {
+        public void addCardTransaction(CardTransaction cardTransaction){
         Connection c = dbconnection.getConnection();
-        PreparedStatement ps = c.prepareStatement("INSERT INTO student_cards(card_id, cost, date_bought, user_id) VALUES(?, ?, ?, ?)");
-        ps.setInt(1, cardTransaction.getItemId());
-        ps.setInt(2, cardTransaction.getCost());
-        ps.setDate(3, cardTransaction.getDate());
-        ps.setInt(4, cardTransaction.getUserId());
-        ps.executeUpdate();
+        try {
+            PreparedStatement ps = c.prepareStatement("INSERT INTO student_cards(card_id, cost, date_bought, user_id) VALUES(?, ?, ?, ?)");
+            ps.setInt(1, cardTransaction.getItemId());
+            ps.setInt(2, cardTransaction.getCost());
+            ps.setDate(3, cardTransaction.getDate());
+            ps.setInt(4, cardTransaction.getUserId());
+            ps.executeUpdate();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 
-    private void addQuestTransaction(QuestTransaction questTransaction) throws SQLException {
+    private void addQuestTransaction(QuestTransaction questTransaction){
         Connection c = dbconnection.getConnection();
-        PreparedStatement ps = c.prepareStatement("INSERT INTO student_quests(cost, date_added, date_approved, user_id, quest_id) VALUES(?, ?, ?, ?, ?)");
-        ps.setInt(1, questTransaction.getCost());
-        ps.setDate(2, questTransaction.getDate());
-        ps.setNull(3, java.sql.Types.DATE);
-        ps.setInt(4, questTransaction.getUserId());
-        ps.setInt(5, questTransaction.getItemId());
-        ps.executeUpdate();
+        try {
+            PreparedStatement ps = c.prepareStatement("INSERT INTO student_quests(cost, date_added, date_approved, user_id, quest_id) VALUES(?, ?, ?, ?, ?)");
+            ps.setInt(1, questTransaction.getCost());
+            ps.setDate(2, questTransaction.getDate());
+            ps.setNull(3, java.sql.Types.DATE);
+            ps.setInt(4, questTransaction.getUserId());
+            ps.setInt(5, questTransaction.getItemId());
+            ps.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
 
@@ -141,7 +136,7 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
     }
 
     @Override
-    public void save(Object object) throws SQLException {
+    public void save(Object object){
         if (object instanceof CardTransaction){
             CardTransaction cardTransaction = (CardTransaction) object;
             addCardTransaction(cardTransaction);
@@ -152,43 +147,41 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
     }
 
     @Override
-    public List loadAll() throws SQLException {
+    public List loadAll(){
         Connection c = dbconnection.getConnection();
         List<Transaction> transactionsList = new ArrayList<>();
-        PreparedStatement ps = c.prepareStatement("SELECT * FROM student_cards");
-        ResultSet rs = ps.executeQuery();
-        DbCardDAO cardDAO = null;
         try {
-            cardDAO = new DbCardDAO();
-        } catch (ClassNotFoundException e) {
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM student_cards");
+            ResultSet rs = ps.executeQuery();
+            DbCardDAO cardDAO = new DbCardDAO();
+            while(rs.next()) {
+                Integer id = rs.getInt("card_id");
+                Integer coinsPaid = rs.getInt("cost");
+                Date dateBought = rs.getDate("date_bought");
+                Integer userId = rs.getInt("user_id");
+                Card card = cardDAO.selectCardById(id);
+                Transaction cardTransaction = new CardTransaction(card, userId, dateBought, coinsPaid);
+                transactionsList.add(cardTransaction);
+            }
+        }catch(SQLException e){
             e.printStackTrace();
         }
-        while(rs.next()) {
-            Integer id = rs.getInt("card_id");
-            Integer coinsPaid = rs.getInt("cost");
-            Date dateBought = rs.getDate("date_bought");
-            Integer userId = rs.getInt("user_id");
-            Card card = cardDAO.selectCardById(id);
-            Transaction cardTransaction = new CardTransaction(card, userId, dateBought, coinsPaid);
-            transactionsList.add(cardTransaction);
-        }
-        ps = c.prepareStatement("SELECT * FROM student_quests");
-        rs = ps.executeQuery();
-        DbQuestDAO dbQuestDAO = null;
+        DbQuestDAO dbQuestDAO = new DbQuestDAO();
         try {
-            dbQuestDAO = new DbQuestDAO();
-        } catch (ClassNotFoundException e) {
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM student_quests");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Integer coinsReceived = rs.getInt("cost");
+                Date dateAdded = rs.getDate("date_added");
+                Date dateApproved = rs.getDate("date_approved");
+                Integer questId = rs.getInt("quest_id");
+                Integer userId = rs.getInt("user_id");
+                Quest quest = dbQuestDAO.selectQuestById(questId);
+                Transaction questTransaction = new QuestTransaction(quest, userId, dateAdded, coinsReceived);
+                transactionsList.add(questTransaction);
+            }
+        }catch (SQLException e){
             e.printStackTrace();
-        }
-        while(rs.next()) {
-            Integer coinsReceived = rs.getInt("cost");
-            Date dateAdded = rs.getDate("date_added");
-            Date dateApproved = rs.getDate("date_approved");
-            Integer questId = rs.getInt("quest_id");
-            Integer userId = rs.getInt("user_id");
-            Quest quest = dbQuestDAO.selectQuestById(questId);
-            Transaction questTransaction = new QuestTransaction(quest, userId, dateAdded, coinsReceived);
-            transactionsList.add(questTransaction);
         }
         return transactionsList;
     }

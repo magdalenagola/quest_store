@@ -24,22 +24,16 @@ public class MentorQuestHandler implements HttpHandler {
                 httpResponse.redirectToLoginPage(httpExchange);
             }else {
                 cookieHelper.refreshCookie(httpExchange);
-                response = getQuests(httpExchange);
+                response = getQuests();
                 httpResponse.sendResponse200(httpExchange, response);
             }
         }
     }
 
-    private String getQuests(HttpExchange httpExchange) throws IOException {
-        List<Quest> quests = new ArrayList<>();
+    private String getQuests(){
         Gson gson = new Gson();
-        try {
-            QuestDAO questDAO = new DbQuestDAO();
-            quests = questDAO.loadAll();
-        } catch (SQLException | ClassNotFoundException e) {
-            httpResponse.sendResponse500(httpExchange);
-        }
-        return gson.toJson(quests);
+        QuestDAO questDAO = new DbQuestDAO();
+        return gson.toJson(questDAO.loadAll());
     }
 
 }

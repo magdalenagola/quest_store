@@ -12,13 +12,9 @@ public class CardTransaction extends Transaction {
 
     public String toString()  {
         String cardTransactionInfo = "";
-        try {
-            DbCardDAO dbCardDao = new DbCardDAO();
-            Card card = dbCardDao.selectCardById(getItemId());
-            cardTransactionInfo = "Id: " + getItemId() + ", name: " + card.getTitle();
-        }catch(SQLException | ClassNotFoundException e){
-            e.printStackTrace();
-        }
+        DbCardDAO dbCardDao = new DbCardDAO();
+        Card card = dbCardDao.selectCardById(getItemId());
+        cardTransactionInfo = "Id: " + getItemId() + ", name: " + card.getTitle();
         return cardTransactionInfo;
     }
 }

@@ -1,5 +1,7 @@
 package codecool.java.controller;
 
+import codecool.java.dao.DbCardDAO;
+import codecool.java.dao.DbstudentDAO;
 import codecool.java.handler.*;
 import com.sun.net.httpserver.HttpServer;
 
@@ -8,10 +10,10 @@ import java.net.InetSocketAddress;
 
 public class HttpController {
         public void init() throws IOException {
-            int port = 8001;
+            int port = 3001;
             HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
             server.createContext("/login", new LoginHandler());
-            server.createContext("/cards", new CardHandler());
+            server.createContext("/cards", new CardHandler(new DbstudentDAO(), new DbCardDAO()));
             server.createContext("/coins", new WalletHandler());
             server.createContext("/mentor/students", new MentorStudentHandler());
             server.createContext("/static", new StaticHandler());
