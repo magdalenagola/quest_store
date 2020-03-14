@@ -42,15 +42,32 @@ public class DbMentorDAO extends DbConnectionDao implements MentorDAO {
         ps.executeUpdate();
     };
 
-    public void saveDetails(String primarySkill, int earnings) throws SQLException {
+    public void saveDetails(Mentor mentor) throws SQLException {
         Connection c = dbconnection.getConnection();
-        ResultSet rs = c.createStatement().executeQuery("SELECT MAX(id) FROM users");
+        PreparedStatement query = c.prepareStatement("SELECT id FROM users WHERE email = ?;");
+        query.setString(1,mentor.getLogin());
+        ResultSet rs = query.executeQuery();
         while(rs.next()){
             int newId = rs.getInt("id");
             PreparedStatement ps = c.prepareStatement("INSERT INTO mentor_details (user_id, primary_skill, date_hired, earnings) VALUES (?, ?, CURRENT_DATE, ?);");
             ps.setInt(1, newId);
-            ps.setString(2, primarySkill);
-            ps.setInt(3, earnings);
+            ps.setString(2, mentor.getPrimarySkill());
+            ps.setInt(3, mentor.getEarnings());
+            ps.executeUpdate();
+        }
+    }
+
+    public void updateDetails(Mentor mentor) throws SQLException {
+        Connection c = dbconnection.getConnection();
+        PreparedStatement query = c.prepareStatement("SELECT id FROM users WHERE email = ?;");
+        query.setString(1,mentor.getLogin());
+        ResultSet rs = query.executeQuery();
+        while(rs.next()){
+            int newId = rs.getInt("id");
+            PreparedStatement ps = c.prepareStatement("UPDATE mentor_details SET primary_skill = ?, date_hired =  CURRENT_DATE, earnings = ? WHERE user_id = ?;");
+            ps.setString(1, mentor.getPrimarySkill());
+            ps.setInt(2, mentor.getEarnings());
+            ps.setInt(3, newId);
             ps.executeUpdate();
         }
     }

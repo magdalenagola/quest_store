@@ -41,6 +41,14 @@ public class Mentor extends User{
         this.isActive = isActive;
     }
 
+    public int getEarnings() {
+        return earnings;
+    }
+
+    public void setEarnings(int earnings) {
+        this.earnings = earnings;
+    }
+
     public int getId() {
         return id;
     }
@@ -106,8 +114,8 @@ public class Mentor extends User{
     @Override
     public String toString() {
         String response = "";
-        response = String.format("ID: %d Login: %s Password: %s Name: %s Surname: %s Primary Skill: %s",
-                getId(),getLogin(),getPassword(),getName(),getSurname(),getPrimarySkill());
+        response = String.format("ID: %d Login: %s Password: %s Name: %s Surname: %s Primary Skill: %s Earnings: %d",
+                getId(),getLogin(),getPassword(),getName(),getSurname(),getPrimarySkill(), getEarnings());
         return response;
     }
 

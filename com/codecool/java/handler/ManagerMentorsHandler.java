@@ -43,10 +43,11 @@ public class ManagerMentorsHandler implements HttpHandler {
 
         if(method.equals("POST") && (uri.toString().equals("/manager/mentor/add/"))) {
             Mentor jsonData = receiveMentorFromFront(httpExchange);
-            Mentor mentor = new Mentor(jsonData.getLogin(),jsonData.getPassword(),jsonData.getName(),jsonData.getSurname(),jsonData.getPrimarySkill(),true);
+            Mentor mentor = new Mentor(0,jsonData.getLogin(),jsonData.getPassword(),jsonData.getName(),jsonData.getSurname(),jsonData.getPrimarySkill(),jsonData.getEarnings(),true);
             try {
                 DbMentorDAO dbmentorDAO = new DbMentorDAO();
                 dbmentorDAO.save(mentor);
+                dbmentorDAO.saveDetails(mentor);
                 httpResponse.sendResponse200(httpExchange, "saved");
             } catch (SQLException| ClassNotFoundException e) {
                 e.printStackTrace();
@@ -55,10 +56,11 @@ public class ManagerMentorsHandler implements HttpHandler {
 
         if(method.equals("POST") && (uri.toString().split("/")[3].equals("add")) && !(uri.toString().split("/")[4].equals(""))) {
             Mentor jsonData = receiveMentorFromFront(httpExchange);
-            Mentor mentor = new Mentor(jsonData.getId(), jsonData.getLogin(),jsonData.getPassword(),jsonData.getName(),jsonData.getSurname(),jsonData.getPrimarySkill(),true);
+            Mentor mentor = new Mentor(jsonData.getId(), jsonData.getLogin(),jsonData.getPassword(),jsonData.getName(),jsonData.getSurname(),jsonData.getPrimarySkill(),jsonData.getEarnings(),true);
             try {
                 DbMentorDAO dbmentorDAO = new DbMentorDAO();
                 dbmentorDAO.update(mentor);
+                dbmentorDAO.updateDetails(mentor);
                 httpResponse.sendResponse200(httpExchange, "updated");
             } catch (SQLException| ClassNotFoundException e) {
                 e.printStackTrace();
