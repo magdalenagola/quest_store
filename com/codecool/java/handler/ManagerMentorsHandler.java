@@ -1,23 +1,17 @@
 package codecool.java.handler;
 
 import codecool.java.dao.DbMentorDAO;
-import codecool.java.dao.DbTransactionsDAO;
-import codecool.java.dao.DbMentorDAO;
 import codecool.java.helper.HttpResponse;
 import codecool.java.model.Mentor;
-import codecool.java.model.Transaction;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-
 import java.io.*;
 import java.net.URI;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class ManagerMentorsHandler implements HttpHandler {
+    private DbMentorDAO dbMentorDAO = new DbMentorDAO();
     CookieHelper cookieHelper = new CookieHelper();
     HttpResponse httpResponse = new HttpResponse();
 
@@ -52,30 +46,25 @@ public class ManagerMentorsHandler implements HttpHandler {
     }
 
     private void handleAddMentor(HttpExchange httpExchange) throws IOException {
-        Mentor jsonData = receiveMentorFromFront(httpExchange);
-        Mentor mentor = new Mentor(0, jsonData.getLogin(), jsonData.getPassword(), jsonData.getName(), jsonData.getSurname(), jsonData.getPrimarySkill(), jsonData.getEarnings(), true);
-        saveMentor(mentor);
+        Mentor mentor = receiveMentorFromFront(httpExchange);
+//        Mentor mentor = new Mentor(0, jsonData.getLogin(), jsonData.getPassword(), jsonData.getName(), jsonData.getSurname(), jsonData.getPrimarySkill(), jsonData.getEarnings(), true);
         saveMentor(mentor);
         httpResponse.sendResponse200(httpExchange, "saved");
     }
 
     private void saveMentor(Mentor mentor) {
-        DbMentorDAO dbmentorDAO = new DbMentorDAO();
-        dbmentorDAO.save(mentor);
-        dbmentorDAO.saveDetails(mentor);
+        dbMentorDAO.save(mentor);
     }
 
     private void handleUpdateMentor(HttpExchange httpExchange) throws IOException {
-        Mentor jsonData = receiveMentorFromFront(httpExchange);
-        Mentor mentor = new Mentor(jsonData.getId(), jsonData.getLogin(), jsonData.getPassword(), jsonData.getName(), jsonData.getSurname(), jsonData.getPrimarySkill(), jsonData.getEarnings(), true);
+        Mentor mentor = receiveMentorFromFront(httpExchange);
+//        Mentor mentor = new Mentor(jsonData.getId(), jsonData.getLogin(), jsonData.getPassword(), jsonData.getName(), jsonData.getSurname(), jsonData.getPrimarySkill(), jsonData.getEarnings(), true);
         updateMentor(mentor);
         httpResponse.sendResponse200(httpExchange, "updated");
     }
 
     private void updateMentor(Mentor mentor) {
-        DbMentorDAO dbmentorDAO = new DbMentorDAO();
-        dbmentorDAO.update(mentor);
-        dbmentorDAO.updateDetails(mentor);
+        dbMentorDAO.update(mentor);
     }
 
     private void handleDeleteMentor(HttpExchange httpExchange) throws IOException {
@@ -88,9 +77,8 @@ public class ManagerMentorsHandler implements HttpHandler {
     }
 
     private void selectMentor(String userId) {
-        DbMentorDAO dbmentorDAO = new DbMentorDAO();
-        Mentor mentor = dbmentorDAO.selectMentorById(Integer.parseInt(userId));
-        deleteMentor(dbmentorDAO, mentor);
+        Mentor mentor = dbMentorDAO.selectMentorById(Integer.parseInt(userId));
+        deleteMentor(dbMentorDAO, mentor);
     }
 
     private void deleteMentor(DbMentorDAO dbmentorDAO, Mentor mentor) {
@@ -106,9 +94,8 @@ public class ManagerMentorsHandler implements HttpHandler {
         return gson.fromJson(stringData, Mentor.class);
     }
 
-    public String getMentorList() {
-        DbMentorDAO mentorDAO = new DbMentorDAO();
-        List<Mentor> mentors = mentorDAO.loadAllActive();
+    private String getMentorList() {
+        List<Mentor> mentors = dbMentorDAO.loadAllActive();
         return getMentorsJson(mentors);
     }
 
