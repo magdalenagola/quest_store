@@ -37,20 +37,11 @@ public class TransactionsHandler implements HttpHandler {
             httpResponse.redirectToLoginPage(httpExchange);
         }else {
             cookieHelper.refreshCookie(httpExchange);
-            Student student = findStudent(httpExchange);
+            String sessionId = cookieHelper.getSessionId(httpExchange);
+            Student student = studentDAO.findStudentBySessionId(sessionId);
             String response = getStudentTransactions(student);
             httpResponse.sendResponse200(httpExchange, response);
-
        }
-    }
-
-    private String getCookieString(HttpExchange httpExchange){
-        return httpExchange.getRequestHeaders().getFirst("Cookie");
-    }
-
-    private Student findStudent(HttpExchange httpExchange){
-        String cookieStr = getCookieString(httpExchange);
-        return studentDAO.findStudentBySessionId(getSessionIdFromCookieString(cookieStr));
     }
 
     //TODO make private after testing
@@ -58,8 +49,5 @@ public class TransactionsHandler implements HttpHandler {
         Gson gson = new Gson();
         return gson.toJson(transactionsDAO.displayAllTransactionsByStudent(student));
     }
-    //TODO make private after testing
-    public String getSessionIdFromCookieString(String cookieStr) {
-        return cookieStr.split("=")[1].replace("\"","");
-    }
+
 }

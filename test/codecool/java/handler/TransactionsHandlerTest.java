@@ -1,10 +1,8 @@
-package handler;
+package codecool.java.handler;
 
 import codecool.java.dao.DbTransactionsDAO;
 import codecool.java.dao.DbstudentDAO;
-import codecool.java.handler.TransactionsHandler;
 import codecool.java.model.*;
-import com.sun.net.httpserver.HttpExchange;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Date;
@@ -16,17 +14,8 @@ import java.util.Map;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 class TransactionsHandlerTest {
-    TransactionsHandler transactionsHandler = new TransactionsHandler(mock(DbstudentDAO.class),mock(DbTransactionsDAO.class));
-
-    @Test
-    public void shouldReturnSessionIdFromCookieString(){
-        String expected = "12345";
-        String actual = transactionsHandler.getSessionIdFromCookieString("session-id=12345");
-        assertEquals(expected, actual);
-    }
 
     @Test
     public void shouldReturnTransactionsForGivenStudent(){

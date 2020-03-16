@@ -79,4 +79,14 @@ public class CookieHelper {
         // TODO get usertype from db, compare to needed
         return true;
     }
+
+    public String getSessionId(HttpExchange httpExchange){
+        String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
+        return getSessionIdFromCookieString(cookieStr);
+    }
+
+    //TODO make private after testing
+    public String getSessionIdFromCookieString(String cookieStr) {
+        return cookieStr.split("=")[1].replace("\"","");
+    }
 }

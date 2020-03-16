@@ -19,18 +19,18 @@ public class QuestTransaction extends Transaction {
         this.approvalDate = approvalDate;
     }
 
-    public String toString(){
-        DbQuestDAO dbQuestDao = null;
-        String questTransactionInfo = "";
-        try {
-            dbQuestDao = new DbQuestDAO();
-            Quest quest = dbQuestDao.selectQuestById(getItemId());
-            questTransactionInfo = "Id: " + getItemId() + ", name: " + quest.getTitle();
-            return questTransactionInfo;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return questTransactionInfo;
-    }
+//    public String toString(){
+//        DbQuestDAO dbQuestDao = null;
+//        String questTransactionInfo = "";
+//        try {
+//            dbQuestDao = new DbQuestDAO();
+//            Quest quest = dbQuestDao.selectQuestById(getItemId());
+//            questTransactionInfo = "Id: " + getItemId() + ", name: " + quest.getTitle();
+//            return questTransactionInfo;
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return questTransactionInfo;
+//    }
 }
