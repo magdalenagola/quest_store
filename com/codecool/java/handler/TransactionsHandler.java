@@ -43,8 +43,8 @@ public class TransactionsHandler implements HttpHandler {
         Student student = studentDAO.findStudentBySessionId(getSessionIdFromCookieString(cookieStr));
         return gson.toJson(transactionsDAO.displayAllTransactionsByStudent(student));
     }
-
-    private String getSessionIdFromCookieString(String cookieStr) {
+    //TODO make private after testing
+    public String getSessionIdFromCookieString(String cookieStr) {
         return cookieStr.split("=")[1].replace("\"","");
     }
 }
