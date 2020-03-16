@@ -71,25 +71,6 @@ public class DbMentorDAO extends DbConnectionDao implements MentorDAO {
         }
     }
 
-    public void updateDetails(Mentor mentor) {
-        Connection c = dbconnection.getConnection();
-        try {
-            PreparedStatement query = c.prepareStatement("SELECT id FROM users WHERE email = ?;");
-            query.setString(1, mentor.getLogin());
-            ResultSet rs = query.executeQuery();
-            while (rs.next()) {
-                int newId = rs.getInt("id");
-                PreparedStatement ps = c.prepareStatement("UPDATE mentor_details SET primary_skill = ?, date_hired =  CURRENT_DATE, earnings = ? WHERE user_id = ?;");
-                ps.setString(1, mentor.getPrimarySkill());
-                ps.setInt(2, mentor.getEarnings());
-                ps.setInt(3, newId);
-                ps.executeUpdate();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public List<Mentor> loadAll() {
         Connection c = dbconnection.getConnection();
@@ -190,6 +171,25 @@ public class DbMentorDAO extends DbConnectionDao implements MentorDAO {
             e.printStackTrace();
         }
         updateDetails(mentor);
+    }
+
+    private void updateDetails(Mentor mentor) {
+        Connection c = dbconnection.getConnection();
+        try {
+            PreparedStatement query = c.prepareStatement("SELECT id FROM users WHERE email = ?;");
+            query.setString(1, mentor.getLogin());
+            ResultSet rs = query.executeQuery();
+            while (rs.next()) {
+                int newId = rs.getInt("id");
+                PreparedStatement ps = c.prepareStatement("UPDATE mentor_details SET primary_skill = ?, date_hired =  CURRENT_DATE, earnings = ? WHERE user_id = ?;");
+                ps.setString(1, mentor.getPrimarySkill());
+                ps.setInt(2, mentor.getEarnings());
+                ps.setInt(3, newId);
+                ps.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

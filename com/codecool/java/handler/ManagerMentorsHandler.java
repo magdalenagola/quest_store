@@ -24,15 +24,18 @@ public class ManagerMentorsHandler implements HttpHandler {
         }
 
         if (method.equals("POST") && (uri.toString().equals("/manager/mentor/add/"))) {
-            handleAddMentor(httpExchange);
+            HttpResponse httpResponse = handleAddMentor(httpExchange);
+            httpResponse.sendResponse200();
         }
 
         if (method.equals("POST") && (uri.toString().split("/")[3].equals("add")) && !(uri.toString().split("/")[4].equals(""))) {
-            handleUpdateMentor(httpExchange);
+            HttpResponse httpResponse = handleUpdateMentor(httpExchange);
+            httpResponse.sendResponse200();
         }
 
         if (method.equals("POST") && (uri.toString().split("/")[3].equals("delete")) && !(uri.toString().split("/")[4].equals(""))) {
-            handleDeleteMentor(httpExchange);
+            HttpResponse httpResponse = handleDeleteMentor(httpExchange);
+            httpResponse.sendResponse200();
         }
     }
 
@@ -45,44 +48,44 @@ public class ManagerMentorsHandler implements HttpHandler {
         }
     }
 
-    private void handleAddMentor(HttpExchange httpExchange) throws IOException {
+    private HttpResponse handleAddMentor(HttpExchange httpExchange) throws IOException {
         Mentor mentor = receiveMentorFromFront(httpExchange);
 //        Mentor mentor = new Mentor(0, jsonData.getLogin(), jsonData.getPassword(), jsonData.getName(), jsonData.getSurname(), jsonData.getPrimarySkill(), jsonData.getEarnings(), true);
         saveMentor(mentor);
-        httpResponse.sendResponse200(httpExchange, "saved");
+        return new HttpResponse(httpExchange, "saved");
     }
 
     private void saveMentor(Mentor mentor) {
         dbMentorDAO.save(mentor);
     }
 
-    private void handleUpdateMentor(HttpExchange httpExchange) throws IOException {
+    private HttpResponse handleUpdateMentor(HttpExchange httpExchange) throws IOException {
         Mentor mentor = receiveMentorFromFront(httpExchange);
 //        Mentor mentor = new Mentor(jsonData.getId(), jsonData.getLogin(), jsonData.getPassword(), jsonData.getName(), jsonData.getSurname(), jsonData.getPrimarySkill(), jsonData.getEarnings(), true);
         updateMentor(mentor);
-        httpResponse.sendResponse200(httpExchange, "updated");
+        return new HttpResponse(httpExchange, "updated");
     }
 
     private void updateMentor(Mentor mentor) {
         dbMentorDAO.update(mentor);
     }
 
-    private void handleDeleteMentor(HttpExchange httpExchange) throws IOException {
+    private HttpResponse handleDeleteMentor(HttpExchange httpExchange) throws IOException {
         InputStream requestBody = httpExchange.getRequestBody();
         InputStreamReader isr = new InputStreamReader(requestBody, "utf-8");
         BufferedReader br = new BufferedReader(isr);
         String userId = br.readLine().replace("\"", "");
         selectMentor(userId);
-        httpResponse.sendResponse200(httpExchange, "deleted");
+        return new HttpResponse(httpExchange, "deleted");
     }
 
     private void selectMentor(String userId) {
         Mentor mentor = dbMentorDAO.selectMentorById(Integer.parseInt(userId));
-        deleteMentor(dbMentorDAO, mentor);
+        deleteMentor( mentor);
     }
 
-    private void deleteMentor(DbMentorDAO dbmentorDAO, Mentor mentor) {
-        dbmentorDAO.disable(mentor);
+    private void deleteMentor( Mentor mentor) {
+        dbMentorDAO.disable(mentor);
     }
 
     private Mentor receiveMentorFromFront(HttpExchange httpExchange) throws IOException {
