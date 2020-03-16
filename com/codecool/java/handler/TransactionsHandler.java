@@ -31,7 +31,6 @@ public class TransactionsHandler implements HttpHandler {
             cookieHelper.refreshCookie(httpExchange);
             String response = getStudentTransactions(httpExchange);
             httpResponse.sendResponse200(httpExchange, response);
-
        }
     }
 

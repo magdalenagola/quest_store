@@ -9,9 +9,10 @@ import java.util.Date;
 
 public class StudentController {
     private TransactionsDAO transactionsDAO;
-
-    public StudentController(TransactionsDAO transactionsDAO){
+    private StudentDAO studentDAO;
+    public StudentController(StudentDAO studentDAO, TransactionsDAO transactionsDAO){
         this.transactionsDAO = transactionsDAO;
+        this.studentDAO = studentDAO;
     }
 
     public void buyCard(Student student, Card cardToBuy){
@@ -32,5 +33,16 @@ public class StudentController {
             e.printStackTrace();
         }
         return todayDate;
+    }
+    public Student findStudentBySessionId(String sessionId){
+        return studentDAO.findStudentBySessionId(sessionId);
+    }
+
+    public int getStudentCoins(Student student){
+        return studentDAO.getCoins(student);
+    }
+
+    public void decreaseStudentCoins(Student student, int cardPrice){
+        studentDAO.updateCoins(student,-cardPrice);
     }
 }

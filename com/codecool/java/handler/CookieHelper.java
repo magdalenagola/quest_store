@@ -79,4 +79,8 @@ public class CookieHelper {
         // TODO get usertype from db, compare to needed
         return true;
     }
+
+    public String getSessionIdFromCookieString(String cookieStr) {
+        return cookieStr.split("=")[1].replace("\"","");
+    }
 }
