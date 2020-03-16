@@ -1,7 +1,8 @@
-package codecool.java.handler;
+package handler;
 
 import codecool.java.dao.DbCardDAO;
 import codecool.java.dao.DbstudentDAO;
+import codecool.java.handler.CardHandler;
 import codecool.java.model.Card;
 import org.junit.jupiter.api.Test;
 import java.net.URI;
@@ -53,7 +54,7 @@ class CardHandlerTest {
         assertEquals(expected, actual);
     }
     @Test
-    public void shouldReturnSessionIdFromCookieString() throws URISyntaxException {
+    public void shouldReturnSessionIdFromCookieString(){
         String cookieStr = new String("sessionId=P1Cu9n8");
         String expected = "P1Cu9n8";
         String actual = cardHandler.getSessionIdFromCookieString(cookieStr);
