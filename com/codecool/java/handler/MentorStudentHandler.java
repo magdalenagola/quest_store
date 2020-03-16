@@ -45,10 +45,10 @@ public class MentorStudentHandler implements HttpHandler {
         }
     }
 
-    private String getStudentList(){
+    public String getStudentList(){
         DbstudentDAO studentDAO = new DbstudentDAO();
         Gson gson = new Gson();
-        return  gson.toJson(studentDAO.loadAllActive());
+        return gson.toJson(studentDAO.loadAllActive());
 
     }
 

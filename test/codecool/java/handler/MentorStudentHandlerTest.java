@@ -13,16 +13,20 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MentorStudentHandlerTest {
 
+    MentorStudentHandler mentorStudentHandler = new MentorStudentHandler();
+
     @Test
     void ShouldLoadAllStudents() {
         DbstudentDAO mockStudentDAO = Mockito.mock(DbstudentDAO.class);
         Student student1 = new Student("alex", "123", "Alex", "Smith", true);
         Student student2 = new Student("john", "123", "John", "Milton", true);
-        Mockito.when(mockStudentDAO.loadAll()).thenReturn(Arrays.asList(student1, student2));
+        Mockito.when(mockStudentDAO.loadAllActive()).thenReturn(Arrays.asList(student1, student2));
         Gson gson = new Gson();
         String studentList = gson.toJson(mockStudentDAO.loadAll());
+        Mockito.when(mentorStudentHandler.getStudentList()).thenReturn(studentList);
         String expected = "[{\"id\":0,\"login\":\"alex\",\"password\":\"123\",\"name\":\"Alex\",\"surname\":\"Smith\",\"isActive\":true},{\"id\":0,\"login\":\"john\",\"password\":\"123\",\"name\":\"John\",\"surname\":\"Milton\",\"isActive\":true}]";
-        assertEquals(expected, studentList);
+        String actual = mentorStudentHandler.getStudentList();
+        assertEquals(expected, actual);
     }
 
     @Test
