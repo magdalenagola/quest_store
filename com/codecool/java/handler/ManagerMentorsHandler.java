@@ -6,6 +6,7 @@ import codecool.java.model.Mentor;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+
 import java.io.*;
 import java.net.URI;
 import java.util.List;
@@ -17,34 +18,35 @@ public class ManagerMentorsHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-        URI uri = httpExchange.getRequestURI();
-        String method = httpExchange.getRequestMethod();
-        if (method.equals("GET")) {
-            handleGET(httpExchange);
-        }
-
-        if (method.equals("POST") && (uri.toString().equals("/manager/mentor/add/"))) {
-            HttpResponse httpResponse = handleAddMentor(httpExchange);
-            httpResponse.sendResponse200();
-        }
-
-        if (method.equals("POST") && (uri.toString().split("/")[3].equals("add")) && !(uri.toString().split("/")[4].equals(""))) {
-            HttpResponse httpResponse = handleUpdateMentor(httpExchange);
-            httpResponse.sendResponse200();
-        }
-
-        if (method.equals("POST") && (uri.toString().split("/")[3].equals("delete")) && !(uri.toString().split("/")[4].equals(""))) {
-            HttpResponse httpResponse = handleDeleteMentor(httpExchange);
-            httpResponse.sendResponse200();
+        if (!cookieHelper.isCookiePresent(httpExchange)) {
+            httpResponse.redirectToLoginPage(httpExchange);
+        } else {
+            URI uri = httpExchange.getRequestURI();
+            String method = httpExchange.getRequestMethod();
+            switch (method) {
+                case "GET" -> handleGET(httpExchange);
+                case "POST" -> handlePOST(httpExchange, uri);
+            }
         }
     }
 
     private void handleGET(HttpExchange httpExchange) throws IOException {
-        if (!cookieHelper.isCookiePresent(httpExchange)) {
-            httpResponse.redirectToLoginPage(httpExchange);
-        } else {
-            String response = getMentorList();
-            httpResponse.sendResponse200(httpExchange, response);
+        String response = getMentorList();
+        httpResponse.sendResponse200(httpExchange, response);
+    }
+
+    private void handlePOST(HttpExchange httpExchange, URI uri) throws IOException {
+        if ("uri.toString().equals(\"/manager/mentor/add/\"))".equals(uri)) {
+            HttpResponse httpResponse = handleAddMentor(httpExchange);
+            httpResponse.sendResponse200();
+        }
+        if ((uri.toString().split("/")[3].equals("add")) && !(uri.toString().split("/")[4].equals(""))) {
+            HttpResponse httpResponse = handleUpdateMentor(httpExchange);
+            httpResponse.sendResponse200();
+        }
+        if ((uri.toString().split("/")[3].equals("delete")) && !(uri.toString().split("/")[4].equals(""))) {
+            HttpResponse httpResponse = handleDeleteMentor(httpExchange);
+            httpResponse.sendResponse200();
         }
     }
 
@@ -79,10 +81,10 @@ public class ManagerMentorsHandler implements HttpHandler {
 
     private void selectMentor(String userId) {
         Mentor mentor = dbMentorDAO.selectMentorById(Integer.parseInt(userId));
-        deleteMentor( mentor);
+        deleteMentor(mentor);
     }
 
-    private void deleteMentor( Mentor mentor) {
+    private void deleteMentor(Mentor mentor) {
         dbMentorDAO.disable(mentor);
     }
 

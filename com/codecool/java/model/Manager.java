@@ -19,12 +19,6 @@ public class Manager extends User {
 
     @Override
     public void start(){
-//        try {
-//            ManagerController managerController = new ManagerController();
-//            managerController.run();
-//        } catch (SQLException | ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
     }
 
     @Override

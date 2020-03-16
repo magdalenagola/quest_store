@@ -47,6 +47,4 @@ class ManagerMentorsHandlerTest {
         // Assert
         assertEquals(expected, actual);
     }
-
-
 }
