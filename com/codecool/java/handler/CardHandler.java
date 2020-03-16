@@ -53,8 +53,7 @@ public class CardHandler implements HttpHandler {
     }
 
     private Student getStudentBySessionId(HttpExchange httpExchange) {
-        String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
-        String sessionId = cookieHelper.getSessionIdFromCookieString(cookieStr);
+        String sessionId = cookieHelper.getSessionId(httpExchange);
         return studentController.findStudentBySessionId(sessionId);
     }
 
