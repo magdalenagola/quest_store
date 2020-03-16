@@ -50,7 +50,6 @@ public class ManagerMentorsHandler implements HttpHandler {
 
     private HttpResponse handleAddMentor(HttpExchange httpExchange) throws IOException {
         Mentor mentor = receiveMentorFromFront(httpExchange);
-//        Mentor mentor = new Mentor(0, jsonData.getLogin(), jsonData.getPassword(), jsonData.getName(), jsonData.getSurname(), jsonData.getPrimarySkill(), jsonData.getEarnings(), true);
         saveMentor(mentor);
         return new HttpResponse(httpExchange, "saved");
     }
@@ -61,7 +60,6 @@ public class ManagerMentorsHandler implements HttpHandler {
 
     private HttpResponse handleUpdateMentor(HttpExchange httpExchange) throws IOException {
         Mentor mentor = receiveMentorFromFront(httpExchange);
-//        Mentor mentor = new Mentor(jsonData.getId(), jsonData.getLogin(), jsonData.getPassword(), jsonData.getName(), jsonData.getSurname(), jsonData.getPrimarySkill(), jsonData.getEarnings(), true);
         updateMentor(mentor);
         return new HttpResponse(httpExchange, "updated");
     }
