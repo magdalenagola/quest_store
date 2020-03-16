@@ -16,6 +16,14 @@ import java.util.Map;
 public class TransactionsHandler implements HttpHandler {
     CookieHelper cookieHelper = new CookieHelper();
     HttpResponse httpResponse = new HttpResponse();
+    DbstudentDAO studentDAO;
+    DbTransactionsDAO transactionsDAO;
+
+    public TransactionsHandler(DbstudentDAO studentDAO, DbTransactionsDAO transactionsDAO){
+        this.studentDAO = studentDAO;
+        this.transactionsDAO = transactionsDAO;
+    }
+
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
@@ -29,18 +37,25 @@ public class TransactionsHandler implements HttpHandler {
             httpResponse.redirectToLoginPage(httpExchange);
         }else {
             cookieHelper.refreshCookie(httpExchange);
-            String response = getStudentTransactions(httpExchange);
+            Student student = findStudent(httpExchange);
+            String response = getStudentTransactions(student);
             httpResponse.sendResponse200(httpExchange, response);
 
        }
     }
 
-    private String getStudentTransactions(HttpExchange httpExchange){
-        DbstudentDAO studentDAO = new DbstudentDAO();
+    private String getCookieString(HttpExchange httpExchange){
+        return httpExchange.getRequestHeaders().getFirst("Cookie");
+    }
+
+    private Student findStudent(HttpExchange httpExchange){
+        String cookieStr = getCookieString(httpExchange);
+        return studentDAO.findStudentBySessionId(getSessionIdFromCookieString(cookieStr));
+    }
+
+    //TODO make private after testing
+    public String getStudentTransactions(Student student){
         Gson gson = new Gson();
-        DbTransactionsDAO transactionsDAO = new DbTransactionsDAO();
-        String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
-        Student student = studentDAO.findStudentBySessionId(getSessionIdFromCookieString(cookieStr));
         return gson.toJson(transactionsDAO.displayAllTransactionsByStudent(student));
     }
     //TODO make private after testing
