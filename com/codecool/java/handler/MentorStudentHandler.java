@@ -9,7 +9,6 @@ import com.sun.net.httpserver.HttpHandler;
 
 import java.io.*;
 import java.net.URI;
-import java.sql.SQLException;
 
 public class MentorStudentHandler implements HttpHandler {
     CookieHelper cookieHelper = new CookieHelper();
@@ -52,7 +51,7 @@ public class MentorStudentHandler implements HttpHandler {
 
     }
 
-    private void handleAddStudent(HttpExchange httpExchange) throws IOException {
+    public void handleAddStudent(HttpExchange httpExchange) throws IOException {
         Student jsonData = receiveStudentFromFront(httpExchange);
         Student student = new Student(jsonData.getLogin(), jsonData.getPassword(), jsonData.getName(), jsonData.getSurname(),true);
         DbstudentDAO dbstudentDAO = new DbstudentDAO();
@@ -68,7 +67,7 @@ public class MentorStudentHandler implements HttpHandler {
         httpResponse.sendResponse200(httpExchange, "updated");
     }
 
-    private void handleDeleteStudent(HttpExchange httpExchange) throws IOException {
+    public void handleDeleteStudent(HttpExchange httpExchange) throws IOException {
         InputStream requestBody = httpExchange.getRequestBody();
         InputStreamReader isr = new InputStreamReader(requestBody, "utf-8");
         BufferedReader br = new BufferedReader(isr);
@@ -79,7 +78,7 @@ public class MentorStudentHandler implements HttpHandler {
         httpResponse.sendResponse200(httpExchange, "deleted");
     }
 
-    private Student receiveStudentFromFront (HttpExchange httpExchange) throws IOException {
+    public Student receiveStudentFromFront (HttpExchange httpExchange) throws IOException {
         InputStream requestBody = httpExchange.getRequestBody();
         InputStreamReader isr = new InputStreamReader(requestBody, "utf-8");
         BufferedReader br = new BufferedReader(isr);
