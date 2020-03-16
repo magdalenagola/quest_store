@@ -27,6 +27,22 @@ public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
         return student;
     }
 
+    public Student selectStudentByLogin(String login){
+        Connection c = dbconnection.getConnection();
+        Student student = null;
+        try{
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM users WHERE email = ?;");
+            ps.setString(1, login);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                student = createStudent(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return student;
+    }
+
     @Override
     public List<Student> loadAll(){
         List<Student> result = new ArrayList<>();
