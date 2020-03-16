@@ -20,7 +20,7 @@ public class HttpController {
             server.createContext("/mentor/students", new MentorStudentHandler());
             server.createContext("/static", new StaticHandler());
             server.createContext("/student/transactions", new TransactionsHandler(new DbstudentDAO(), new DbTransactionsDAO()));
-            server.createContext("/student/inventory", new InventoryHandler());
+            server.createContext("/student/inventory", new InventoryHandler(new DbstudentDAO(), new DbCardDAO()));
             server.createContext("/mentor/quests", new MentorQuestHandler());
             server.createContext("/student/quests", new StudentQuestHandler());
             server.createContext("/manager/mentor", new ManagerMentorsHandler());
