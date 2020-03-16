@@ -4,6 +4,7 @@ import codecool.java.controller.StudentController;
 import codecool.java.dao.*;
 import codecool.java.helper.HttpResponse;
 import codecool.java.model.Card;
+import codecool.java.model.Student;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -60,33 +61,34 @@ public class CardHandler implements HttpHandler {
 
     private void tryBuyCard(HttpExchange httpExchange, String sessionId, int cardID)throws IOException{
         String response = "";
-        int studentCoins = getStudentCoins(sessionId);
-        int studentID = studentDAO.findStudentBySessionId(sessionId).getId();
-        StudentController studentController = new StudentController(new DbCardDAO(), new DbTransactionsDAO());
+        Student student = studentDAO.findStudentBySessionId(sessionId);
+        int studentCoins = getStudentCoins(student);
         Card card = getCardById(cardID);
-        if(checkCardAffordability(studentCoins,card)){
-            studentController.buyCard(studentID,cardID);
-            decreaseStudentCoins(sessionId, card);
+        int cardPrice = card.getCost();
+        if(checkCardAffordability(studentCoins, cardPrice)){
+            StudentController studentController = new StudentController(new DbTransactionsDAO());
+            studentController.buyCard(student,card);
+            decreaseStudentCoins(student, cardPrice);
             httpResponse.sendResponse200(httpExchange,response);
         }else{
             httpResponse.sendResponse403(httpExchange);
         }
     }
 
-    private void decreaseStudentCoins(String sessionId, Card card){
-        studentDAO.updateCoins(studentDAO.findStudentBySessionId(sessionId),-card.getCost());
+    private void decreaseStudentCoins(Student student, int cardPrice){
+        studentDAO.updateCoins(student,-cardPrice);
     }
     //TODO MAKE PRIVATE AFTER TESTS
-    public boolean checkCardAffordability(int studenCoins, Card card){
-        return studenCoins >= card.getCost();
+    public boolean checkCardAffordability(int studentCoins, int cardPrice){
+        return studentCoins >= cardPrice;
     }
 
     private Card getCardById(int cardID) {
         return (Card) cardDAO.selectCardById(cardID);
     }
 
-    private int getStudentCoins(String sessionId){
-        return studentDAO.getCoins(studentDAO.findStudentBySessionId(sessionId));
+    private int getStudentCoins(Student student){
+        return studentDAO.getCoins(student);
     }
     //TODO MAKE PRIVATE AFTER TESTS
     public String getSessionIdFromCookieString(String cookieStr) {

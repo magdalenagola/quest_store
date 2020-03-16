@@ -5,6 +5,8 @@ import codecool.java.dao.DbstudentDAO;
 import codecool.java.handler.CardHandler;
 import codecool.java.model.Card;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -14,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CardHandlerTest {
 
     static CardHandler cardHandler = new CardHandler(mock(DbstudentDAO.class),mock(DbCardDAO.class));
+
     @Test
     public void shouldReturnFalseWhenNotEnoughCoins() {
         Card mockCard = mock(Card.class);
@@ -22,6 +25,7 @@ class CardHandlerTest {
         boolean actual = cardHandler.checkCardAffordability(studentCoins,mockCard);
         assertFalse(actual);
     }
+
     @Test
     public void shouldReturnTrueWhenEnoughCoins() {
         Card mockCard = mock(Card.class);
@@ -30,22 +34,21 @@ class CardHandlerTest {
         boolean actual = cardHandler.checkCardAffordability(studentCoins,mockCard);
         assertTrue(actual);
     }
+
     @Test
     public void shouldReturnJsonOfCards() {
-        // Arrange
         DbCardDAO mockCardDAO = mock(DbCardDAO.class);
         CardHandler cardHandler = new CardHandler(mock(DbstudentDAO.class),mockCardDAO);
         Card Card1 = new Card(1,10,"xd","name",true,10,"title");
         Card Card2 = new Card(2,15,"dx","name2",true,15,"title2");
         when(mockCardDAO.loadAll()).thenReturn(Arrays.asList(Card1,Card2));
-        // Act
         String expected =
                 "[{\"quantity\":10,\"id\":1,\"title\":\"title\",\"description\":\"xd\",\"image\":\"name\",\"isActive\":true,\"cost\":10}," +
                 "{\"quantity\":15,\"id\":2,\"title\":\"title2\",\"description\":\"dx\",\"image\":\"name2\",\"isActive\":true,\"cost\":15}]";
         String actual = cardHandler.getCards();
-        // Assert
         assertEquals(expected,actual);
     }
+
     @Test
     public void shouldReturnCardIdFromUri() throws URISyntaxException {
         URI uri = new URI("/cards/buy/3");
@@ -55,9 +58,8 @@ class CardHandlerTest {
     }
     @Test
     public void shouldReturnSessionIdFromCookieString(){
-        String cookieStr = new String("sessionId=P1Cu9n8");
         String expected = "P1Cu9n8";
-        String actual = cardHandler.getSessionIdFromCookieString(cookieStr);
+        String actual = cardHandler.getSessionIdFromCookieString("sessionId=P1Cu9n8");
         assertEquals(expected, actual);
     }
 }
