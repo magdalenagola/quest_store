@@ -63,24 +63,28 @@ public class CardHandler implements HttpHandler {
         int studentCoins = getStudentCoins(sessionId);
         int studentID = studentDAO.findStudentBySessionId(sessionId).getId();
         StudentController studentController = new StudentController(new DbCardDAO(), new DbTransactionsDAO());
-        if(checkCardAffordability(studentCoins,cardID)){
+        Card card = getCardById(cardID);
+        if(checkCardAffordability(studentCoins,card)){
             studentController.buyCard(studentID,cardID);
-            decreaseStudentCoins(sessionId, cardID);
+            decreaseStudentCoins(sessionId, card);
             httpResponse.sendResponse200(httpExchange,response);
         }else{
             httpResponse.sendResponse403(httpExchange);
         }
     }
 
-    private void decreaseStudentCoins(String sessionId, int cardID){
-        Card card = (Card) cardDAO.selectCardById(cardID);
+    private void decreaseStudentCoins(String sessionId, Card card){
         studentDAO.updateCoins(studentDAO.findStudentBySessionId(sessionId),-card.getCost());
     }
-
-    private boolean checkCardAffordability(int studenCoins, int cardID){
-        Card card = (Card) cardDAO.selectCardById(cardID);
+    //TODO MAKE PRIVATE AFTER TESTS
+    public boolean checkCardAffordability(int studenCoins, Card card){
         return studenCoins >= card.getCost();
     }
+
+    private Card getCardById(int cardID) {
+        return (Card) cardDAO.selectCardById(cardID);
+    }
+
     private int getStudentCoins(String sessionId){
         return studentDAO.getCoins(studentDAO.findStudentBySessionId(sessionId));
     }
