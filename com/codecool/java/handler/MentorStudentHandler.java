@@ -35,7 +35,7 @@ public class MentorStudentHandler implements HttpHandler {
         }
     }
 
-    private void handleGET(HttpExchange httpExchange) throws IOException {
+    public void handleGET(HttpExchange httpExchange) throws IOException {
         if(!cookieHelper.isCookiePresent(httpExchange)){
             httpResponse.redirectToLoginPage(httpExchange);
         }else {
