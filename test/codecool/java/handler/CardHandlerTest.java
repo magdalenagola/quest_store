@@ -19,19 +19,15 @@ class CardHandlerTest {
 
     @Test
     public void shouldReturnFalseWhenNotEnoughCoins() {
-        Card mockCard = mock(Card.class);
         int studentCoins = 5;
-        when(mockCard.getCost()).thenReturn(10);
-        boolean actual = cardHandler.checkCardAffordability(studentCoins,mockCard);
+        boolean actual = cardHandler.checkCardAffordability(studentCoins,10);
         assertFalse(actual);
     }
 
     @Test
     public void shouldReturnTrueWhenEnoughCoins() {
-        Card mockCard = mock(Card.class);
         int studentCoins = 10;
-        when(mockCard.getCost()).thenReturn(10);
-        boolean actual = cardHandler.checkCardAffordability(studentCoins,mockCard);
+        boolean actual = cardHandler.checkCardAffordability(studentCoins,10);
         assertTrue(actual);
     }
 
