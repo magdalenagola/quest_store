@@ -40,8 +40,8 @@ public class CardHandler implements HttpHandler {
         String response = getCards();
         httpResponse.sendResponse200(httpExchange, response);
     }
-
-    private String getCards() {
+    //TODO MAKE PUBLIC AFTER TESTS
+    public String getCards() {
         Gson gson = new Gson();
         return gson.toJson(cardDAO.loadAll());
     }
@@ -88,12 +88,12 @@ public class CardHandler implements HttpHandler {
     private int getStudentCoins(String sessionId){
         return studentDAO.getCoins(studentDAO.findStudentBySessionId(sessionId));
     }
-
-    private String getSessionIdFromCookieString(String cookieStr) {
+    //TODO MAKE PRIVATE AFTER TESTS
+    public String getSessionIdFromCookieString(String cookieStr) {
         return cookieStr.split("=")[1].replace("\"","");
     }
-
-    private int getCardIDFromURI(URI uri) {
+    //TODO MAKE PRIVATE AFTER TESTS
+    public int getCardIDFromURI(URI uri) {
         final int URI_CARD_ID = 3;
         return Integer.parseInt(uri.toString().split("/")[URI_CARD_ID]);
     }
