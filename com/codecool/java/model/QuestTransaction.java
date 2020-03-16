@@ -29,8 +29,6 @@ public class QuestTransaction extends Transaction {
             return questTransactionInfo;
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
 
         return questTransactionInfo;

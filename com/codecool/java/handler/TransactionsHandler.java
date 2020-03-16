@@ -19,30 +19,29 @@ public class TransactionsHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
-        String response = "";
         if(method.equals("GET")){
-            if(!cookieHelper.isCookiePresent(httpExchange)){
-                httpResponse.redirectToLoginPage(httpExchange);
-            }else {
-                cookieHelper.refreshCookie(httpExchange);
-                try {
-                    Gson gson = new Gson();
-                    response = gson.toJson(getStudentTransactions(httpExchange));
-                    httpResponse.sendResponse200(httpExchange, response);
-                } catch (SQLException | ClassNotFoundException e) {
-                    httpResponse.sendResponse500(httpExchange);
-                    e.printStackTrace();
-                }
-           }
+            handleGET(httpExchange);
         }
     }
 
-    private Map<String,List<Transaction>> getStudentTransactions(HttpExchange httpExchange) throws SQLException, ClassNotFoundException {
+    private void handleGET(HttpExchange httpExchange) throws IOException {
+        if(!cookieHelper.isCookiePresent(httpExchange)){
+            httpResponse.redirectToLoginPage(httpExchange);
+        }else {
+            cookieHelper.refreshCookie(httpExchange);
+            String response = getStudentTransactions(httpExchange);
+            httpResponse.sendResponse200(httpExchange, response);
+
+       }
+    }
+
+    private String getStudentTransactions(HttpExchange httpExchange){
         DbstudentDAO studentDAO = new DbstudentDAO();
+        Gson gson = new Gson();
         DbTransactionsDAO transactionsDAO = new DbTransactionsDAO();
         String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
         Student student = studentDAO.findStudentBySessionId(getSessionIdFromCookieString(cookieStr));
-        return transactionsDAO.displayAllTransactionsByStudent(student);
+        return gson.toJson(transactionsDAO.displayAllTransactionsByStudent(student));
     }
 
     private String getSessionIdFromCookieString(String cookieStr) {

@@ -13,18 +13,19 @@ public class WalletHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
-        String response ="";
         final String sessionId = getSessionIdFromCookieString(httpExchange.getRequestHeaders().getFirst("Cookie"));
         if(method.equals("GET")){
-            try {
-                response = String.valueOf(getStudentCoins(sessionId));
-                httpResponse.sendResponse200(httpExchange,response);
-            } catch (SQLException | ClassNotFoundException e) {
-                httpResponse.sendResponse500(httpExchange);
-            }
+            handleGET(httpExchange, sessionId);
         }
     }
-    private int getStudentCoins(String sessionId) throws SQLException, ClassNotFoundException {
+
+    private void handleGET(HttpExchange httpExchange, String sessionId) throws IOException {
+        String response = String.valueOf(getStudentCoins(sessionId));
+        httpResponse.sendResponse200(httpExchange,response);
+
+    }
+
+    private int getStudentCoins(String sessionId){
         DbstudentDAO dbstudentDAO = new DbstudentDAO();
         return dbstudentDAO.getCoins(dbstudentDAO.findStudentBySessionId(sessionId));
     }

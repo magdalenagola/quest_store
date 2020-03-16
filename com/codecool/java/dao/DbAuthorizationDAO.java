@@ -4,67 +4,78 @@ import codecool.java.model.User;
 import codecool.java.model.UserFactory;
 import java.net.HttpCookie;
 import java.sql.*;
-import java.text.ParseException;
 import java.util.Date;
 import java.util.Optional;
 
 public class DbAuthorizationDAO extends DbConnectionDao implements LoginDao {
 
-    public DbAuthorizationDAO() throws ClassNotFoundException, SQLException {
+    public DbAuthorizationDAO(){
         super();
     }
 
     @Override
-    public ResultSet findLoginInfo(String providedLogin, String providedPassword) throws SQLException {
+    public ResultSet findLoginInfo(String providedLogin, String providedPassword){
         Connection c = dbconnection.getConnection();
-        PreparedStatement ps = c.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?;");
-        ps.setString(1, providedLogin);
-        ps.setString(2, providedPassword);
-        ResultSet rs = ps.executeQuery();
+        ResultSet rs = null;
+        try {
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?;");
+            ps.setString(1, providedLogin);
+            ps.setString(2, providedPassword);
+            rs = ps.executeQuery();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
         return rs;
     }
 
     @Override
-    public User logIn(String providedLogin, String providedPassword) throws SQLException, ClassNotFoundException, NotInDatabaseException {
+    public User logIn(String providedLogin, String providedPassword)throws NotInDatabaseException {
         ResultSet rs = findLoginInfo(providedLogin, providedPassword);
         UserFactory userFactory = new UserFactory();
         User user = null;
-        if (!rs.next()) {
-            throw new NotInDatabaseException();
-        } else {
-            do {
-                int id = rs.getInt("id");
-                String email = rs.getString("email");
-                String userPassword = rs.getString("password");
-                String name = rs.getString("name");
-                String surname = rs.getString("surname");
-                int userTypeID = rs.getInt("usertype_id");
-                boolean isActive = rs.getBoolean("is_active");
+        try {
+            if (!rs.next()) {
+                throw new NotInDatabaseException();
+            } else {
+                do {
+                    int id = rs.getInt("id");
+                    String email = rs.getString("email");
+                    String userPassword = rs.getString("password");
+                    String name = rs.getString("name");
+                    String surname = rs.getString("surname");
+                    int userTypeID = rs.getInt("usertype_id");
+                    boolean isActive = rs.getBoolean("is_active");
 
-                user = userFactory.createUser(id, email, userPassword, name, surname, userTypeID, isActive);
+                    user = userFactory.createUser(id, email, userPassword, name, surname, userTypeID, isActive);
+                }
+                while (rs.next());
             }
-            while (rs.next());
+        }catch(SQLException e){
+            e.printStackTrace();
         }
-
         return user;
     }
 
-    public void saveCookie(int userId, Optional<HttpCookie> cookie) throws SQLException, ParseException {
+    public void saveCookie(int userId, Optional<HttpCookie> cookie){
         Connection c = dbconnection.getConnection();
-        PreparedStatement ps = c.prepareStatement("INSERT INTO cookies (session_id, user_id, creation_date, expiration_date, is_active) VALUES (?, ?, ?, ?, ?);");
-        ps.setString(1, cookie.get().getValue());
-        ps.setInt(2, userId);
-        Date creationDate = new Date();
-        Date expDate = new Date();
-        expDate.setTime(creationDate.getTime() + cookie.get().getMaxAge() * 1000);
-        ps.setTimestamp(3, new java.sql.Timestamp(creationDate.getTime()));
-        ps.setTimestamp(4, new java.sql.Timestamp(expDate.getTime()));
-        ps.setBoolean(5, true);
-        ps.executeUpdate();
-        ps.close();
+        try {
+            PreparedStatement ps = c.prepareStatement("INSERT INTO cookies (session_id, user_id, creation_date, expiration_date, is_active) VALUES (?, ?, ?, ?, ?);");
+            ps.setString(1, cookie.get().getValue());
+            ps.setInt(2, userId);
+            Date creationDate = new Date();
+            Date expDate = new Date();
+            expDate.setTime(creationDate.getTime() + cookie.get().getMaxAge() * 1000);
+            ps.setTimestamp(3, new java.sql.Timestamp(creationDate.getTime()));
+            ps.setTimestamp(4, new java.sql.Timestamp(expDate.getTime()));
+            ps.setBoolean(5, true);
+            ps.executeUpdate();
+            ps.close();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 
-    public void refreshCookie( Optional<HttpCookie> cookie) throws SQLException, ParseException {
+    public void refreshCookie( Optional<HttpCookie> cookie) throws SQLException{
         Connection c = dbconnection.getConnection();
         PreparedStatement ps = c.prepareStatement("UPDATE cookies SET expiration_date = (CURRENT_TIMESTAMP + '00:15:00'::interval), is_active = true WHERE session_id = ?;");
         ps.setString(1, cookie.get().getValue());

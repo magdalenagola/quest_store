@@ -7,5 +7,5 @@ import java.sql.SQLException;
 
 public interface LoginDao {
     ResultSet findLoginInfo(String providedLogin, String providedPassword) throws SQLException;
-    User logIn(String providedLogin, String providedPassword) throws SQLException, ClassNotFoundException, NotInDatabaseException;
+    User logIn(String providedLogin, String providedPassword)throws NotInDatabaseException;
 }

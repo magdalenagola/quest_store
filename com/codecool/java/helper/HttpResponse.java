@@ -30,7 +30,6 @@ public class HttpResponse {
         os.close();
     }
     public void redirectToLoginPage(HttpExchange httpExchange) throws IOException {
-//        httpExchange.getResponseHeaders().set("Location","/static/index.html");
         sendResponse303(httpExchange);
     }
 

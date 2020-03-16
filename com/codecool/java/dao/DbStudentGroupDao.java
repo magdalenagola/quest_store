@@ -75,15 +75,19 @@ public class DbStudentGroupDao extends DbConnectionDao implements StudentGroupDa
     }
 
     @Override
-    public List loadAll() throws SQLException {
+    public List loadAll(){
         Group group;
         List<Object> groups = new ArrayList<>();
-        List<Integer> groupIds = getGroupIds();
-        for(int i : groupIds){
-            group = selectGroup(i);
-            groups.add(group);
+        try {
+            List<Integer> groupIds = getGroupIds();
+            for (int i : groupIds) {
+                group = selectGroup(i);
+                groups.add(group);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
-        return groups;
+       return groups;
     }
 
     @Override
@@ -132,12 +136,16 @@ public class DbStudentGroupDao extends DbConnectionDao implements StudentGroupDa
     }
 
     @Override
-    public void save(Object o) throws SQLException {
+    public void save(Object o){
         Group group = (Group) o;
         String orderToSql = "INSERT INTO student_groups (name) VALUES (?);";
         Connection c = dbconnection.getConnection();
-        PreparedStatement ps = c.prepareStatement(orderToSql);
-        ps.setString(1, group.getName());
-        ps.execute();
+        try {
+            PreparedStatement ps = c.prepareStatement(orderToSql);
+            ps.setString(1, group.getName());
+            ps.execute();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 }

@@ -18,28 +18,26 @@ public class StudentQuestHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
-        String response = "";
-        if(method.equals("GET")){
-            if(!cookieHelper.isCookiePresent(httpExchange)){
-                httpResponse.redirectToLoginPage(httpExchange);
-            }else {
-                cookieHelper.refreshCookie(httpExchange);
-                response = getQuests(httpExchange);
-                httpResponse.sendResponse200(httpExchange, response);
-            }
+        if(method.equals("GET")) {
+            handleGET(httpExchange);
         }
     }
 
-    private String getQuests(HttpExchange httpExchange) throws IOException {
-        List<Quest> quests = new ArrayList<>();
-        Gson gson = new Gson();
-        try {
-            DbQuestDAO questDAO = new DbQuestDAO();
-            quests = questDAO.loadAllActive();
-        } catch (SQLException | ClassNotFoundException e) {
-            httpResponse.sendResponse500(httpExchange);
+    private void handleGET(HttpExchange httpExchange) throws IOException {
+        if(!cookieHelper.isCookiePresent(httpExchange)){
+            httpResponse.redirectToLoginPage(httpExchange);
+        }else {
+            cookieHelper.refreshCookie(httpExchange);
+            String response = getQuests();
+            httpResponse.sendResponse200(httpExchange, response);
         }
-        return gson.toJson(quests);
+    }
+
+    private String getQuests(){
+        Gson gson = new Gson();
+        DbQuestDAO questDAO = new DbQuestDAO();
+        return  gson.toJson(questDAO.loadAllActive());
+
     }
 
 }
