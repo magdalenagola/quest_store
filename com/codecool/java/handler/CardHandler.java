@@ -3,24 +3,29 @@ package codecool.java.handler;
 import codecool.java.controller.CardController;
 import codecool.java.controller.StudentController;
 import codecool.java.helper.HttpResponse;
+import codecool.java.model.CannotAffordCardException;
 import codecool.java.model.Card;
 import codecool.java.model.Student;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import org.json.Cookie;
+
 import java.io.IOException;
 import java.net.URI;
 
 
 public class CardHandler implements HttpHandler {
 
-    CookieHelper cookieHelper = new CookieHelper();
-    HttpResponse httpResponse = new HttpResponse();
+    CookieHelper cookieHelper;
+    HttpResponse httpResponse;
     CardController cardController;
     StudentController studentController;
 
-    public CardHandler(CardController cardController, StudentController studentController){
+    public CardHandler(CardController cardController, StudentController studentController, CookieHelper cookieHelper, HttpResponse httpResponse){
         this.cardController = cardController;
         this.studentController = studentController;
+        this.cookieHelper = cookieHelper;
+        this.httpResponse = httpResponse;
     }
 
     @Override
@@ -32,7 +37,7 @@ public class CardHandler implements HttpHandler {
         }
     }
 
-    private void handleGET(HttpExchange httpExchange) throws IOException {
+    void handleGET(HttpExchange httpExchange) throws IOException {
         if(!cookieHelper.isCookiePresent(httpExchange)) {
             httpResponse.redirectToLoginPage(httpExchange);
         }
@@ -41,42 +46,49 @@ public class CardHandler implements HttpHandler {
         httpResponse.sendResponse200(httpExchange, response);
     }
 
-    private void handlePOST(HttpExchange httpExchange) throws IOException {
+    void handlePOST(HttpExchange httpExchange) throws IOException {
         if(!cookieHelper.isCookiePresent(httpExchange)) {
             httpResponse.redirectToLoginPage(httpExchange);
         } else {
             cookieHelper.refreshCookie(httpExchange);
             Card card = getCardFromURI(httpExchange);
             Student student = getStudentBySessionId(httpExchange);
-            tryBuyCard(httpExchange, student, card);
+            try {
+                tryBuyCard(student, card);
+                httpResponse.sendResponse200(httpExchange,"Card bought");
+            }catch(CannotAffordCardException e){
+                httpResponse.sendResponse403(httpExchange);
+            }
         }
     }
 
-    private Student getStudentBySessionId(HttpExchange httpExchange) {
+    Student getStudentBySessionId(HttpExchange httpExchange) {
         String sessionId = cookieHelper.getSessionId(httpExchange);
         return studentController.findStudentBySessionId(sessionId);
     }
 
-    private Card getCardFromURI(HttpExchange httpExchange) {
+    Card getCardFromURI(HttpExchange httpExchange) {
         URI uri = httpExchange.getRequestURI();
         int cardID = cardController.getCardIDFromURI(uri);
         return cardController.getCardById(cardID);
     }
 
-    private void tryBuyCard(HttpExchange httpExchange, Student student, Card card)throws IOException{
-        String response = "";
+    void tryBuyCard(Student student, Card card)throws CannotAffordCardException {
         int studentCoins = studentController.getStudentCoins(student);
         if(checkCardAffordability(studentCoins, card.getCost())){
-            studentController.buyCard(student,card);
-            studentController.decreaseStudentCoins(student, card.getCost());
-            httpResponse.sendResponse200(httpExchange,response);
+            manageSuccessfulTransaction(student, card);
         }else{
-            httpResponse.sendResponse403(httpExchange);
+            throw new CannotAffordCardException();
         }
     }
 
-    //TODO MAKE PRIVATE AFTER TESTS
-    public boolean checkCardAffordability(int studentCoins, int cardPrice){
+    private void manageSuccessfulTransaction(Student student, Card card) {
+        studentController.buyCard(student,card);
+        studentController.decreaseStudentCoins(student, card.getCost());
+    }
+
+
+    boolean checkCardAffordability(int studentCoins, int cardPrice){
         return studentCoins >= cardPrice;
     }
 }
