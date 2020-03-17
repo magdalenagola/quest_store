@@ -1,8 +1,5 @@
 package codecool.java.model;
 
-import codecool.java.dao.DbQuestDAO;
-
-import java.sql.SQLException;
 import java.sql.Date;
 
 public class QuestTransaction extends Transaction {

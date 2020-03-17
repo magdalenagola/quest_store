@@ -1,8 +1,7 @@
 package codecool.java.model;
 
-import codecool.java.dao.DbCardDAO;
+import codecool.java.dao.implementation.DbCardDAO;
 
-import java.sql.SQLException;
 import java.sql.Date;
 
 public class CardTransaction extends Transaction {

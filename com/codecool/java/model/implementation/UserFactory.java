@@ -1,10 +1,8 @@
 package codecool.java.model;
 
-import codecool.java.dao.DbMentorDAO;
+import codecool.java.dao.implementation.DbMentorDAO;
 import codecool.java.dao.MentorDAO;
 import codecool.java.dao.NotInDatabaseException;
-
-import java.sql.SQLException;
 
 public class UserFactory {
     private MentorDAO mentorDAO;
