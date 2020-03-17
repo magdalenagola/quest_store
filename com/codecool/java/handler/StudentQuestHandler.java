@@ -15,6 +15,7 @@ import java.util.List;
 public class StudentQuestHandler implements HttpHandler {
     CookieHelper cookieHelper = new CookieHelper();
     HttpResponse httpResponse = new HttpResponse();
+    DbQuestDAO questDAO = new DbQuestDAO();
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
@@ -28,16 +29,15 @@ public class StudentQuestHandler implements HttpHandler {
             httpResponse.redirectToLoginPage(httpExchange);
         }else {
             cookieHelper.refreshCookie(httpExchange);
-            String response = getQuests();
+            List<Quest> quests = questDAO.loadAllActive();
+            String response = getQuests(quests);
             httpResponse.sendResponse200(httpExchange, response);
         }
     }
 
-    private String getQuests(){
+    public String getQuests(List<Quest> quests) {
         Gson gson = new Gson();
-        DbQuestDAO questDAO = new DbQuestDAO();
-        return  gson.toJson(questDAO.loadAllActive());
-
+        return gson.toJson(quests);
     }
 
 }

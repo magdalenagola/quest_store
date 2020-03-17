@@ -4,16 +4,12 @@ import codecool.java.dao.DbstudentDAO;
 import codecool.java.model.Student;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.Headers;
-import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpPrincipal;
 import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 
 import java.io.*;
-import java.net.InetSocketAddress;
-import java.net.URI;
 
 import static org.junit.jupiter.api.Assertions.*;
 
