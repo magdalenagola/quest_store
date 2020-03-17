@@ -8,6 +8,7 @@ import codecool.java.model.Card;
 import codecool.java.model.Student;
 import com.sun.net.httpserver.HttpExchange;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -16,15 +17,19 @@ import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CardHandlerTest {
-    static StudentController mockStudentController = mock(StudentController.class);
-    static CardController mockCardController = mock(CardController.class);
-    static HttpResponse mockHttpResponse = mock(HttpResponse.class);
-    static CookieHelper mockCookieHelper = mock(CookieHelper.class);
+    static StudentController mockStudentController;
+    static CardController mockCardController;
+    static HttpResponse mockHttpResponse;
+    static CookieHelper mockCookieHelper;
     static CardHandler cardHandler;
     static CardHandler mockCardHandler;
 
-    @BeforeAll
-    static void setUp() {
+    @BeforeEach
+    void setUp() {
+        mockStudentController = mock(StudentController.class);
+        mockCardController = mock(CardController.class);
+        mockHttpResponse = mock(HttpResponse.class);
+        mockCookieHelper = mock(CookieHelper.class);
         cardHandler = new CardHandler(mockCardController, mockStudentController, mockCookieHelper, mockHttpResponse);
         mockCardHandler = mock(CardHandler.class);
     }
