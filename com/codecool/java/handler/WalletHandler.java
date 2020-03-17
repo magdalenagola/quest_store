@@ -10,10 +10,12 @@ import java.sql.SQLException;
 
 public class WalletHandler implements HttpHandler {
     HttpResponse httpResponse = new HttpResponse();
+    CookieHelper cookieHelper = new CookieHelper();
+
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
-        final String sessionId = getSessionIdFromCookieString(httpExchange.getRequestHeaders().getFirst("Cookie"));
+        String sessionId = cookieHelper.getSessionId(httpExchange);
         if(method.equals("GET")){
             handleGET(httpExchange, sessionId);
         }
@@ -25,11 +27,8 @@ public class WalletHandler implements HttpHandler {
 
     }
 
-    private int getStudentCoins(String sessionId){
+    public int getStudentCoins(String sessionId){
         DbstudentDAO dbstudentDAO = new DbstudentDAO();
         return dbstudentDAO.getCoins(dbstudentDAO.findStudentBySessionId(sessionId));
-    }
-    private String getSessionIdFromCookieString(String cookieStr) {
-        return cookieStr.split("=")[1].replace("\"","");
     }
 }
