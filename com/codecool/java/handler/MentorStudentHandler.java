@@ -59,7 +59,7 @@ public class MentorStudentHandler implements HttpHandler {
         httpResponse.sendResponse200(httpExchange, "saved");
     }
 
-    private void handleUpdateStudent(HttpExchange httpExchange) throws IOException {
+    public void handleUpdateStudent(HttpExchange httpExchange) throws IOException {
         Student jsonData = receiveStudentFromFront(httpExchange);
         Student student = new Student(jsonData.getId(), jsonData.getLogin(), jsonData.getPassword(), jsonData.getName(), jsonData.getSurname(),true);
         DbstudentDAO dbstudentDAO = new DbstudentDAO();
