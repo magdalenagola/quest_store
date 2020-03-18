@@ -11,14 +11,17 @@ import java.net.InetSocketAddress;
 public class HttpController {
         public void init() throws IOException {
             int port = 3001;
+            CookieHelper cookieHelper = new CookieHelper();
+            HttpResponse httpResponse = new HttpResponse();
+
             HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
             server.createContext("/login", new LoginHandler());
             server.createContext("/cards",
             new CardHandler(new CardController(new DbCardDAO()),
             new StudentController(new DbstudentDAO(),new DbTransactionsDAO()),
-            new CookieHelper(), new HttpResponse()));
+            cookieHelper, httpResponse));
             server.createContext("/coins", new WalletHandler());
-            server.createContext("/mentor/students", new MentorStudentHandler());
+            server.createContext("/mentor/students", new MentorStudentHandler(cookieHelper, httpResponse));
             server.createContext("/static", new StaticHandler());
             server.createContext("/student/transactions", new TransactionsHandler(new DbstudentDAO(), new DbTransactionsDAO()));
             server.createContext("/student/inventory", new InventoryHandler(new DbstudentDAO(), new DbCardDAO()));

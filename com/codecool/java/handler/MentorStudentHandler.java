@@ -11,8 +11,13 @@ import java.io.*;
 import java.net.URI;
 
 public class MentorStudentHandler implements HttpHandler {
-    CookieHelper cookieHelper = new CookieHelper();
-    HttpResponse httpResponse = new HttpResponse();
+    CookieHelper cookieHelper;
+    HttpResponse httpResponse;
+
+    public MentorStudentHandler(CookieHelper cookieHelper, HttpResponse httpResponse) {
+        this.httpResponse = httpResponse;
+        this.cookieHelper = cookieHelper;
+    }
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -59,7 +64,7 @@ public class MentorStudentHandler implements HttpHandler {
         httpResponse.sendResponse200(httpExchange, "saved");
     }
 
-    private void handleUpdateStudent(HttpExchange httpExchange) throws IOException {
+    public void handleUpdateStudent(HttpExchange httpExchange) throws IOException {
         Student jsonData = receiveStudentFromFront(httpExchange);
         Student student = new Student(jsonData.getId(), jsonData.getLogin(), jsonData.getPassword(), jsonData.getName(), jsonData.getSurname(),true);
         DbstudentDAO dbstudentDAO = new DbstudentDAO();
