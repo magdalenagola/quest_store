@@ -7,13 +7,14 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 class WalletHandlerTest {
 
     HttpResponse httpResponse = mock(HttpResponse.class);
-    WalletHandler walletHandler = new WalletHandler(httpResponse);
+    CookieHelper cookieHelper = mock(CookieHelper.class);
+    WalletHandler walletHandler = new WalletHandler(httpResponse, cookieHelper);
     String sessionId = "session-id-for-test";
 
     @Test
@@ -21,6 +22,15 @@ class WalletHandlerTest {
         int expected = 24;
         int actual = walletHandler.getStudentCoins(sessionId);
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldInvokeGet() throws IOException {
+        WalletHandler walletHandlerSpy = spy(new WalletHandler(httpResponse, cookieHelper));
+        HttpExchange httpExchange = mock(HttpExchange.class);
+        when(httpExchange.getRequestMethod()).thenReturn("GET");
+        walletHandlerSpy.handle(httpExchange);
+        verify(walletHandlerSpy).handleGET(httpExchange, sessionId);
     }
 
     @Test
