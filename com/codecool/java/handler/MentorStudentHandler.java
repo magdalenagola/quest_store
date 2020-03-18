@@ -11,8 +11,13 @@ import java.io.*;
 import java.net.URI;
 
 public class MentorStudentHandler implements HttpHandler {
-    CookieHelper cookieHelper = new CookieHelper();
-    HttpResponse httpResponse = new HttpResponse();
+    CookieHelper cookieHelper;
+    HttpResponse httpResponse;
+
+    public MentorStudentHandler(CookieHelper cookieHelper, HttpResponse httpResponse) {
+        this.httpResponse = httpResponse;
+        this.cookieHelper = cookieHelper;
+    }
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
