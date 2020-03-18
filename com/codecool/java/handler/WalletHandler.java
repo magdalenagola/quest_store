@@ -6,11 +6,14 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 public class WalletHandler implements HttpHandler {
-    HttpResponse httpResponse = new HttpResponse();
+    HttpResponse httpResponse;
     CookieHelper cookieHelper = new CookieHelper();
+
+    public WalletHandler(HttpResponse httpResponse) {
+        this.httpResponse = httpResponse;
+    }
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -21,7 +24,7 @@ public class WalletHandler implements HttpHandler {
         }
     }
 
-    private void handleGET(HttpExchange httpExchange, String sessionId) throws IOException {
+    public void handleGET(HttpExchange httpExchange, String sessionId) throws IOException {
         String response = String.valueOf(getStudentCoins(sessionId));
         httpResponse.sendResponse200(httpExchange,response);
 
