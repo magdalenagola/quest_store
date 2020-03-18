@@ -20,7 +20,7 @@ public class HttpController {
             new CardHandler(new CardController(new DbCardDAO()),
             new StudentController(new DbstudentDAO(),new DbTransactionsDAO()),
             cookieHelper, httpResponse));
-            server.createContext("/coins", new WalletHandler(httpResponse, cookieHelper));
+            server.createContext("/coins", new WalletHandler( new StudentController(new DbstudentDAO(),new DbTransactionsDAO()),httpResponse, cookieHelper));
             server.createContext("/mentor/students", new MentorStudentHandler(cookieHelper, httpResponse));
             server.createContext("/static", new StaticHandler());
             server.createContext("/student/transactions", new TransactionsHandler(new DbstudentDAO(), new DbTransactionsDAO()));
