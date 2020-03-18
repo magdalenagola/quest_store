@@ -25,7 +25,7 @@ public class HttpController {
             server.createContext("/static", new StaticHandler());
             server.createContext("/student/transactions", new TransactionsHandler(new DbstudentDAO(), new DbTransactionsDAO()));
             server.createContext("/student/inventory", new InventoryHandler(new DbstudentDAO(), new DbCardDAO()));
-            server.createContext("/mentor/quests", new MentorQuestHandler(new DbQuestDAO(), new CookieHelper(), new HttpResponse()));
+            server.createContext("/mentor/quests", new MentorQuestHandler(new DbQuestDAO(), cookieHelper, httpResponse));
             server.createContext("/student/quests", new StudentQuestHandler());
             server.createContext("/manager/mentor", new ManagerMentorsHandler());
             server.setExecutor(null);
