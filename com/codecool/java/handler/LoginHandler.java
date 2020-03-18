@@ -11,15 +11,24 @@ import java.io.*;
 import java.net.URI;
 
 public class LoginHandler implements HttpHandler {
-    CookieHelper cookieHelper = new CookieHelper();
-    HttpResponse httpResponse = new HttpResponse();
+    CookieHelper cookieHelper;
+    HttpResponse httpResponse;
+
+    public LoginHandler(CookieHelper cookieHelper, HttpResponse httpResponse){
+        this.cookieHelper = cookieHelper;
+        this.httpResponse = httpResponse;
+    }
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String method  = httpExchange.getRequestMethod();
         URI uri = httpExchange.getRequestURI();
         if(method.equals("POST") && (uri.toString().equals("/login"))){
-            handleLogin(httpExchange);
+            try {
+                handleLogin(httpExchange, getUserData(httpExchange.getRequestBody()));
+            } catch (NotInDatabaseException e) {
+                e.printStackTrace();
+            }
         }
         if (method.equals("POST") && (uri.toString().equals("/login/expired_cookie"))){
             //TODO dlaczego kiedy ciastko wygasa i następuje przekierowanie ciastko jest odnawiane?
@@ -28,18 +37,21 @@ public class LoginHandler implements HttpHandler {
         }
     }
 
-    private void handleLogin(HttpExchange httpExchange) throws IOException {
+    void handleLogin(HttpExchange httpExchange, User user) throws IOException {
         try {
-            tryLogin(httpExchange);
+            tryLogin(httpExchange, user);
         } catch (NotInDatabaseException e) {
             httpResponse.sendResponse404(httpExchange);
         }
     }
 
-    private void tryLogin(HttpExchange httpExchange) throws IOException, NotInDatabaseException {
-        User user = getUserData(httpExchange.getRequestBody());
+     void tryLogin(HttpExchange httpExchange, User user) throws IOException, NotInDatabaseException {
         cookieHelper.createNewCookie(httpExchange, user);
-        httpResponse.sendResponse200(httpExchange, user.getClass().getSimpleName());
+        httpResponse.sendResponse200(httpExchange, getUserTypeName(user));
+    }
+
+     String getUserTypeName(User user){
+        return user.getClass().getSimpleName();
     }
 
         User getUserData(InputStream requestBody) throws IOException, NotInDatabaseException {

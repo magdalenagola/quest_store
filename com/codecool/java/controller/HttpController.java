@@ -15,11 +15,11 @@ public class HttpController {
         public void init() throws IOException {
             int port = 3001;
             HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
-            server.createContext("/login", new LoginHandler());
+            server.createContext("/login", new LoginHandler(new CookieHelper(), new HttpResponse()));
             server.createContext("/cards",
-            new CardHandler(new CardController(new DbCardDAO()),
-            new StudentController(new DbstudentDAO(),new DbTransactionsDAO()),
-            new CookieHelper(), new HttpResponse()));
+                new CardHandler(new CardController(new DbCardDAO()),
+                new StudentController(new DbstudentDAO(),new DbTransactionsDAO()),
+                new CookieHelper(), new HttpResponse()));
             server.createContext("/coins", new WalletHandler());
             server.createContext("/mentor/students", new MentorStudentHandler());
             server.createContext("/static", new StaticHandler());
