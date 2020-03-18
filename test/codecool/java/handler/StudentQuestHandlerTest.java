@@ -44,6 +44,15 @@ class StudentQuestHandlerTest {
         verify(httpResponse).redirectToLoginPage(httpExchange);
     }
 
+    @Test
+    void shouldInvokeGet() throws IOException {
+        StudentQuestHandler studentQuestHandlerSpy = spy(new StudentQuestHandler(cookieHelper, httpResponse));
+        HttpExchange httpExchange = mock(HttpExchange.class);
+        when(httpExchange.getRequestMethod()).thenReturn("GET");
+        studentQuestHandlerSpy.handle(httpExchange);
+        verify(studentQuestHandlerSpy).handleGET(httpExchange);
+    }
+
     private List<Quest> createQuestList() {
         Quest quest1 = new Quest(1, "testTitle1", "testDesc1", "testImage1", true, 12, "testing");
         Quest quest2 = new Quest(2, "testTitle2", "testDesc2", "testImage2", true, 14, "testing");
