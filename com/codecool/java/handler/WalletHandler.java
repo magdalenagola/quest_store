@@ -9,10 +9,11 @@ import java.io.IOException;
 
 public class WalletHandler implements HttpHandler {
     HttpResponse httpResponse;
-    CookieHelper cookieHelper = new CookieHelper();
+    CookieHelper cookieHelper;
 
-    public WalletHandler(HttpResponse httpResponse) {
+    public WalletHandler(HttpResponse httpResponse, CookieHelper cookieHelper) {
         this.httpResponse = httpResponse;
+        this.cookieHelper = cookieHelper;
     }
 
     @Override
