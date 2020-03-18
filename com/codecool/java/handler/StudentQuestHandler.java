@@ -13,9 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StudentQuestHandler implements HttpHandler {
-    CookieHelper cookieHelper = new CookieHelper();
-    HttpResponse httpResponse = new HttpResponse();
+    CookieHelper cookieHelper;
+    HttpResponse httpResponse;
     DbQuestDAO questDAO = new DbQuestDAO();
+
+    public StudentQuestHandler(CookieHelper cookieHelper, HttpResponse httpResponse) {
+        this.cookieHelper = cookieHelper;
+        this.httpResponse = httpResponse;
+    }
+
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
@@ -24,7 +30,7 @@ public class StudentQuestHandler implements HttpHandler {
         }
     }
 
-    private void handleGET(HttpExchange httpExchange) throws IOException {
+    public void handleGET(HttpExchange httpExchange) throws IOException {
         if(!cookieHelper.isCookiePresent(httpExchange)){
             httpResponse.redirectToLoginPage(httpExchange);
         }else {
