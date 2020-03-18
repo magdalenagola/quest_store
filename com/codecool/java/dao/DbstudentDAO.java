@@ -183,6 +183,18 @@ public class DbstudentDAO extends DbConnectionDao implements StudentDAO{
         }
     }
 
+    public void delete(Object o){
+        Connection c = dbconnection.getConnection();
+        Student student = (Student) o;
+        try {
+            PreparedStatement ps = c.prepareStatement("DELETE FROM users WHERE email = ?;");
+            ps.setString(1, student.getLogin());
+            ps.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void activate(Object o){
