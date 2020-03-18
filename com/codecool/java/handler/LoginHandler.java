@@ -42,7 +42,7 @@ public class LoginHandler implements HttpHandler {
         httpResponse.sendResponse200(httpExchange, user.getClass().getSimpleName());
     }
 
-    private User getUserData(InputStream requestBody) throws IOException, NotInDatabaseException {
+        User getUserData(InputStream requestBody) throws IOException, NotInDatabaseException {
         LoginController loginController = new LoginController(new DbAuthorizationDAO());
         InputStreamReader isr = new InputStreamReader(requestBody, "utf-8");
         BufferedReader br = new BufferedReader(isr);
