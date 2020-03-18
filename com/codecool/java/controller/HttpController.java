@@ -1,9 +1,6 @@
 package codecool.java.controller;
 
-import codecool.java.dao.DbCardDAO;
-import codecool.java.dao.DbTransactionsDAO;
-import codecool.java.dao.DbstudentDAO;
-import codecool.java.dao.StudentDAO;
+import codecool.java.dao.*;
 import codecool.java.handler.*;
 import codecool.java.helper.HttpResponse;
 import com.sun.net.httpserver.HttpServer;
@@ -28,7 +25,7 @@ public class HttpController {
             server.createContext("/static", new StaticHandler());
             server.createContext("/student/transactions", new TransactionsHandler(new DbstudentDAO(), new DbTransactionsDAO()));
             server.createContext("/student/inventory", new InventoryHandler(new DbstudentDAO(), new DbCardDAO()));
-            server.createContext("/mentor/quests", new MentorQuestHandler());
+            server.createContext("/mentor/quests", new MentorQuestHandler(new DbQuestDAO(), cookieHelper, httpResponse));
             server.createContext("/student/quests", new StudentQuestHandler());
             server.createContext("/manager/mentor", new ManagerMentorsHandler());
             server.setExecutor(null);
