@@ -28,6 +28,7 @@ class WalletHandlerTest {
     void shouldInvokeGet() throws IOException {
         WalletHandler walletHandlerSpy = spy(new WalletHandler(httpResponse, cookieHelper));
         HttpExchange httpExchange = mock(HttpExchange.class);
+        when(cookieHelper.getSessionId(httpExchange)).thenReturn(sessionId);
         when(httpExchange.getRequestMethod()).thenReturn("GET");
         walletHandlerSpy.handle(httpExchange);
         verify(walletHandlerSpy).handleGET(httpExchange, sessionId);
