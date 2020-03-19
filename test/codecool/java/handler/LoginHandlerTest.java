@@ -1,6 +1,7 @@
 package codecool.java.handler;
 
 import codecool.java.controller.LoginController;
+import codecool.java.dao.DbAuthorizationDAO;
 import codecool.java.dao.NotInDatabaseException;
 import codecool.java.helper.HttpResponse;
 import codecool.java.model.Student;
@@ -23,6 +24,7 @@ class LoginHandlerTest {
     static LoginHandler loginHandler;
     static LoginHandler mockLoginHandler;
     static LoginController mockLoginController;
+    static LoginHandler loginHandlerInstance;
 
 
     @BeforeEach
@@ -33,6 +35,7 @@ class LoginHandlerTest {
         mockLoginController = mock(LoginController.class);
         loginHandler = new LoginHandler(mockCookieHelper, mockHttpResponse, mockLoginController);
         mockLoginHandler = mock(LoginHandler.class);
+        loginHandlerInstance = new LoginHandler(new CookieHelper(), new HttpResponse(), new LoginController(new DbAuthorizationDAO()));
 
     }
 
@@ -41,7 +44,7 @@ class LoginHandlerTest {
         String data = "[notExistingUser, notExistingPassword]";
         InputStream inputStream = new ByteArrayInputStream(data.getBytes());
         assertThrows(NotInDatabaseException.class, ()-> {
-            loginHandler.getUserData(inputStream);
+            loginHandlerInstance.getUserData(inputStream);
         });
     }
 
@@ -49,7 +52,7 @@ class LoginHandlerTest {
     public void shouldReturnStudentClassObjectWhenLoginAndPasswordForStudentUserProvided() throws IOException, NotInDatabaseException {
         String data = "[\"student\",\"123\"]";
         InputStream inputStream = new ByteArrayInputStream(data.getBytes());
-        assertEquals("Student", loginHandler.getUserData(inputStream).getClass().getSimpleName());
+        assertEquals("Student", loginHandlerInstance.getUserData(inputStream).getClass().getSimpleName());
     }
 
     @Test
