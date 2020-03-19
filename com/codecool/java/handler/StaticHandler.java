@@ -23,8 +23,6 @@ public class StaticHandler implements HttpHandler {
         ClassLoader classLoader = getClass().getClassLoader();
         URL fileURL = classLoader.getResource(path);
 
-        OutputStream os = httpExchange.getResponseBody();
-
         if (fileURL == null) {
             // Object does not exist or is not a file: reject with 404 error.
             send404(httpExchange);
@@ -35,7 +33,7 @@ public class StaticHandler implements HttpHandler {
 
     }
 
-    private void send404(HttpExchange httpExchange) throws IOException {
+    public void send404(HttpExchange httpExchange) throws IOException {
         String response = "404 (Not Found)\n";
         httpExchange.sendResponseHeaders(404, response.length());
         OutputStream os = httpExchange.getResponseBody();
@@ -43,7 +41,7 @@ public class StaticHandler implements HttpHandler {
         os.close();
     }
 
-    private void sendFile(HttpExchange httpExchange, URL fileURL) throws IOException {
+    public void sendFile(HttpExchange httpExchange, URL fileURL) throws IOException {
         // get the file
         File file = new File(fileURL.getFile());
         // we need to find out the mime type of the file, see: https://en.wikipedia.org/wiki/Media_type

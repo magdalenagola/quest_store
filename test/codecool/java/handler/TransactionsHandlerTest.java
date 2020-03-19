@@ -3,10 +3,10 @@ package codecool.java.handler;
 import codecool.java.dao.DbTransactionsDAO;
 import codecool.java.dao.DbstudentDAO;
 import codecool.java.model.*;
+
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 class TransactionsHandlerTest {
+
     DbTransactionsDAO mockTransactionsDAO;
     TransactionsHandler transactionsHandler;
 
@@ -26,6 +27,7 @@ class TransactionsHandlerTest {
         mockTransactionsDAO = mock(DbTransactionsDAO.class);
         transactionsHandler = new TransactionsHandler(mock(DbstudentDAO.class),mockTransactionsDAO);
     }
+
 
     @Test
     public void shouldReturnTransactionsForGivenStudent(){

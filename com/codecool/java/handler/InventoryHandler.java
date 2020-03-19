@@ -1,8 +1,6 @@
 package codecool.java.handler;
 
-import codecool.java.dao.DbCardDAO;
-import codecool.java.dao.DbTransactionsDAO;
-import codecool.java.dao.DbstudentDAO;
+import codecool.java.dao.*;
 import codecool.java.helper.HttpResponse;
 import codecool.java.model.Student;
 import com.google.gson.Gson;
@@ -13,10 +11,10 @@ import java.io.IOException;
 public class InventoryHandler implements HttpHandler {
     CookieHelper cookieHelper = new CookieHelper();
     HttpResponse httpResponse = new HttpResponse();
-    DbCardDAO cardDAO;
-    DbstudentDAO studentDAO;
+    CardDAO cardDAO;
+    StudentDAO studentDAO;
 
-    public InventoryHandler(DbstudentDAO studentDAO, DbCardDAO cardDAO) {
+    public InventoryHandler(StudentDAO studentDAO, CardDAO cardDAO) {
         this.studentDAO = studentDAO;
         this.cardDAO = cardDAO;
     }

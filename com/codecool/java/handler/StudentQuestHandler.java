@@ -1,6 +1,7 @@
 package codecool.java.handler;
 
 import codecool.java.dao.DbQuestDAO;
+import codecool.java.dao.QuestDAO;
 import codecool.java.helper.HttpResponse;
 import codecool.java.model.Quest;
 import com.google.gson.Gson;
@@ -13,9 +14,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StudentQuestHandler implements HttpHandler {
-    CookieHelper cookieHelper = new CookieHelper();
-    HttpResponse httpResponse = new HttpResponse();
-    DbQuestDAO questDAO = new DbQuestDAO();
+    CookieHelper cookieHelper;
+    HttpResponse httpResponse;
+    QuestDAO questDAO;
+
+    public StudentQuestHandler(QuestDAO questDAO, CookieHelper cookieHelper, HttpResponse httpResponse) {
+        this.cookieHelper = cookieHelper;
+        this.httpResponse = httpResponse;
+        this.questDAO = questDAO;
+    }
+
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
@@ -24,20 +32,19 @@ public class StudentQuestHandler implements HttpHandler {
         }
     }
 
-    private void handleGET(HttpExchange httpExchange) throws IOException {
+    public void handleGET(HttpExchange httpExchange) throws IOException {
         if(!cookieHelper.isCookiePresent(httpExchange)){
             httpResponse.redirectToLoginPage(httpExchange);
         }else {
             cookieHelper.refreshCookie(httpExchange);
-            List<Quest> quests = questDAO.loadAllActive();
-            String response = getQuests(quests);
+            String response = getQuests();
             httpResponse.sendResponse200(httpExchange, response);
         }
     }
 
-    public String getQuests(List<Quest> quests) {
+    public String getQuests() {
         Gson gson = new Gson();
-        return gson.toJson(quests);
+        return gson.toJson(questDAO.loadAllActive());
     }
 
 }

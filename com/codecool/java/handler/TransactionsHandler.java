@@ -2,6 +2,8 @@ package codecool.java.handler;
 
 import codecool.java.dao.DbTransactionsDAO;
 import codecool.java.dao.DbstudentDAO;
+import codecool.java.dao.StudentDAO;
+import codecool.java.dao.TransactionsDAO;
 import codecool.java.helper.HttpResponse;
 import codecool.java.model.Student;
 import codecool.java.model.Transaction;
@@ -16,10 +18,10 @@ import java.util.Map;
 public class TransactionsHandler implements HttpHandler {
     CookieHelper cookieHelper = new CookieHelper();
     HttpResponse httpResponse = new HttpResponse();
-    DbstudentDAO studentDAO;
-    DbTransactionsDAO transactionsDAO;
+    StudentDAO studentDAO;
+    TransactionsDAO transactionsDAO;
 
-    public TransactionsHandler(DbstudentDAO studentDAO, DbTransactionsDAO transactionsDAO){
+    public TransactionsHandler(StudentDAO studentDAO, TransactionsDAO transactionsDAO){
         this.studentDAO = studentDAO;
         this.transactionsDAO = transactionsDAO;
     }
