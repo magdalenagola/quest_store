@@ -50,7 +50,7 @@ public enum DatabaseConnection {
         String[] credentials = new String[3];
         int i = 0;
         try {
-            reader = new Scanner(new File("com/codecool/resources/" + this.env + "Env"));
+            reader = new Scanner(new File("com/codecool/resources/env/" + this.env + "Env"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
