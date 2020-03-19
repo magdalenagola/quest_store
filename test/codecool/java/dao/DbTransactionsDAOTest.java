@@ -17,13 +17,18 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class DbTransactionsDAOTest {
-    DbTransactionsDAO transactionsDAO = new DbTransactionsDAO();
-    DbQuestDAO dbQuestDAO = new DbQuestDAO();
-    DbCardDAO dbCardDAO = new DbCardDAO();
+    DbTransactionsDAO transactionsDAO;
+    DbQuestDAO dbQuestDAO;
+    DbCardDAO dbCardDAO;
 
     @BeforeAll
     public static void setDbToTest() {
         DatabaseConnection.INSTANCE.setEnv("test");
+    }
+    public void setUp(){
+        transactionsDAO = new DbTransactionsDAO();
+        dbQuestDAO = new DbQuestDAO();
+        dbCardDAO = new DbCardDAO();
     }
 
     @Test
@@ -85,6 +90,20 @@ class DbTransactionsDAOTest {
         assertTrue(checkIfTransactionInDatabase(cardTransaction));
     }
 
+    @Test
+    void shouldSaveQuestTransactionToDatabase() {
+        Transaction questTransaction = createSampleQuestTransaction();
+        transactionsDAO.save(questTransaction);
+        assertTrue(checkIfTransactionInDatabase(questTransaction));
+    }
+
+    private QuestTransaction createSampleQuestTransaction() {
+        Quest quest = new Quest(6, "test", "test quest", "image", true, 44, "normal");
+        Date transactionDate =Date.valueOf("2020-02-09");
+        return new QuestTransaction(quest, 2, transactionDate, 44);
+    }
+
+
     private CardTransaction createSampleCardTransaction(){
         Card card = new Card(10,44, "sample card", "sample image", true, 88, "test card");
         Date transactionDate =Date.valueOf("2020-02-06");
@@ -101,17 +120,9 @@ class DbTransactionsDAOTest {
         return false;
     }
 
-//    @Test
-//    void shouldSaveQuestTransactionToDatabase() {
-//    }
 
     @Test
     void shouldLoadAllTransactions() {
         assertEquals(24, transactionsDAO.loadAll().size());
     }
-
-//    @Test
-//    void update() {
-//    }
-
 }
