@@ -49,29 +49,33 @@ class DbTransactionsDAOTest {
         when(mockStudent.getId()).thenReturn(23);
         Map<String,List<Transaction>> expected = createSampleCardAndQuestTransactionsHashMapForStudentId23();
         Map<String,List<Transaction>> actual = transactionsDAO.displayAllTransactionsByStudent(mockStudent);
-        System.out.println(expected);
-        System.out.println("actual:");
-        System.out.println(actual);
         assertEquals(expected.toString(), actual.toString());
     }
 
     private Map<String,List<Transaction>>  createSampleCardAndQuestTransactionsHashMapForStudentId23() throws SQLException {
         Map<String,List<Transaction>> studentTransactions = new HashMap<>();
+        studentTransactions.put("Cards", createSampleCardsList());
+        studentTransactions.put("Quests", createSampleQuestsList());
+        return studentTransactions;
+    }
+
+    private List<Transaction> createSampleCardsList(){
         List<Transaction> cardsList = new ArrayList<>();
         Card card = dbCardDAO.selectCardById(6);
         Date dateBought =Date.valueOf("2020-03-05");
         Transaction cardTransaction = new CardTransaction(card, 23, dateBought, 8);
         cardsList.add(cardTransaction);
+        return cardsList;
+    }
+
+    private List<Transaction> createSampleQuestsList() throws SQLException {
         List<Transaction> questsList = new ArrayList<>();
-        studentTransactions.put("Cards", cardsList);
         Quest quest = dbQuestDAO.selectQuestById(4);
         Date dateAdded =Date.valueOf("2020-02-06");
         Transaction questTransaction = new QuestTransaction(quest, 23, dateAdded, 5);
         questsList.add(questTransaction);
-        studentTransactions.put("Quests", questsList);
-        return studentTransactions;
+        return questsList;
     }
-
 
 
     @Test
