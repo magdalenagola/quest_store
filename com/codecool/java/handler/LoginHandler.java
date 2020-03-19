@@ -11,12 +11,14 @@ import java.io.*;
 import java.net.URI;
 
 public class LoginHandler implements HttpHandler {
+    LoginController loginController;
     CookieHelper cookieHelper;
     HttpResponse httpResponse;
 
-    public LoginHandler(CookieHelper cookieHelper, HttpResponse httpResponse){
+    public LoginHandler(CookieHelper cookieHelper, HttpResponse httpResponse, LoginController loginController){
         this.cookieHelper = cookieHelper;
         this.httpResponse = httpResponse;
+        this.loginController = loginController;
     }
 
     @Override
@@ -24,11 +26,7 @@ public class LoginHandler implements HttpHandler {
         String method  = httpExchange.getRequestMethod();
         URI uri = httpExchange.getRequestURI();
         if(method.equals("POST") && (uri.toString().equals("/login"))){
-            try {
-                handleLogin(httpExchange, getUserData(httpExchange.getRequestBody()));
-            } catch (NotInDatabaseException e) {
-                e.printStackTrace();
-            }
+            loginUser(httpExchange);
         }
         if (method.equals("POST") && (uri.toString().equals("/login/expired_cookie"))){
             //TODO dlaczego kiedy ciastko wygasa i następuje przekierowanie ciastko jest odnawiane?
@@ -37,25 +35,22 @@ public class LoginHandler implements HttpHandler {
         }
     }
 
-    void handleLogin(HttpExchange httpExchange, User user) throws IOException {
-        try {
-            tryLogin(httpExchange, user);
-        } catch (NotInDatabaseException e) {
-            httpResponse.sendResponse404(httpExchange);
-        }
-    }
-
-     void tryLogin(HttpExchange httpExchange, User user) throws IOException, NotInDatabaseException {
-        cookieHelper.createNewCookie(httpExchange, user);
-        httpResponse.sendResponse200(httpExchange, getUserTypeName(user));
+     void loginUser(HttpExchange httpExchange) throws IOException {
+         User user = null;
+         try {
+             user = getUserData(httpExchange.getRequestBody());
+             cookieHelper.createNewCookie(httpExchange, user);
+             httpResponse.sendResponse200(httpExchange, getUserTypeName(user));
+         } catch (NotInDatabaseException e) {
+             httpResponse.sendResponse404(httpExchange);
+         }
     }
 
      String getUserTypeName(User user){
         return user.getClass().getSimpleName();
     }
 
-        User getUserData(InputStream requestBody) throws IOException, NotInDatabaseException {
-        LoginController loginController = new LoginController(new DbAuthorizationDAO());
+     User getUserData(InputStream requestBody) throws IOException, NotInDatabaseException {
         InputStreamReader isr = new InputStreamReader(requestBody, "utf-8");
         BufferedReader br = new BufferedReader(isr);
         String loginData = br.readLine();
@@ -65,6 +60,5 @@ public class LoginHandler implements HttpHandler {
         loginPassword[1] = loginPassword[1].replaceAll("\"", "");
         User user = loginController.authenticate(loginPassword[0], loginPassword[1]);
         return user;
-
     }
 }

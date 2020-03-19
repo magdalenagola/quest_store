@@ -32,6 +32,5 @@ class TransactionsHandlerTest {
         String expected = "{\"Quests\":[{\"item\":{\"category\":\"category\",\"id\":1,\"title\":\"title\",\"description\":\"description\",\"image\":\"image\",\"isActive\":true,\"cost\":22},\"userId\":1,\"date\":\"sty 1, 1970\",\"cost\":22}]}";
         String actual = transactionsHandler.getStudentTransactions(dummyStudent);
         assertEquals(expected,actual);
-
     }
 }
