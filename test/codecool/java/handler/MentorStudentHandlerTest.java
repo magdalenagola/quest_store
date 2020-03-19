@@ -20,7 +20,7 @@ class MentorStudentHandlerTest {
     DbstudentDAO dbstudentDAO = new DbstudentDAO();
     CookieHelper cookieHelper = mock(CookieHelper.class);
     HttpResponse httpResponse = mock(HttpResponse.class);
-    MentorStudentHandler mentorStudentHandler = new MentorStudentHandler(cookieHelper, httpResponse);
+    MentorStudentHandler mentorStudentHandler = new MentorStudentHandler();
 
     @Test
     void shouldCreateStudentFromJson() throws IOException {
