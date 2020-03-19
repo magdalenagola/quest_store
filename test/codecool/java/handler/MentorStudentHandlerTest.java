@@ -80,7 +80,18 @@ class MentorStudentHandlerTest {
     public void shouldCallSendResponse200WhenGetStudentList() throws IOException {
         HttpExchange httpExchange = mock(HttpExchange.class);
         when(cookieHelper.isCookiePresent(httpExchange)).thenReturn(true);
+        String expected = mentorStudentHandler.getStudentList();
         mentorStudentHandler.handleGET(httpExchange);
+        verify(httpResponse).sendResponse200(httpExchange,expected);
+    }
+
+    @Test
+    void shouldInvokeGet() throws IOException {
+        MentorStudentHandler mentorStudentHandlerSpy = spy(new MentorStudentHandler(cookieHelper, httpResponse));
+        HttpExchange httpExchange = mock(HttpExchange.class);
+        when(httpExchange.getRequestMethod()).thenReturn("GET");
+        mentorStudentHandlerSpy.handle(httpExchange);
+        verify(mentorStudentHandlerSpy).handleGET(httpExchange);
     }
 
     void createTestStudent() {

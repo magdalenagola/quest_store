@@ -1,20 +1,23 @@
 package codecool.java.handler;
 
-import codecool.java.dao.DbQuestDAO;
 import codecool.java.dao.QuestDAO;
 import codecool.java.helper.HttpResponse;
-import codecool.java.model.Quest;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MentorQuestHandler implements HttpHandler {
-    CookieHelper cookieHelper = new CookieHelper();
-    HttpResponse httpResponse = new HttpResponse();
+    CookieHelper cookieHelper;
+    HttpResponse httpResponse;
+    QuestDAO questDAO;
+
+    public MentorQuestHandler(QuestDAO questDAO,CookieHelper cookieHelper, HttpResponse httpResponse){
+        this.questDAO = questDAO;
+        this.cookieHelper = cookieHelper;
+        this.httpResponse = httpResponse;
+    }
+
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
@@ -23,7 +26,7 @@ public class MentorQuestHandler implements HttpHandler {
         }
     }
 
-    private void handleGET(HttpExchange httpExchange) throws IOException {
+    void handleGET(HttpExchange httpExchange) throws IOException {
         if(!cookieHelper.isCookiePresent(httpExchange)){
             httpResponse.redirectToLoginPage(httpExchange);
         }else {
@@ -35,7 +38,6 @@ public class MentorQuestHandler implements HttpHandler {
 
     private String getQuests(){
         Gson gson = new Gson();
-        QuestDAO questDAO = new DbQuestDAO();
         return gson.toJson(questDAO.loadAll());
     }
 

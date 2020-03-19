@@ -9,5 +9,5 @@ import java.util.Map;
 
 public interface TransactionsDAO extends DAO{
     List<Transaction> loadAllNotApproved() throws SQLException;
-    Map<String,List<Transaction>> displayAllTransactionsByStudent(Student student) throws SQLException;
+    Map<String,List<Transaction>> displayAllTransactionsByStudent(Student student);
 }
