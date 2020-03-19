@@ -10,11 +10,11 @@ public class CardTransaction extends Transaction {
         super(card, userId, transactionDate, cost);
     };
 
-    public String toString()  {
-        String cardTransactionInfo = "";
-        DbCardDAO dbCardDao = new DbCardDAO();
-        Card card = dbCardDao.selectCardById(getItemId());
-        cardTransactionInfo = "Id: " + getItemId() + ", name: " + card.getTitle();
-        return cardTransactionInfo;
-    }
+//    public String toString()  {
+//        String cardTransactionInfo = "";
+//        DbCardDAO dbCardDao = new DbCardDAO();
+//        Card card = dbCardDao.selectCardById(getItemId());
+//        cardTransactionInfo = "Id: " + getItemId() + ", name: " + card.getTitle();
+//        return cardTransactionInfo;
+//    }
 }

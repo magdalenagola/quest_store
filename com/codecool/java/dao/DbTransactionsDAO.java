@@ -62,7 +62,7 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
             Integer coinsPaid = rs.getInt("cost");
             Date dateBought = rs.getDate("date_bought");
             Integer userId = rs.getInt("user_id");
-            Card card = new Card(rs.getInt("cost"), rs.getString("description"), rs.getString("image"), true, rs.getInt("quantity"), rs.getString("title"));
+            Card card = new Card(id, rs.getInt("cost"), rs.getString("description"), rs.getString("image"), true, rs.getInt("quantity"), rs.getString("title"));
             Transaction cardTransaction = new CardTransaction(card, userId, dateBought, coinsPaid);
             transactionsList.add(cardTransaction);
         }
