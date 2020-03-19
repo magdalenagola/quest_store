@@ -53,7 +53,6 @@ public class MentorStudentHandler implements HttpHandler {
         DbstudentDAO studentDAO = new DbstudentDAO();
         Gson gson = new Gson();
         return gson.toJson(studentDAO.loadAllActive());
-
     }
 
     public void handleAddStudent(HttpExchange httpExchange) throws IOException {

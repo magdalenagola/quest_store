@@ -3,3 +3,7 @@ node_modules/
 /.idea/
 /target/
 /quest_store.iml
+/com/codecool/resources/env/prodEnv
+/com/codecool/resources/env/testEnv
+/com/codecool/resources/env
+com/codecool/resources/env/env.zip
