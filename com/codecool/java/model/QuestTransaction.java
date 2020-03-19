@@ -4,6 +4,7 @@ import codecool.java.dao.DbQuestDAO;
 
 import java.sql.SQLException;
 import java.sql.Date;
+import java.util.Objects;
 
 public class QuestTransaction extends Transaction {
     private Date approvalDate;
@@ -33,4 +34,18 @@ public class QuestTransaction extends Transaction {
 //
 //        return questTransactionInfo;
 //    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        QuestTransaction that = (QuestTransaction) o;
+        return Objects.equals(approvalDate, that.approvalDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), approvalDate);
+    }
 }

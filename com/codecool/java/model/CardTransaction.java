@@ -4,6 +4,7 @@ import codecool.java.dao.DbCardDAO;
 
 import java.sql.SQLException;
 import java.sql.Date;
+import java.util.Objects;
 
 public class CardTransaction extends Transaction {
     public CardTransaction(Item card, int userId, Date transactionDate, int cost) {
@@ -17,4 +18,11 @@ public class CardTransaction extends Transaction {
 //        cardTransactionInfo = "Id: " + getItemId() + ", name: " + card.getTitle();
 //        return cardTransactionInfo;
 //    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode());
+    }
+
 }
+

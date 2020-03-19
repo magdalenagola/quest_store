@@ -79,27 +79,39 @@ class DbTransactionsDAOTest {
 
 
     @Test
-    void addCardTransaction() {
+    void shouldSaveCardTransactionToDatabase() {
+        Transaction cardTransaction = createSampleCardTransaction();
+        transactionsDAO.save(cardTransaction);
+        assertTrue(checkIfTransactionInDatabase(cardTransaction));
     }
 
-    @Test
-    void save() {
+    private CardTransaction createSampleCardTransaction(){
+        Card card = new Card(10,44, "sample card", "sample image", true, 88, "test card");
+        Date transactionDate =Date.valueOf("2020-02-06");
+        return new CardTransaction(card, 2, transactionDate, 44);
     }
+
+    private boolean checkIfTransactionInDatabase(Transaction transaction) {
+        List<Transaction> transactions = transactionsDAO.loadAll();
+        for (Transaction transactionItem : transactions) {
+            if (transaction.equals(transactionItem)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+//    @Test
+//    void shouldSaveQuestTransactionToDatabase() {
+//    }
 
     @Test
     void shouldLoadAllTransactions() {
         assertEquals(24, transactionsDAO.loadAll().size());
     }
 
-    @Test
-    void update() {
-    }
+//    @Test
+//    void update() {
+//    }
 
-    @Test
-    void disable() {
-    }
-
-    @Test
-    void activate() {
-    }
 }
