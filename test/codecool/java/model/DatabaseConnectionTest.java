@@ -1,5 +1,8 @@
 package codecool.java.model;
 
+import codecool.java.dao.DbStudentGroupDao;
+import codecool.java.dao.DbstudentDAO;
+import codecool.java.dao.StudentDAO;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,6 +18,7 @@ public class DatabaseConnectionTest {
 
     @Test
     public void shouldReturnProdDbLoginCredentials() {
+        DatabaseConnection.INSTANCE.setEnv("prod");
         String[] actual = DatabaseConnection.INSTANCE.getDbCredentials();
         String expectedUrl = "jdbc:postgresql://ec2-176-34-237-141.eu-west-1.compute.amazonaws.com:5432/dbc5jifafq3j1h?sslmode=require";
         String expectedUser = "utiuhfgjckzuoq";
@@ -36,5 +40,20 @@ public class DatabaseConnectionTest {
         assertEquals(expectedPassword, actual[2]);
     }
 
+    @Test
+    public void shouldReturnTestBeniosDataWhenUsingTestDb() {
+        DatabaseConnection.INSTANCE.setEnv("prod");
+        String expected = "TestBenio";
+        StudentDAO dao = new DbstudentDAO();
+        dao.findStudentBySessionId("f4d044bb-a4ea-4afe-8sdgga-5t4grea725");
+    }
+
+    @Test
+    public void shouldReturnRealBeniosDataWhenUsingProdDb() {
+        DatabaseConnection.INSTANCE.setEnv("test");
+        String expected = "benio";
+        StudentDAO dao = new DbstudentDAO();
+        dao.findStudentBySessionId("e9a8476c-2cf2-402a-a819-f2bbb5d5e9ad");
+    }
 
 }
