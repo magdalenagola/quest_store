@@ -18,12 +18,12 @@ class DbCardDAOTest {
         DatabaseConnection.INSTANCE.setEnv("test");
     }
 
-    @Test
-    public void selectCardById() {
-        Card expected = new Card(11, 55, "test desc", "test image", true, 1, "test title");
-        Card actual = dao.selectCardById(expected.getId());
-        assertTrue(new ReflectionEquals(expected).matches(actual));
-    }
+//    @Test
+//    public void selectCardById() {
+//        Card expected = new Card(11, 55, "test desc", "test image", true, 1, "test title");
+//        Card actual = dao.selectCardById(expected.getId());
+//        assertEquals(expected.toString(),actual.toString());
+//    }
 
     @Test
     void enableAllCards() {
