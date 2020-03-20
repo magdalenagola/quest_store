@@ -106,7 +106,11 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
             PreparedStatement ps = c.prepareStatement("INSERT INTO student_quests(cost, date_added, date_approved, user_id, quest_id) VALUES(?, ?, ?, ?, ?)");
             ps.setInt(1, questTransaction.getCost());
             ps.setDate(2, questTransaction.getDate());
-            ps.setNull(3, java.sql.Types.DATE);
+            if (questTransaction.getApprovalDate() != null){
+                ps.setDate(3, questTransaction.getApprovalDate());
+            }else{
+                ps.setNull(3, java.sql.Types.DATE);
+            }
             ps.setInt(4, questTransaction.getUserId());
             ps.setInt(5, questTransaction.getItemId());
             ps.executeUpdate();
@@ -227,6 +231,20 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
         } else if (object instanceof QuestTransaction) {
             QuestTransaction questTransaction = (QuestTransaction) object;
             PreparedStatement ps = c.prepareStatement(String.format("UPDATE student_quests SET is_active = true WHERE id = %d;", questTransaction.getItemId()));
+            ps.executeUpdate();
+        }
+    }
+
+    public void remove(Object object) throws SQLException {
+        Connection c = dbconnection.getConnection();
+        if (object instanceof CardTransaction){
+            CardTransaction cardTransaction = (CardTransaction) object;
+            PreparedStatement ps = c.prepareStatement(String.format("DELETE FROM student_cards WHERE card_id = %d;", cardTransaction.getItemId()));
+            ps.executeUpdate();
+
+        } else if (object instanceof QuestTransaction) {
+            QuestTransaction questTransaction = (QuestTransaction) object;
+            PreparedStatement ps = c.prepareStatement(String.format("DELETE FROM student_quests WHERE quest_id = %d;", questTransaction.getItemId()));
             ps.executeUpdate();
         }
     }
