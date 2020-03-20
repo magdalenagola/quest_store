@@ -2,6 +2,7 @@ package codecool.java.model;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public abstract class Transaction {
     private Item item;
@@ -47,5 +48,20 @@ public abstract class Transaction {
 
     public void setCost(int cost) {
         this.cost = cost;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Transaction that = (Transaction) o;
+        return userId == that.userId &&
+                cost == that.cost &&
+                Objects.equals(date, that.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(item, userId, date, cost);
     }
 }

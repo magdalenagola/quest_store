@@ -4,6 +4,7 @@ import codecool.java.dao.DbQuestDAO;
 
 import java.sql.SQLException;
 import java.sql.Date;
+import java.util.Objects;
 
 public class QuestTransaction extends Transaction {
     private Date approvalDate;
@@ -33,4 +34,9 @@ public class QuestTransaction extends Transaction {
 //
 //        return questTransactionInfo;
 //    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode());
+    }
 }
