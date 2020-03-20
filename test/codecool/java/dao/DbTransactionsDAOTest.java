@@ -2,7 +2,6 @@ package codecool.java.dao;
 
 import codecool.java.model.*;
 import org.junit.jupiter.api.*;
-import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 
 import java.sql.Date;
 
@@ -135,7 +134,6 @@ class DbTransactionsDAOTest {
         }
         return false;
     }
-
 
     @Test
     void shouldLoadAllTransactions() {
