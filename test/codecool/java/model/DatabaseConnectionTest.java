@@ -18,7 +18,7 @@ public class DatabaseConnectionTest {
 
     @Test
     public void shouldReturnProdDbLoginCredentials() {
-        DatabaseConnection.INSTANCE.setEnv("prod");
+//        DatabaseConnection.INSTANCE.setEnv("prod");
         String[] actual = DatabaseConnection.INSTANCE.getDbCredentials();
         String expectedUrl = "jdbc:postgresql://ec2-176-34-237-141.eu-west-1.compute.amazonaws.com:5432/dbc5jifafq3j1h?sslmode=require";
         String expectedUser = "utiuhfgjckzuoq";
@@ -30,7 +30,7 @@ public class DatabaseConnectionTest {
 
     @Test
     public void shouldReturnTestDbLoginCredentials() {
-        DatabaseConnection.INSTANCE.setEnv("test");
+//        DatabaseConnection.INSTANCE.setEnv("test");
         String[] actual = DatabaseConnection.INSTANCE.getDbCredentials();
         String expectedUrl = "jdbc:postgresql://ec2-54-247-169-129.eu-west-1.compute.amazonaws.com:5432/de3ku5gmultp9?sslmode=require";
         String expectedUser = "xxgyliphwfrqpv";
@@ -42,7 +42,7 @@ public class DatabaseConnectionTest {
 
     @Test
     public void shouldReturnTestBeniosDataWhenUsingTestDb() {
-        DatabaseConnection.INSTANCE.setEnv("prod");
+//        DatabaseConnection.INSTANCE.setEnv("prod");
         String expected = "TestBenio";
         StudentDAO dao = new DbstudentDAO();
         dao.findStudentBySessionId("f4d044bb-a4ea-4afe-8sdgga-5t4grea725");
@@ -50,7 +50,7 @@ public class DatabaseConnectionTest {
 
     @Test
     public void shouldReturnRealBeniosDataWhenUsingProdDb() {
-        DatabaseConnection.INSTANCE.setEnv("test");
+//        DatabaseConnection.INSTANCE.setEnv("test");
         String expected = "benio";
         StudentDAO dao = new DbstudentDAO();
         dao.findStudentBySessionId("e9a8476c-2cf2-402a-a819-f2bbb5d5e9ad");

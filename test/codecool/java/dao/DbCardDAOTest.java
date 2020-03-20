@@ -19,7 +19,7 @@ class DbCardDAOTest {
 
     @BeforeAll
     public static void setDbToTest() {
-        DatabaseConnection.INSTANCE.setEnv("test");
+//        DatabaseConnection.INSTANCE.setEnv("test");
         DAO.update(TEST_CARD);
         DAO.update(SECOND_TEST_CARD);
         }

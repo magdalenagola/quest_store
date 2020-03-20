@@ -21,7 +21,7 @@ class DbTransactionsDAOTest {
 
     @BeforeAll
     public static void setDbToTest() {
-        DatabaseConnection.INSTANCE.setEnv("test");
+//        DatabaseConnection.INSTANCE.setEnv("test");
     }
 
     @BeforeAll

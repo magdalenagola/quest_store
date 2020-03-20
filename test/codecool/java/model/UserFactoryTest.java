@@ -11,7 +11,7 @@ class UserFactoryTest {
 
     @BeforeAll
     public static void setDbToTest() {
-        DatabaseConnection.INSTANCE.setEnv("test");
+//        DatabaseConnection.INSTANCE.setEnv("test");
     }
 
 
