@@ -1,8 +1,7 @@
 package codecool.java.dao;
 
 import codecool.java.model.*;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 
 import java.sql.Date;
@@ -17,18 +16,31 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class DbTransactionsDAOTest {
-    DbTransactionsDAO transactionsDAO;
-    DbQuestDAO dbQuestDAO;
-    DbCardDAO dbCardDAO;
+    static DbTransactionsDAO transactionsDAO;
+    static DbQuestDAO dbQuestDAO;
+    static DbCardDAO dbCardDAO;
 
     @BeforeAll
     public static void setDbToTest() {
         DatabaseConnection.INSTANCE.setEnv("test");
     }
-    public void setUp(){
+
+    @BeforeAll
+    public static void setUp(){
         transactionsDAO = new DbTransactionsDAO();
         dbQuestDAO = new DbQuestDAO();
         dbCardDAO = new DbCardDAO();
+    }
+
+    @AfterEach
+    void afterEach(TestInfo info) throws SQLException {
+        if(!info.getTags().contains("cleanUpSavedCardTransaction") && !info.getTags().contains("cleanUpSavedQuestTransaction")) {
+            return;
+        }else if (info.getTags().contains("cleanUpSavedCardTransaction")) {
+            transactionsDAO.remove(createSampleCardTransaction());
+        } else if (info.getTags().contains("cleanUpSavedQuestTransaction")){
+            transactionsDAO.remove(createSampleQuestTransaction());
+        }
     }
 
     @Test
@@ -84,6 +96,7 @@ class DbTransactionsDAOTest {
 
 
     @Test
+    @Tag("cleanUpSavedCardTransaction")
     void shouldSaveCardTransactionToDatabase() {
         Transaction cardTransaction = createSampleCardTransaction();
         transactionsDAO.save(cardTransaction);
@@ -91,6 +104,7 @@ class DbTransactionsDAOTest {
     }
 
     @Test
+    @Tag("cleanUpSavedQuestTransaction")
     void shouldSaveQuestTransactionToDatabase() {
         Transaction questTransaction = createSampleQuestTransaction();
         transactionsDAO.save(questTransaction);
@@ -100,7 +114,9 @@ class DbTransactionsDAOTest {
     private QuestTransaction createSampleQuestTransaction() {
         Quest quest = new Quest(6, "test", "test quest", "image", true, 44, "normal");
         Date transactionDate =Date.valueOf("2020-02-09");
-        return new QuestTransaction(quest, 2, transactionDate, 44);
+        QuestTransaction questTransaction = new QuestTransaction(quest, 2, transactionDate, 44);
+        questTransaction.setApprovalDate(transactionDate);
+        return questTransaction;
     }
 
 

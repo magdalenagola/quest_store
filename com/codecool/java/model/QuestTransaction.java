@@ -36,16 +36,7 @@ public class QuestTransaction extends Transaction {
 //    }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        QuestTransaction that = (QuestTransaction) o;
-        return Objects.equals(approvalDate, that.approvalDate);
-    }
-
-    @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), approvalDate);
+        return Objects.hash(super.hashCode());
     }
 }
