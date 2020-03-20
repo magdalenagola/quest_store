@@ -4,9 +4,11 @@ import codecool.java.controller.LoginController;
 import codecool.java.dao.DbAuthorizationDAO;
 import codecool.java.dao.NotInDatabaseException;
 import codecool.java.helper.HttpResponse;
+import codecool.java.model.DatabaseConnection;
 import codecool.java.model.Student;
 import codecool.java.model.User;
 import com.sun.net.httpserver.HttpExchange;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,6 +27,11 @@ class LoginHandlerTest {
     static LoginHandler mockLoginHandler;
     static LoginController mockLoginController;
     static LoginHandler loginHandlerInstance;
+
+    @BeforeAll
+    public static void setDbToTest() {
+        DatabaseConnection.INSTANCE.setEnv("test");
+    }
 
 
     @BeforeEach

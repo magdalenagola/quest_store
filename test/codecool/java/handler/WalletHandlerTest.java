@@ -4,7 +4,9 @@ import codecool.java.controller.StudentController;
 import codecool.java.dao.DbTransactionsDAO;
 import codecool.java.dao.DbstudentDAO;
 import codecool.java.helper.HttpResponse;
+import codecool.java.model.DatabaseConnection;
 import com.sun.net.httpserver.HttpExchange;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -20,6 +22,11 @@ class WalletHandlerTest {
     StudentController studentController = new StudentController(new DbstudentDAO(),new DbTransactionsDAO());
     WalletHandler walletHandler = new WalletHandler(studentController, httpResponse, cookieHelper);
     String sessionId = "session-id-for-test";
+
+    @BeforeAll
+    public static void setDbToTest() {
+        DatabaseConnection.INSTANCE.setEnv("test");
+    }
 
     @Test
     void shouldGetStudentCoins() {

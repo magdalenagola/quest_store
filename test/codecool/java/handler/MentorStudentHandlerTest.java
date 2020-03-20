@@ -2,6 +2,7 @@ package codecool.java.handler;
 
 import codecool.java.dao.DbstudentDAO;
 import codecool.java.helper.HttpResponse;
+import codecool.java.model.DatabaseConnection;
 import codecool.java.model.Student;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.Headers;
@@ -21,6 +22,11 @@ class MentorStudentHandlerTest {
     CookieHelper cookieHelper = mock(CookieHelper.class);
     HttpResponse httpResponse = mock(HttpResponse.class);
     MentorStudentHandler mentorStudentHandler = new MentorStudentHandler(cookieHelper, httpResponse);
+
+    @BeforeAll
+    public static void setDbToTest() {
+        DatabaseConnection.INSTANCE.setEnv("test");
+    }
 
     @Test
     void shouldCreateStudentFromJson() throws IOException {
