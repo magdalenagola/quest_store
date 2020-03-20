@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Predicate;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 class DbCardDAOTest {
     private static final DbCardDAO DAO = new DbCardDAO();
