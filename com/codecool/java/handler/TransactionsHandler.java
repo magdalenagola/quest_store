@@ -46,8 +46,7 @@ public class TransactionsHandler implements HttpHandler {
        }
     }
 
-    //TODO make private after testing
-    public String getStudentTransactions(Student student){
+     String getStudentTransactions(Student student){
         Gson gson = new Gson();
         return gson.toJson(transactionsDAO.displayAllTransactionsByStudent(student));
     }

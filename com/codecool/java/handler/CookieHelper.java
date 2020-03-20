@@ -85,8 +85,7 @@ public class CookieHelper {
         return getSessionIdFromCookieString(cookieStr);
     }
 
-    //TODO make private after testing
-    public String getSessionIdFromCookieString(String cookieStr) {
+    String getSessionIdFromCookieString(String cookieStr) {
         return cookieStr.split("=")[1].replace("\"","");
     }
 }

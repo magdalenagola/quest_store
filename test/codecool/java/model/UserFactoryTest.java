@@ -1,12 +1,18 @@
 package codecool.java.model;
 
 import codecool.java.dao.NotInDatabaseException;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserFactoryTest {
     UserFactory userFactory = new UserFactory();
+
+    @BeforeAll
+    public static void setDbToTest() {
+        DatabaseConnection.INSTANCE.setEnv("test");
+    }
 
 
     @Test
