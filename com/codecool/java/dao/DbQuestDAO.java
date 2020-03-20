@@ -139,10 +139,15 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
         return quests;
     }
 
-    private ResultSet selectAllActiveFromTable() throws SQLException {
+    private ResultSet selectAllActiveFromTable(){
         String orderToSql = ("SELECT * FROM quests WHERE is_active = true;");
         Connection c = dbconnection.getConnection();
-        ResultSet rs = c.createStatement().executeQuery(orderToSql);
+        ResultSet rs = null;
+        try {
+            rs = c.createStatement().executeQuery(orderToSql);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
         return rs;
     }
     private ResultSet selectAllFromTable() throws SQLException {
@@ -153,37 +158,49 @@ public class DbQuestDAO extends DbConnectionDao implements QuestDAO {
     }
 
     @Override
-    public void update(Object o) throws SQLException {
+    public void update(Object o){
         Quest quest = (Quest) o;
         String orderToSql = "INSERT INTO quests (title, description, image, category, is_active, cost, category) VALUES (?, ?, ?, ?, ?, ?);";
         Connection c = dbconnection.getConnection();
-        PreparedStatement ps = c.prepareStatement(orderToSql);
-        ps.setString(1, quest.getTitle());
-        ps.setString(2, quest.getDescription());
-        ps.setString(3, quest.getImage());
-        ps.setBoolean(4, quest.isActive());
-        ps.setInt(5, quest.getCost());
-        ps.setString(6, quest.getCategory());
-        ps.execute();
+        try {
+            PreparedStatement ps = c.prepareStatement(orderToSql);
+            ps.setString(1, quest.getTitle());
+            ps.setString(2, quest.getDescription());
+            ps.setString(3, quest.getImage());
+            ps.setBoolean(4, quest.isActive());
+            ps.setInt(5, quest.getCost());
+            ps.setString(6, quest.getCategory());
+            ps.execute();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void disable(Object o) throws SQLException {
+    public void disable(Object o){
         Quest quest = (Quest) o;
         String orderToSql = "UPDATE quests SET is_active = false WHERE id = ?;";
         Connection c = dbconnection.getConnection();
-        PreparedStatement ps = c.prepareStatement(orderToSql);
-        ps.setInt(1, quest.getId());
-        ps.execute();
+        try {
+            PreparedStatement ps = c.prepareStatement(orderToSql);
+            ps.setInt(1, quest.getId());
+            ps.execute();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void activate(Object o) throws SQLException {
+    public void activate(Object o){
         Quest quest = (Quest) o;
         String orderToSql = "UPDATE quests SET is_active = true WHERE id = ?;";
         Connection c = dbconnection.getConnection();
-        PreparedStatement ps = c.prepareStatement(orderToSql);
-        ps.setInt(1, quest.getId());
-        ps.execute();
+        try {
+            PreparedStatement ps = c.prepareStatement(orderToSql);
+            ps.setInt(1, quest.getId());
+            ps.execute();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 }

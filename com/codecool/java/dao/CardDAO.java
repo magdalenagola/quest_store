@@ -3,7 +3,6 @@ package codecool.java.dao;
 import codecool.java.model.Card;
 import codecool.java.model.Student;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface CardDAO extends DAO {

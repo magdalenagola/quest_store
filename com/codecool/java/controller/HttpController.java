@@ -29,7 +29,7 @@ public class HttpController {
             server.createContext("/student/inventory", new InventoryHandler(new DbstudentDAO(), new DbCardDAO()));
             server.createContext("/mentor/quests", new MentorQuestHandler(new DbQuestDAO(), cookieHelper, httpResponse));
             server.createContext("/student/quests", new StudentQuestHandler(new DbQuestDAO(), cookieHelper, httpResponse));
-            server.createContext("/manager/mentor", new ManagerMentorsHandler());
+            server.createContext("/manager/mentor", new ManagerMentorsHandler(new DbMentorDAO(),cookieHelper,httpResponse));
             server.setExecutor(null);
             server.start();
         }

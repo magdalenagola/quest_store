@@ -162,7 +162,7 @@ public class DbCardDAO extends DbConnectionDao implements CardDAO {
     }
 
     @Override
-    public void disable(Object o){
+    public void activate(Object o){
         Card card = (Card) o;
         String orderToSql = "UPDATE cards SET is_active = true WHERE id = ?;";
         Connection c = dbconnection.getConnection();
@@ -176,7 +176,7 @@ public class DbCardDAO extends DbConnectionDao implements CardDAO {
     }
 
     @Override
-    public void activate(Object o){
+    public void disable(Object o){
         Card card = (Card) o;
         String orderToSql = "UPDATE cards SET is_active = false WHERE id = ?;";
         Connection c = dbconnection.getConnection();
@@ -189,6 +189,7 @@ public class DbCardDAO extends DbConnectionDao implements CardDAO {
         }
     }
 
+    @Override
     public List<Card> getCardsByStudent(Student student) {
         Connection c = dbconnection.getConnection();
         List<Card> cardsList = new ArrayList<>();

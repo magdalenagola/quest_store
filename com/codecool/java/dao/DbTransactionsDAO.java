@@ -120,8 +120,9 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
     }
 
 
-    private void updateStudentQuest(QuestTransaction questTransaction) throws SQLException {
+    private void updateStudentQuest(QuestTransaction questTransaction) {
         Connection c = dbconnection.getConnection();
+        try{
         PreparedStatement ps = c.prepareStatement("UPDATE student_quests SET cost = ?," +
                 "date_added = ?, date_approved = ?, user_id = ? WHERE quest_id = ?");
         ps.setInt(1, questTransaction.getCost());
@@ -130,10 +131,14 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
         ps.setInt(4, questTransaction.getUserId());
         ps.setInt(5, questTransaction.getItemId());
         ps.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
-    private void updateStudentCard(CardTransaction cardTransaction) throws SQLException {
+    private void updateStudentCard(CardTransaction cardTransaction){
         Connection c = dbconnection.getConnection();
+        try{
         PreparedStatement ps = c.prepareStatement("UPDATE student_quests SET cost = ?," +
                 "date_added = ?, user_id = ? WHERE quest_id = ?");
         ps.setInt(1, cardTransaction.getCost());
@@ -141,6 +146,9 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
         ps.setInt(3, cardTransaction.getUserId());
         ps.setInt(4, cardTransaction.getItemId());
         ps.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -195,7 +203,7 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
     }
 
     @Override
-    public void update(Object object) throws SQLException {
+    public void update(Object object){
     if (object instanceof CardTransaction){
         updateStudentCard((CardTransaction) object);
 
@@ -206,32 +214,48 @@ public class DbTransactionsDAO extends DbConnectionDao implements TransactionsDA
      }
 
     @Override
-    public void disable(Object object) throws SQLException {
+    public void disable(Object object){
         Connection c = dbconnection.getConnection();
         if (object instanceof CardTransaction){
             CardTransaction cardTransaction = (CardTransaction) object;
-            PreparedStatement ps = c.prepareStatement(String.format("UPDATE student_cards SET is_active = false WHERE id = %d;", cardTransaction.getItemId()));
-            ps.executeUpdate();
+            try {
+                PreparedStatement ps = c.prepareStatement(String.format("UPDATE student_cards SET is_active = false WHERE id = %d;", cardTransaction.getItemId()));
+                ps.executeUpdate();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
 
         } else if (object instanceof QuestTransaction) {
             QuestTransaction questTransaction = (QuestTransaction) object;
+            try{
             PreparedStatement ps = c.prepareStatement(String.format("UPDATE student_quests SET is_active = false WHERE id = %d;", questTransaction.getItemId()));
             ps.executeUpdate();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
         }
     }
 
     @Override
-    public void activate(Object object) throws SQLException {
+    public void activate(Object object){
         Connection c = dbconnection.getConnection();
         if (object instanceof CardTransaction){
             CardTransaction cardTransaction = (CardTransaction) object;
-            PreparedStatement ps = c.prepareStatement(String.format("UPDATE student_cards SET is_active = true WHERE id = %d;", cardTransaction.getItemId()));
-            ps.executeUpdate();
+            try {
+                PreparedStatement ps = c.prepareStatement(String.format("UPDATE student_cards SET is_active = true WHERE id = %d;", cardTransaction.getItemId()));
+                ps.executeUpdate();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
 
         } else if (object instanceof QuestTransaction) {
             QuestTransaction questTransaction = (QuestTransaction) object;
-            PreparedStatement ps = c.prepareStatement(String.format("UPDATE student_quests SET is_active = true WHERE id = %d;", questTransaction.getItemId()));
-            ps.executeUpdate();
+            try {
+                PreparedStatement ps = c.prepareStatement(String.format("UPDATE student_quests SET is_active = true WHERE id = %d;", questTransaction.getItemId()));
+                ps.executeUpdate();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
         }
     }
 

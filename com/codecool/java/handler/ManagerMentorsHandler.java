@@ -1,21 +1,25 @@
 package codecool.java.handler;
 
-import codecool.java.dao.DbMentorDAO;
+import codecool.java.dao.MentorDAO;
 import codecool.java.helper.HttpResponse;
 import codecool.java.model.Mentor;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-
 import java.io.*;
 import java.net.URI;
 import java.util.List;
 
 public class ManagerMentorsHandler implements HttpHandler {
-    private DbMentorDAO dbMentorDAO = new DbMentorDAO();
-    CookieHelper cookieHelper = new CookieHelper();
-    HttpResponse httpResponse = new HttpResponse();
+    private MentorDAO mentorDAO;
+    CookieHelper cookieHelper;
+    HttpResponse httpResponse;
 
+    public ManagerMentorsHandler(MentorDAO mentorDAO,CookieHelper cookieHelper, HttpResponse httpResponse){
+        this.mentorDAO = mentorDAO;
+        this.cookieHelper = cookieHelper;
+        this.httpResponse = httpResponse;
+    }
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         if (!cookieHelper.isCookiePresent(httpExchange)) {
@@ -39,11 +43,10 @@ public class ManagerMentorsHandler implements HttpHandler {
         httpResponse.sendResponse200(httpExchange, response);
     }
 
-    public String handlePOST(HttpExchange httpExchange, URI uri) throws IOException {
+    public void handlePOST(HttpExchange httpExchange, URI uri) throws IOException {
         if ("uri.toString().equals(\"/manager/mentor/add/\"))".equals(uri)) {
             HttpResponse httpResponse = handleAddMentor(httpExchange);
             httpResponse.sendResponse200();
-            return "";
         }
 
         if ((uri.toString().split("/")[3].equals("add")) && !(uri.toString().split("/")[4].equals(""))) {
@@ -56,7 +59,6 @@ public class ManagerMentorsHandler implements HttpHandler {
             httpResponse.sendResponse200();
         }
 
-        return "No response";
     }
 
     private HttpResponse handleAddMentor(HttpExchange httpExchange) throws IOException {
@@ -66,7 +68,8 @@ public class ManagerMentorsHandler implements HttpHandler {
     }
 
     private void saveMentor(Mentor mentor) {
-        dbMentorDAO.save(mentor);
+        mentorDAO.save(mentor);
+        mentorDAO.saveDetails(mentor);
     }
 
     public HttpResponse handleUpdateMentor(HttpExchange httpExchange) throws IOException {
@@ -76,7 +79,8 @@ public class ManagerMentorsHandler implements HttpHandler {
     }
 
     private void updateMentor(Mentor mentor) {
-        dbMentorDAO.update(mentor);
+        mentorDAO.update(mentor);
+        mentorDAO.updateDetails(mentor);
     }
 
     private HttpResponse handleDeleteMentor(HttpExchange httpExchange) throws IOException {
@@ -89,12 +93,12 @@ public class ManagerMentorsHandler implements HttpHandler {
     }
 
     private void selectMentor(String userId) {
-        Mentor mentor = dbMentorDAO.selectMentorById(Integer.parseInt(userId));
+        Mentor mentor = mentorDAO.selectMentorById(Integer.parseInt(userId));
         deleteMentor(mentor);
     }
 
     private void deleteMentor(Mentor mentor) {
-        dbMentorDAO.disable(mentor);
+        mentorDAO.disable(mentor);
     }
 
     private Mentor receiveMentorFromFront(HttpExchange httpExchange) throws IOException {
@@ -107,7 +111,7 @@ public class ManagerMentorsHandler implements HttpHandler {
     }
 
     private String getMentorList() {
-        List<Mentor> mentors = dbMentorDAO.loadAllActive();
+        List<Mentor> mentors = mentorDAO.loadAllActive();
         return getMentorsJson(mentors);
     }
 
