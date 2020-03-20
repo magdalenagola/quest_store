@@ -143,7 +143,7 @@ public class DbMentorDAO extends DbConnectionDao implements MentorDAO {
         Connection c = dbconnection.getConnection();
         Mentor mentor = null;
         try{
-        PreparedStatement ps = c.prepareStatement("SELECT * FROM users WHERE id = ?;");
+        PreparedStatement ps = c.prepareStatement("SELECT * FROM users JOIN mentor_details ON users.id = mentor_details.user_id WHERE users.id = ?;");
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -155,11 +155,12 @@ public class DbMentorDAO extends DbConnectionDao implements MentorDAO {
         return mentor;
     }
 
+
     public Mentor selectMentorByLogin(String login){
         Connection c = dbconnection.getConnection();
         Mentor mentor = null;
         try{
-            PreparedStatement ps = c.prepareStatement("SELECT * FROM users WHERE email = ?;");
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM users JOIN mentor_details ON users.id = mentor_details.user_id WHERE email = ?;");
             ps.setString(1, login);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -168,35 +169,6 @@ public class DbMentorDAO extends DbConnectionDao implements MentorDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return mentor;
-    }
-
-    public Mentor selectMentorByLoginWithId(String login){
-        Connection c = dbconnection.getConnection();
-        Mentor mentor = null;
-        try{
-            PreparedStatement ps = c.prepareStatement("SELECT * FROM users WHERE email = ?;");
-            ps.setString(1, login);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                mentor = createMentor(rs);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return mentor;
-    }
-
-    private Mentor createMentorWithId(ResultSet rs) throws SQLException {
-        Mentor mentor = null;
-        int id = rs.getInt("id");
-        String email = rs.getString("email");
-        String password = rs.getString("password");
-        String name = rs.getString("name");
-        String surname = rs.getString("surname");
-        boolean is_active = rs.getBoolean("is_active");
-        String primarySkill = rs.getString("primary_skill");
-        mentor = new Mentor(id, email,password,name,surname,primarySkill,is_active);
         return mentor;
     }
 
@@ -209,7 +181,7 @@ public class DbMentorDAO extends DbConnectionDao implements MentorDAO {
         String surname = rs.getString("surname");
         boolean is_active = rs.getBoolean("is_active");
         String primarySkill = rs.getString("primary_skill");
-        mentor = new Mentor(email,password,name,surname,primarySkill,is_active);
+        mentor = new Mentor(id,email,password,name,surname,primarySkill,is_active);
         return mentor;
     }
 
@@ -236,7 +208,7 @@ public class DbMentorDAO extends DbConnectionDao implements MentorDAO {
         Connection c = dbconnection.getConnection();
         Mentor mentor = (Mentor) t;
         try {
-            PreparedStatement ps = c.prepareStatement(String.format("UPDATE users SET is_active = false WHERE id = %d;", mentor.getId()));
+            PreparedStatement ps = c.prepareStatement(String.format("UPDATE users SET is_active = false WHERE email = %s;", mentor.getLogin()));
             ps.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -248,7 +220,7 @@ public class DbMentorDAO extends DbConnectionDao implements MentorDAO {
         Connection c = dbconnection.getConnection();
         Mentor mentor = (Mentor) t;
         try {
-            PreparedStatement ps = c.prepareStatement(String.format("UPDATE users SET is_active = true WHERE id = %d;", mentor.getId()));
+            PreparedStatement ps = c.prepareStatement(String.format("UPDATE users SET is_active = true WHERE email = %s;", mentor.getLogin()));
             ps.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -259,12 +231,13 @@ public class DbMentorDAO extends DbConnectionDao implements MentorDAO {
         Connection c = dbconnection.getConnection();
         Mentor mentor = (Mentor) o;
         try {
-            PreparedStatement ps = c.prepareStatement("DELETE FROM users WHERE email = ?;");
+
+            PreparedStatement ps = c.prepareStatement(" DELETE FROM mentor_details WHERE primary_skill = ?;");
+            ps.setString(1, mentor.getPrimarySkill());
+            ps.executeUpdate();
+            ps = c.prepareStatement("DELETE FROM users WHERE email = ?;");
             ps.setString(1, mentor.getLogin());
             ps.executeUpdate();
-            PreparedStatement ps2 = c.prepareStatement("DELETE FROM mentor_details WHERE primary_skill = ?;");
-            ps2.setString(1, mentor.getPrimarySkill());
-            ps2.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
         }

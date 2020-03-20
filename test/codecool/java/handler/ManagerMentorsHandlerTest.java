@@ -1,30 +1,25 @@
 package codecool.java.handler;
 
 import codecool.java.dao.DbMentorDAO;
-import codecool.java.dao.DbstudentDAO;
+import codecool.java.dao.MentorDAO;
 import codecool.java.helper.HttpResponse;
 import codecool.java.model.Mentor;
-import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class ManagerMentorsHandlerTest {
-    static ManagerMentorsHandler handler = new ManagerMentorsHandler();
-    DbMentorDAO dao = new DbMentorDAO();
-    CookieHelper cookieHelper = mock(CookieHelper.class);
-    HttpResponse httpResponse = mock(HttpResponse.class);
+    static MentorDAO mockMentorDAO = mock(DbMentorDAO.class);
+    static CookieHelper cookieHelper = mock(CookieHelper.class);
+    static HttpResponse httpResponse = mock(HttpResponse.class);
+    static ManagerMentorsHandler handler = new ManagerMentorsHandler(mockMentorDAO,cookieHelper,httpResponse);
+
 
     @Test
     void shouldReturnJsonListWithOneMentor() {
@@ -62,7 +57,9 @@ class ManagerMentorsHandlerTest {
     public void shouldCallSendResponse200WhenGetMentorsList() throws IOException {
         HttpExchange httpExchange = mock(HttpExchange.class);
         when(cookieHelper.isCookiePresent(httpExchange)).thenReturn(true);
+        when(mockMentorDAO.loadAll()).thenReturn(Collections.singletonList(""));
         handler.handleGET(httpExchange);
+        verify(httpResponse).sendResponse200(httpExchange,"[]");
     }
 
     /**

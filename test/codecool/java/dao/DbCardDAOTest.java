@@ -5,13 +5,11 @@ import codecool.java.model.DatabaseConnection;
 import codecool.java.model.Student;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Predicate;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 class DbCardDAOTest {
     private static final DbCardDAO DAO = new DbCardDAO();
