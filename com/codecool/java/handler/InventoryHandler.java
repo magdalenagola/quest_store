@@ -40,8 +40,7 @@ public class InventoryHandler implements HttpHandler {
         }
     }
 
-    //TODO make private after testing
-    public String getStudentCards(Student student) {
+    String getStudentCards(Student student) {
         Gson gson = new Gson();
         return gson.toJson(cardDAO.getCardsByStudent(student));
     }
