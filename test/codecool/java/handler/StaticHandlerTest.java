@@ -22,18 +22,6 @@ public class StaticHandlerTest {
     HttpExchange httpExchange = mock(HttpExchange.class);
 
     @Test
-    void shouldSendFile() throws IOException, URISyntaxException {
-        URI uri = new URI("/test.txt");
-        ClassLoader classLoader = getClass().getClassLoader();
-        URL url = classLoader.getResource("test.txt");
-        when(httpExchange.getResponseHeaders()).thenReturn(new Headers());
-        when(httpExchange.getResponseBody()).thenReturn(new ByteArrayOutputStream(21));
-        when(httpExchange.getRequestURI()).thenReturn(uri);
-        staticHandler.handle(httpExchange);
-        verify(staticHandler).sendFile(httpExchange, url);
-    }
-
-    @Test
     void shouldSend404() throws IOException, URISyntaxException {
         URI uri = new URI("/test2.txt");
         when(httpExchange.getRequestURI()).thenReturn(uri);
